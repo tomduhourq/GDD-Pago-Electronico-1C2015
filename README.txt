@@ -1,0 +1,10 @@
+﻿Curso K3012
+
+Grupo
+
+Integrantes:
+
+	- Federico Bonisconti	1472859
+	- Francisco Bravo	1472197
+	- Juan Martín Desimoni	1436697
+	- Tomás Duhourq		1445212
