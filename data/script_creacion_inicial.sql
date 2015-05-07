@@ -10,17 +10,43 @@ END
 IF OBJECT_ID('VIDA_ESTATICA.Rol') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Rol;
-END;
+END
 
 CREATE TABLE VIDA_ESTATICA.Rol (
-	id INT PRIMARY KEY IDENTITY(1,1),
-	nombre varchar(13) NOT NULL,
-	funcionalidades varchar(255) NOT NULL,
-	estado char(1) NOT NULL);
-	
-INSERT INTO VIDA_ESTATICA.Rol VALUES
-(1, 'Administrador General', 'ALL', 'S'),
-(2, 'Cliente', 'CUENTA, DEPOSITOS, RETIRO, TRANSFERENCIAS, FACTURACION, SALDOS', 'S');
+	id numeric(18, 0) IDENTITY,
+	nombre varchar(25) NOT NULL,
+	activo bit NOT NULL
+		CONSTRAINT activo DEFAULT 1,
+	PRIMARY KEY (id)
+)
+
+INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
+('Administrador General', 1),
+('Cliente', 1) 
+
+
+IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Funcionalidad;
+END
+
+CREATE TABLE VIDA_ESTATICA.Funcionalidad (
+	id numeric(18, 0) IDENTITY,
+	nombre varchar(255) NOT NULL,
+	PRIMARY KEY (id)
+)
+
+IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad_Rol') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Funcionalidad_Rol;
+END
+
+CREATE TABLE VIDA_ESTATICA.Funcionalidad_Rol (
+	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id),
+	funcionalidad numeric(18, 0) NOT NULL ,
+	FOREIGN KEY (rol) REFERENCES VIDA_ESTATICA.Rol(id),
+	FOREIGN KEY (funcionalidad) REFERENCES VIDA_ESTATICA.Funcionalidad(id)
+)
 
 -- Login
 
@@ -33,7 +59,7 @@ END;
 -- así que hay que traer todo encriptado desde la app.
 
 CREATE TABLE VIDA_ESTATICA.Usuario (
-	id INT PRIMARY KEY IDENTITY(1,1),
+	id numeric(18, 0) IDENTITY,
 	name varchar(60) NOT NULL,
 	pass varchar(25) NOT NULL,
 	fecha_creacion DATETIME NOT NULL,
@@ -43,7 +69,7 @@ CREATE TABLE VIDA_ESTATICA.Usuario (
 	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id));
 
 INSERT INTO VIDA_ESTATICA.Usuario VALUES 
-(1, 'admin', 'w23e', GETDATE(), NULL, 'Dog?', 'Dawg', 1);
+('admin', 'w23e', GETDATE(), NULL, 'Dog?', 'Dawg', 1);
 	
 IF OBJECT_ID('VIDA_ESTATICA.Cliente') IS NOT NULL
 BEGIN
@@ -58,7 +84,7 @@ BEGIN
 END;
 
 CREATE TABLE VIDA_ESTATICA.Pais (
-	id INT PRIMARY KEY IDENTITY(1,1),
+	id varchar(250) PRIMARY KEY,
 	descripcion varchar(250) NOT NULL);
 
 INSERT INTO VIDA_ESTATICA.Pais 
