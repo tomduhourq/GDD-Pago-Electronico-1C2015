@@ -76,7 +76,41 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Cliente;
 END;
 
--- TODO: tabla clientes
+CREATE TABLE VIDA_ESTATICA.Direccion(
+	id numeric(18,0) IDENTITY,
+	dom_calle varchar(50)NOT NULL,
+	dom_nro numeric(6,0) NOT NULL,
+	dom_dpto varchar(1),
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE VIDA_ESTATICA.Cuenta(
+	id numeric(18,0) IDENTITY,
+	nro_cuenta numeric(16,0),
+	fecha_creacion DATETIME,
+	estado numeric(4,0),
+	PRIMARY KEY (id)	
+)
+
+CREATE TABLE VIDA_ESTATICA.Documento(
+	id numeric(18,0) IDENTITY,
+	tipo_doc_cod numeric(5,0),
+	tipo_doc_desc varchar(10),
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE VIDA_ESTATICA.Cliente (
+	id numeric(18,0) IDENTITY,
+	nombre varchar(20),
+	apellido varchar(25),
+	direccion numeric(18,0),
+	fecha_nac DATETIME,
+	mail varchar(50),
+	
+	PRIMARY KEY (id),
+	FOREIGN KEY (direccion) REFERENCES VIDA_ESTATICA.Direccion(id)
+)
+
 
 IF OBJECT_ID('VIDA_ESTATICA.Pais') IS NOT NULL
 BEGIN
