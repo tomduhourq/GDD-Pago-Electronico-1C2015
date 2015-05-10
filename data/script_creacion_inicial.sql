@@ -7,10 +7,60 @@ BEGIN
 EXEC sp_executesql N'CREATE SCHEMA VIDA_ESTATICA AUTHORIZATION gd'
 END
 
+--
+-- DROP TABLES
+--
+
+IF OBJECT_ID('VIDA_ESTATICA.Usuario') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Usuario;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad_Rol') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Funcionalidad_Rol;
+END;
+
 IF OBJECT_ID('VIDA_ESTATICA.Rol') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Rol;
-END
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Funcionalidad;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Cliente') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Cliente;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Cuenta') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Cuenta;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Pais') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Pais;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Direccion') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Direccion;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Documento') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Documento;
+END;
+
+
+
+--
+-- CREATE TABLES
+--
 
 CREATE TABLE VIDA_ESTATICA.Rol (
 	id numeric(18, 0) IDENTITY,
@@ -25,21 +75,13 @@ INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
 ('Cliente', 1) 
 
 
-IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Funcionalidad;
-END
-
 CREATE TABLE VIDA_ESTATICA.Funcionalidad (
 	id numeric(18, 0) IDENTITY,
 	nombre varchar(255) NOT NULL,
 	PRIMARY KEY (id)
 )
 
-IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad_Rol') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Funcionalidad_Rol;
-END
+
 
 CREATE TABLE VIDA_ESTATICA.Funcionalidad_Rol (
 	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id),
@@ -48,15 +90,10 @@ CREATE TABLE VIDA_ESTATICA.Funcionalidad_Rol (
 	FOREIGN KEY (funcionalidad) REFERENCES VIDA_ESTATICA.Funcionalidad(id)
 )
 
--- Login
-
-IF OBJECT_ID('VIDA_ESTATICA.Usuario') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Usuario;
-END;
-
 -- SQL SERVER 2008 R2 no soporta SHA256, 
 -- así que hay que traer todo encriptado desde la app.
+
+-- LOGIN
 
 CREATE TABLE VIDA_ESTATICA.Usuario (
 	id numeric(18, 0) IDENTITY,
@@ -68,14 +105,16 @@ CREATE TABLE VIDA_ESTATICA.Usuario (
 	respuesta varchar(25) NOT NULL,
 	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id));
 
+
 INSERT INTO VIDA_ESTATICA.Usuario VALUES 
 ('admin', 'w23e', GETDATE(), NULL, 'Dog?', 'Dawg', 1);
-	
-IF OBJECT_ID('VIDA_ESTATICA.Cliente') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Cliente;
-END;
 
+
+CREATE TABLE VIDA_ESTATICA.Pais (
+	id varchar(250) PRIMARY KEY,
+	descripcion varchar(250) NOT NULL);
+
+	
 CREATE TABLE VIDA_ESTATICA.Direccion(
 	id numeric(18,0) IDENTITY,
 	dom_calle varchar(50)NOT NULL,
@@ -83,6 +122,7 @@ CREATE TABLE VIDA_ESTATICA.Direccion(
 	dom_dpto varchar(1),
 	PRIMARY KEY (id)
 )
+
 
 CREATE TABLE VIDA_ESTATICA.Cuenta(
 	id numeric(18,0) IDENTITY,
@@ -92,12 +132,14 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	PRIMARY KEY (id)	
 )
 
+
 CREATE TABLE VIDA_ESTATICA.Documento(
 	id numeric(18,0) IDENTITY,
 	tipo_doc_cod numeric(5,0),
 	tipo_doc_desc varchar(10),
 	PRIMARY KEY (id)
 )
+
 
 CREATE TABLE VIDA_ESTATICA.Cliente (
 	id numeric(18,0) IDENTITY,
@@ -106,21 +148,19 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	direccion numeric(18,0),
 	fecha_nac DATETIME,
 	mail varchar(50),
-	
+	nacionalidad varchar(250),
 	PRIMARY KEY (id),
-	FOREIGN KEY (direccion) REFERENCES VIDA_ESTATICA.Direccion(id)
+	FOREIGN KEY (direccion) REFERENCES VIDA_ESTATICA.Direccion(id),
+	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id)
 )
 
 
-IF OBJECT_ID('VIDA_ESTATICA.Pais') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Pais;
-END;
 
-CREATE TABLE VIDA_ESTATICA.Pais (
-	id varchar(250) PRIMARY KEY,
-	descripcion varchar(250) NOT NULL);
+--
+-- INSERT DATA
+--
 
 INSERT INTO VIDA_ESTATICA.Pais 
 SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc 
 FROM gd_esquema.Maestra;
+
