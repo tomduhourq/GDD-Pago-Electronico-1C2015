@@ -41,14 +41,19 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Cuenta;
 END;
 
-IF OBJECT_ID('VIDA_ESTATICA.Pais') IS NOT NULL
+IF OBJECT_ID('VIDA_ESTATICA.Banco') IS NOT NULL
 BEGIN
-	DROP TABLE VIDA_ESTATICA.Pais;
+	DROP TABLE VIDA_ESTATICA.Banco;
 END;
 
 IF OBJECT_ID('VIDA_ESTATICA.Direccion') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Direccion;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Pais') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Pais;
 END;
 
 IF OBJECT_ID('VIDA_ESTATICA.Documento') IS NOT NULL
@@ -103,7 +108,8 @@ CREATE TABLE VIDA_ESTATICA.Usuario (
 	ultima_mod DATETIME,
 	pregunta varchar(50) NOT NULL,
 	respuesta varchar(25) NOT NULL,
-	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id));
+	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id)
+)
 
 
 INSERT INTO VIDA_ESTATICA.Usuario VALUES 
@@ -111,25 +117,40 @@ INSERT INTO VIDA_ESTATICA.Usuario VALUES
 
 
 CREATE TABLE VIDA_ESTATICA.Pais (
-	id varchar(250) PRIMARY KEY,
-	descripcion varchar(250) NOT NULL);
+	id numeric(18,0) PRIMARY KEY,
+	descripcion varchar(250) NOT NULL
+)
 
 	
 CREATE TABLE VIDA_ESTATICA.Direccion(
-	id numeric(18,0) IDENTITY,
-	dom_calle varchar(50)NOT NULL,
-	dom_nro numeric(6,0) NOT NULL,
+	id numeric(18,0)IDENTITY,
+	dom_calle varchar(50),
+	dom_nro numeric(6,0),
+	dom_piso numeric(2,0),
 	dom_dpto varchar(1),
-	PRIMARY KEY (id)
+	dom_pais numeric(18,0),
+	PRIMARY KEY (id),
+	FOREIGN KEY (dom_pais) REFERENCES VIDA_ESTATICA.Pais(id)
 )
 
+CREATE TABLE VIDA_ESTATICA.Banco(
+	cod numeric(18,0) IDENTITY,
+	nombre varchar(40),
+	direccion numeric(18,0),
+	PRIMARY KEY (cod),
+	FOREIGN KEY (direccion) REFERENCES VIDA_ESTATICA.Direccion(id)
+)
 
 CREATE TABLE VIDA_ESTATICA.Cuenta(
 	id numeric(18,0) IDENTITY,
+	cod_banco numeric(18,0),
 	nro_cuenta numeric(16,0),
 	fecha_creacion DATETIME,
-	estado numeric(4,0),
-	PRIMARY KEY (id)	
+	estado varchar(40),
+	pais numeric(18,0),
+	PRIMARY KEY (id, cod_banco),
+	FOREIGN KEY (pais) REFERENCES VIDA_ESTATICA.Pais(id),
+	FOREIGN KEY (cod_banco) REFERENCES VIDA_ESTATICA.Banco(cod)
 )
 
 
@@ -148,10 +169,13 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	direccion numeric(18,0),
 	fecha_nac DATETIME,
 	mail varchar(50),
-	nacionalidad varchar(250),
+	nacionalidad numeric(18,0),
+	cuenta numeric(18,0),
+	banco numeric(18,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (direccion) REFERENCES VIDA_ESTATICA.Direccion(id),
-	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id)
+	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id),
+	FOREIGN KEY (cuenta, banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco)
 )
 
 
@@ -163,4 +187,8 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 INSERT INTO VIDA_ESTATICA.Pais 
 SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc 
 FROM gd_esquema.Maestra;
+
+INSERT INTO VIDA_ESTATICA.Direccion
+SELECT DISTINCT Cli_Dom_Calle, Cli_Dom_Nro, Cli_Dom_Piso, Cli_Dom_Depto, Cli_Pais_Codigo
+FROM gd_esquema.Maestra
 
