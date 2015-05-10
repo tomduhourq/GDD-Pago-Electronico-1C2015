@@ -184,7 +184,7 @@ CREATE TABLE VIDA_ESTATICA.Estado_Cuenta(
 
 
 CREATE TABLE VIDA_ESTATICA.Moneda(
-	tipo varchar(20) NOT NULL,
+	tipo varchar(20),
 	PRIMARY KEY (tipo)
 )
 
@@ -205,7 +205,6 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	fecha_cierre DATETIME,
 	tipo_moneda varchar(20),
 	tipo_cuenta varchar(20),
-	--TARJETAS
 	PRIMARY KEY (id, cod_banco),
 	FOREIGN KEY (pais) REFERENCES VIDA_ESTATICA.Pais(id),
 	FOREIGN KEY (cod_banco) REFERENCES VIDA_ESTATICA.Banco(cod),
@@ -233,10 +232,12 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	nacionalidad numeric(18,0),
 	cuenta numeric(18,0),
 	banco numeric(18,0),
+	tipo_documento numeric(5,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (direccion) REFERENCES VIDA_ESTATICA.Direccion(id),
 	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id),
-	FOREIGN KEY (cuenta, banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco)
+	FOREIGN KEY (cuenta, banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco),
+	FOREIGN KEY (tipo_documento) REFERENCES VIDA_ESTATICA.Documento(tipo_doc_cod)
 )
 
 
