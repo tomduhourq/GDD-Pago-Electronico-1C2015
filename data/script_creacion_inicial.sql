@@ -36,6 +36,11 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Cliente;
 END;
 
+IF OBJECT_ID('VIDA_ESTATICA.Tarjeta') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Tarjeta;
+END;
+
 IF OBJECT_ID('VIDA_ESTATICA.Cuenta') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Cuenta;
@@ -81,8 +86,15 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Tipo_Cuenta;
 END;
 
+IF OBJECT_ID('VIDA_ESTATICA.Tarjeta') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Tarjeta;
+END;
 
-
+IF OBJECT_ID('VIDA_ESTATICA.Emisor') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Emisor;
+END;
 
 --
 -- CREATE TABLES
@@ -155,6 +167,7 @@ CREATE TABLE VIDA_ESTATICA.Direccion(
 	FOREIGN KEY (dom_pais) REFERENCES VIDA_ESTATICA.Pais(id)
 )
 
+
 CREATE TABLE VIDA_ESTATICA.Banco(
 	cod numeric(18,0) IDENTITY NOT NULL,
 	nombre varchar(40) NOT NULL,
@@ -176,10 +189,13 @@ CREATE TABLE VIDA_ESTATICA.Moneda(
 	PRIMARY KEY (tipo)
 )
 
+
 CREATE TABLE VIDA_ESTATICA.Tipo_Cuenta(
 	tipo varchar(20) NOT NULL,
 	PRIMARY KEY (tipo)
 )
+
+
 CREATE TABLE VIDA_ESTATICA.Cuenta(
 	id numeric(18,0) IDENTITY NOT NULL,
 	cod_banco numeric(18,0) NOT NULL,
@@ -190,6 +206,7 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	fecha_cierre DATETIME,
 	tipo_moneda varchar(20),
 	tipo_cuenta varchar(20),
+	--TARJETAS
 	PRIMARY KEY (id, cod_banco),
 	FOREIGN KEY (pais) REFERENCES VIDA_ESTATICA.Pais(id),
 	FOREIGN KEY (cod_banco) REFERENCES VIDA_ESTATICA.Banco(cod),
@@ -224,13 +241,39 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 )
 
 
+CREATE TABLE VIDA_ESTATICA.Emisor(
+	nombre varchar(30),
+	PRIMARY KEY (nombre)
+)
+
+
+CREATE TABLE VIDA_ESTATICA.Tarjeta(
+	id numeric(18,0) IDENTITY NOT NULL,
+	numero numeric(18,0) NOT NULL,
+	fecha_emision DATETIME,
+	fecha_vencimiento DATETIME,
+	cod_seguridad numeric(18,0),
+	emisor varchar(30),
+	cuenta numeric(18,0),
+	cod_banco numeric(18,0),
+	PRIMARY KEY (id),
+	FOREIGN KEY (emisor) REFERENCES VIDA_ESTATICA.Emisor(nombre),
+	FOREIGN KEY (cuenta, cod_banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco)
+)
+
+
 CREATE TABLE VIDA_ESTATICA.Deposito(
 	cod numeric(18,0) IDENTITY NOT NULL,
 	fecha DATETIME,
 	importe numeric(15,0) NOT NULL,
 	tipo_moneda varchar(20),
+	tarjeta_id numeric(18,0),
+	cuenta_destino numeric(18,0),
+	cod_banco numeric(18,0),
 	PRIMARY KEY (cod),
-	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(tipo)
+	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(tipo),
+	FOREIGN KEY (tarjeta_id) REFERENCES VIDA_ESTATICA.Tarjeta(id),
+	FOREIGN KEY (cuenta_destino, cod_banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco)
 )
 
 
@@ -253,6 +296,11 @@ FROM gd_esquema.Maestra
 INSERT INTO VIDA_ESTATICA.Estado_Cuenta
 SELECT DISTINCT Cuenta_Estado
 FROM gd_esquema.Maestra
+
+INSERT INTO VIDA_ESTATICA.Emisor
+SELECT DISTINCT Tarjeta_Emisor_Descripcion
+FROM gd_esquema.Maestra
+
 
 --INSERT INTO VIDA_ESTATICA.Banco
 --SELECT DISTINCT Banco_Cogido, Banco_Nombre, Banco_Direccion
