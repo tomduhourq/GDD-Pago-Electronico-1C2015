@@ -292,13 +292,14 @@ FROM gd_esquema.Maestra
 
 INSERT INTO VIDA_ESTATICA.Estado_Cuenta
 SELECT DISTINCT Cuenta_Estado
-FROM gd_esquema.Maestra
+FROM gd_esquema.Maestra where(Cuenta_Estado is not null)
 
 INSERT INTO VIDA_ESTATICA.Emisor
 SELECT DISTINCT Tarjeta_Emisor_Descripcion
-FROM gd_esquema.Maestra
+FROM gd_esquema.Maestra where(Tarjeta_Emisor_Descripcion is not null)
 
 --SET IDENTITY_INSERT VIDA_ESTATICA.BANCO ON
 --INSERT INTO VIDA_ESTATICA.BANCO (COD, NOMBRE, DIRECCION)
 --SELECT DISTINCT BANCO_COGIDO, BANCO_NOMBRE, BANCO_DIRECCION 
 --FROM GD_ESQUEMA.MAESTRA
+--SET IDENTITY_INSERT VIDA_ESTATICA.BANCO OFF
