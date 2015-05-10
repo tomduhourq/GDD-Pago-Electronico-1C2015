@@ -41,6 +41,16 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Deposito;
 END;
 
+IF OBJECT_ID('VIDA_ESTATICA.Transferencia') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Transferencia;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Cheque') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Cheque;
+END;
+
 IF OBJECT_ID('VIDA_ESTATICA.Tarjeta') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Tarjeta;
@@ -104,10 +114,6 @@ CREATE TABLE VIDA_ESTATICA.Rol (
 	PRIMARY KEY (id)
 )
 
-INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
-('Administrador General', 1),
-('Cliente', 1) 
-
 
 CREATE TABLE VIDA_ESTATICA.Funcionalidad (
 	id numeric(18, 0) IDENTITY,
@@ -139,10 +145,6 @@ CREATE TABLE VIDA_ESTATICA.Usuario (
 	respuesta varchar(25) NOT NULL,
 	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id)
 )
-
-
-INSERT INTO VIDA_ESTATICA.Usuario VALUES 
-('admin', 'w23e', GETDATE(), NULL, 'Dog?', 'Dawg', 1);
 
 
 CREATE TABLE VIDA_ESTATICA.Pais (
@@ -262,7 +264,7 @@ CREATE TABLE VIDA_ESTATICA.Tarjeta(
 CREATE TABLE VIDA_ESTATICA.Deposito(
 	cod numeric(18,0) IDENTITY NOT NULL,
 	fecha DATETIME,
-	importe numeric(15,0) NOT NULL,
+	importe numeric(15,2) NOT NULL,
 	tipo_moneda varchar(20),
 	tarjeta_id numeric(18,0),
 	cuenta_destino numeric(18,0),
@@ -274,8 +276,46 @@ CREATE TABLE VIDA_ESTATICA.Deposito(
 )
 
 
+CREATE TABLE VIDA_ESTATICA.Transferencia(
+	id numeric(18,0) IDENTITY NOT NULL,
+	fecha DATETIME,
+	importe numeric(15,2) NOT NULL,
+	costo numeric(10,2) NOT NULL,
+	cuenta_destino numeric(18,0),
+	tipo_moneda varchar(20),
+	cod_banco numeric(18,0),
+	PRIMARY KEY (id),
+	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(tipo),
+	FOREIGN KEY (cuenta_destino, cod_banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco)
+)
+
+CREATE TABLE VIDA_ESTATICA.Cheque(
+	id numeric(18,0) IDENTITY NOT NULL,
+	retiro_fecha DATETIME,
+	retiro_codigo numeric(18,0) NOT NULL,
+	retiro_importe numeric(15,2) NOT NULL,
+	cheque_importe numeric(15,2) NOT NULL,
+	cuenta_destino numeric(18,0),
+	tipo_moneda varchar(20),
+	cod_banco numeric(18,0),
+	PRIMARY KEY (id),
+	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(tipo),
+	FOREIGN KEY (cuenta_destino, cod_banco) REFERENCES VIDA_ESTATICA.Cuenta(id, cod_banco)
+)
 --
--- INSERT DATA
+-- DATA INSERT
+--
+
+INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
+('Administrador General', 1),
+('Cliente', 1) 
+
+INSERT INTO VIDA_ESTATICA.Usuario VALUES 
+('admin', 'w23e', GETDATE(), NULL, 'Dog?', 'Dawg', 1);
+
+
+--
+-- MIGRATION
 --
 
 INSERT INTO VIDA_ESTATICA.Pais 
