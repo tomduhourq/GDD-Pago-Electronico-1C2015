@@ -226,6 +226,7 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	id numeric(18,0) IDENTITY NOT NULL,
 	nombre varchar(20) NOT NULL,
 	apellido varchar(25) NOT NULL,
+	documento numeric(8,0),
 	direccion numeric(18,0),
 	fecha_nac DATETIME NOT NULL,
 	mail varchar(50) NOT NULL,
