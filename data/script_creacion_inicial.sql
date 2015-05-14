@@ -11,14 +11,19 @@ END
 -- DROP TABLES
 --
 
-IF OBJECT_ID('VIDA_ESTATICA.Usuario') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Usuario;
-END;
-
 IF OBJECT_ID('VIDA_ESTATICA.Funcionalidad_Rol') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Funcionalidad_Rol;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Rol_Usuario') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Rol_Usuario;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Usuario') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Usuario;
 END;
 
 IF OBJECT_ID('VIDA_ESTATICA.Rol') IS NOT NULL
@@ -121,8 +126,6 @@ CREATE TABLE VIDA_ESTATICA.Funcionalidad (
 	PRIMARY KEY (id)
 )
 
-
-
 CREATE TABLE VIDA_ESTATICA.Funcionalidad_Rol (
 	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id),
 	funcionalidad numeric(18, 0) NOT NULL ,
@@ -130,22 +133,36 @@ CREATE TABLE VIDA_ESTATICA.Funcionalidad_Rol (
 	FOREIGN KEY (funcionalidad) REFERENCES VIDA_ESTATICA.Funcionalidad(id)
 )
 
+
 -- SQL SERVER 2008 R2 no soporta SHA256, 
 -- así que hay que traer todo encriptado desde la app.
 
 -- LOGIN
 
 CREATE TABLE VIDA_ESTATICA.Usuario (
-	id numeric(18, 0) IDENTITY NOT NULL,
-	name varchar(60) NOT NULL,
+	name varchar(25) NOT NULL,
 	pass varchar(25) NOT NULL,
 	fecha_creacion DATETIME NOT NULL,
 	ultima_mod DATETIME,
+	intentos_login numeric(18, 0) NOT NULL
+		CONSTRAINT "intentos_login_0" DEFAULT 0,
+	activo bit NOT NULL
+		CONSTRAINT "usuario_activo" DEFAULT 1,
 	pregunta varchar(50) NOT NULL,
 	respuesta varchar(25) NOT NULL,
-	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id)
+	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id),
+	PRIMARY KEY (name)
 )
 
+-- Un usuario puede tener más de un Rol
+
+CREATE TABLE VIDA_ESTATICA.Rol_Usuario (
+	usuario varchar(25),
+	rol numeric(18, 0),
+	FOREIGN KEY (usuario) REFERENCES VIDA_ESTATICA.Usuario(name),
+	FOREIGN KEY (rol) REFERENCES VIDA_ESTATICA.Rol(id),
+	PRIMARY KEY (usuario, rol)
+)
 
 CREATE TABLE VIDA_ESTATICA.Pais (
 	id numeric(18,0) NOT NULL,
@@ -210,8 +227,7 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	FOREIGN KEY (cod_banco) REFERENCES VIDA_ESTATICA.Banco(cod),
 	FOREIGN KEY (estado) REFERENCES VIDA_ESTATICA.Estado_Cuenta(id),
 	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(tipo),
-	FOREIGN KEY (tipo_cuenta) REFERENCES VIDA_ESTATICA.Tipo_Cuenta(tipo)
-	
+	FOREIGN KEY (tipo_cuenta) REFERENCES VIDA_ESTATICA.Tipo_Cuenta(tipo)	
 )
 
 
@@ -313,7 +329,7 @@ INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
 ('Cliente', 1) 
 
 INSERT INTO VIDA_ESTATICA.Usuario VALUES 
-('admin', 'w23e', GETDATE(), NULL, 'Dog?', 'Dawg', 1);
+('admin', 'w23e', GETDATE(), NULL,0, 1, 'Dog?', 'Dawg', 1);
 
 
 --
