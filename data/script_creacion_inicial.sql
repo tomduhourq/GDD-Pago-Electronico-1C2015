@@ -141,7 +141,7 @@ CREATE TABLE VIDA_ESTATICA.Funcionalidad_Rol (
 
 CREATE TABLE VIDA_ESTATICA.Usuario (
 	name varchar(25) NOT NULL,
-	pass varchar(25) NOT NULL,
+	pass varchar(100) NOT NULL,
 	fecha_creacion DATETIME NOT NULL,
 	ultima_mod DATETIME,
 	intentos_login numeric(18, 0) NOT NULL
@@ -150,7 +150,6 @@ CREATE TABLE VIDA_ESTATICA.Usuario (
 		CONSTRAINT "usuario_activo" DEFAULT 1,
 	pregunta varchar(50) NOT NULL,
 	respuesta varchar(25) NOT NULL,
-	rol numeric(18, 0) NOT NULL REFERENCES VIDA_ESTATICA.Rol(id),
 	PRIMARY KEY (name)
 )
 
@@ -329,8 +328,11 @@ INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
 ('Cliente', 1) 
 
 INSERT INTO VIDA_ESTATICA.Usuario VALUES 
-('admin', 'w23e', GETDATE(), NULL,0, 1, 'Dog?', 'Dawg', 1);
+('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', GETDATE(), NULL, 0, 1, 'Dog?', 'Dawg');
 
+INSERT INTO VIDA_ESTATICA.Rol_Usuario VALUES
+('admin', 1),
+('admin', 2)
 
 --
 -- MIGRATION
@@ -361,3 +363,26 @@ FROM gd_esquema.Maestra where(Tarjeta_Emisor_Descripcion is not null)
 --SELECT DISTINCT BANCO_COGIDO, BANCO_NOMBRE, BANCO_DIRECCION 
 --FROM GD_ESQUEMA.MAESTRA
 --SET IDENTITY_INSERT VIDA_ESTATICA.BANCO OFF
+
+-- Stored Procedures
+GO
+IF OBJECT_ID('VIDA_ESTATICA.updateIntentos') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.updateIntentos;
+END;
+GO
+
+CREATE PROCEDURE VIDA_ESTATICA.updateIntentos(@intentos_login numeric(18, 0),@nombre varchar(25) , @ret numeric(18,0) output)
+AS BEGIN
+  IF(@intentos_login = 2)
+	BEGIN
+	  UPDATE VIDA_ESTATICA.Usuario SET activo=0, intentos_login=@intentos_login WHERE name=@nombre
+	  SET @ret = 1
+	END
+  ELSE
+	BEGIN
+	  UPDATE VIDA_ESTATICA.Usuario set intentos_login=@intentos_login WHERE name=@nombre
+	  SET @ret = 2
+	END
+END
+GO

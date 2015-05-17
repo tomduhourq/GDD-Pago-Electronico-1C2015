@@ -38,7 +38,7 @@ namespace PagoElectronico.Models.DB
             } catch { return false; }
         }
 
-        // If we are returning a value in the procedure, @ret should be output
+        // En @ret va el output
         public static decimal ExecStoredProcedure(string commandText, List<SqlParameter> parameters)
         {
             try {
