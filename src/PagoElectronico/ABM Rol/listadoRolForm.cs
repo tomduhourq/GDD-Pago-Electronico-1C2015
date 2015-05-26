@@ -9,19 +9,14 @@ using System.Windows.Forms;
 
 namespace PagoElectronico.ABM_Rol
 {
-    public partial class formRol : Form
+    public partial class listadoRolForm : Form
     {
-        public formRol()
+        public listadoRolForm()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBoxFunc_SelectedIndexChanged(object sender, EventArgs e)
+        private void listadoRolForm_Load(object sender, EventArgs e)
         {
 
         }
