@@ -17,17 +17,17 @@ namespace PagoElectronico.Models.Utils{
         static private string password { get; set; }
  
  	//TODO: Make datasource load from a text file
- 	private string datasource;
-        static private string strCon = "Data Source=" + datasource + ";Initial Catalog=prode;Persist Security Info=True;User ID=gd;Password=gd2015";
+ 	 //private string datasource = "localhost\\SQLSERVER2008";
+     static private string strCon = "Data Source=" + "localhost\\SQLSERVER2008" + ";Initial Catalog=prode;Persist Security Info=True;User ID=gd;Password=gd2015";
  
         static private SqlConnection sqlCon = new SqlConnection(strCon);
         static public Exception exception;
  
         static private Dictionary<Transaccion, SqlTransaction> transacciones = new Dictionary<Transaccion, SqlTransaction>();
  
-        static private void setData() {
+       static private void setData() {
             sqlCon = new SqlConnection(strCon);
-        }
+        } 
  
         static public void setData(string _motor, string _direccion, string _db, string _username, string _password) {
             motor = _motor;
