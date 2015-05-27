@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace PagoElectronico.Models.DB
+namespace PagoElectronico.Models.DataBase
 {
     class DBAcess
     {
@@ -26,6 +26,11 @@ namespace PagoElectronico.Models.DB
             SqlCommand sqlCommand = BuildSQLCommand(commandtext, parameters);
             SetCommandType(commandtype, sqlCommand);
             return sqlCommand.ExecuteReader();
+        }
+
+        public static SqlDataReader GetDataReader(string commandtext, string commandtype)
+        {
+            return GetDataReader(commandtext, commandtype, null);
         }
 
         public static bool WriteInBase(string commandtext, string commandtype, List<SqlParameter> parameters)
@@ -54,7 +59,10 @@ namespace PagoElectronico.Models.DB
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.Connection = GetConnection();
             sqlCommand.CommandText = commandtext;
-            foreach (SqlParameter param in parameters) { sqlCommand.Parameters.Add(param); }
+            if (parameters != null)
+            {
+                foreach (SqlParameter param in parameters) { sqlCommand.Parameters.Add(param); }
+            }
             return sqlCommand;
         }
 
