@@ -34,7 +34,7 @@ namespace PagoElectronico.Models.BO
             if (dcc.Contains("nombre"))
                 nombre = (dr["nombre"] == DBNull.Value) ? null : dr["nombre"].ToString();
             if (dcc.Contains("direccion"))
-                nombre = (dr["direccion"] == DBNull.Value) ? null : dr["direccion"].ToString();
+                direccion = (dr["direccion"] == DBNull.Value) ? null : dr["direccion"].ToString();
 
             return this;
         }
