@@ -83,11 +83,11 @@
             // 
             this.Bienvenido.AutoSize = true;
             this.Bienvenido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Bienvenido.Location = new System.Drawing.Point(12, 9);
+            this.Bienvenido.Location = new System.Drawing.Point(40, 9);
             this.Bienvenido.Name = "Bienvenido";
-            this.Bienvenido.Size = new System.Drawing.Size(199, 20);
+            this.Bienvenido.Size = new System.Drawing.Size(145, 20);
             this.Bienvenido.TabIndex = 6;
-            this.Bienvenido.Text = "Bienvenido Hijo de puto";
+            this.Bienvenido.Text = "Pago Electrónico";
             // 
             // frmLogin
             // 
@@ -101,7 +101,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "frmLogin";
-            this.Text = "frmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();
 
