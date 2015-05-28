@@ -76,6 +76,11 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Banco;
 END;
 
+IF OBJECT_ID('VIDA_ESTATICA.Direccion') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Direccion;
+END;
+
 IF OBJECT_ID('VIDA_ESTATICA.Pais') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Pais;
@@ -100,6 +105,11 @@ END;
 IF OBJECT_ID('VIDA_ESTATICA.Emisor') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Emisor;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Documento') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Documento;
 END;
 
 --
@@ -215,8 +225,8 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 
 
 CREATE TABLE VIDA_ESTATICA.Tipo_Documento(
-	id numeric(4,0) IDENTITY NOT NULL,
-	descripcion varchar(40) NOT NULL,
+	id numeric(18,0) IDENTITY NOT NULL,
+	descripcion varchar(255) NOT NULL,
 	PRIMARY KEY(id)
 )
 
@@ -236,7 +246,7 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	nacionalidad numeric(18,0),
 	cuenta numeric(18,0),
 	banco numeric(18,0),
-	tipo_documento numeric(4,0),
+	tipo_documento numeric(18,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id),
 	FOREIGN KEY (dom_pais) REFERENCES VIDA_ESTATICA.Pais(id),
@@ -312,6 +322,18 @@ CREATE TABLE VIDA_ESTATICA.Cheque(
 -- DATA INSERT
 --
 
+INSERT INTO VIDA_ESTATICA.Funcionalidad VALUES
+('ABM Cliente'),
+('ABM Cuenta'),
+('ABM de Usuario'),
+('ABM Rol'),
+('Consulta saldos'),
+('Depositos'),
+('Facturacion'),
+('Listados'),
+('Retiros'),
+('Transferencias')
+
 INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
 ('Administrador General', 1),
 ('Cliente', 1) 
@@ -323,6 +345,8 @@ INSERT INTO VIDA_ESTATICA.Rol_Usuario VALUES
 ('admin', 1),
 ('admin', 2)
 
+exec sp_columns Rol_Usuario;
+
 --
 -- MIGRATION
 --
@@ -331,12 +355,8 @@ INSERT INTO VIDA_ESTATICA.Pais
 SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc 
 FROM gd_esquema.Maestra;
 
-INSERT INTO VIDA_ESTATICA.Direccion
-SELECT DISTINCT Cli_Dom_Calle, Cli_Dom_Nro, Cli_Dom_Piso, Cli_Dom_Depto, Cli_Pais_Codigo
-FROM gd_esquema.Maestra
-
-INSERT INTO VIDA_ESTATICA.Documento
-SELECT DISTINCT Cli_Tipo_Doc_Cod, Cli_Tipo_Doc_Desc
+INSERT INTO VIDA_ESTATICA.Tipo_Documento(descripcion)
+SELECT DISTINCT Cli_Tipo_Doc_Desc
 FROM gd_esquema.Maestra
 
 INSERT INTO VIDA_ESTATICA.Estado_Cuenta
@@ -355,10 +375,25 @@ FROM gd_esquema.Maestra where(Tarjeta_Emisor_Descripcion is not null)
 
 -- Stored Procedures
 GO
+
 IF OBJECT_ID('VIDA_ESTATICA.updateIntentos') IS NOT NULL
 BEGIN
 	DROP PROCEDURE VIDA_ESTATICA.updateIntentos;
 END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.addFuncionalidad') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.addFuncionalidad;
+END;
+GO
+
+CREATE PROCEDURE VIDA_ESTATICA.addFuncionalidad(@rol varchar(255), @func varchar(255)) AS
+BEGIN
+	INSERT INTO VIDA_ESTATICA.Funcionalidad_Rol (rol, funcionalidad)
+		VALUES ((SELECT id FROM VIDA_ESTATICA.Rol WHERE nombre = @rol),
+		        (SELECT id FROM VIDA_ESTATICA.Funcionalidad WHERE nombre = @func))
+END
 GO
 
 CREATE PROCEDURE VIDA_ESTATICA.updateIntentos(@intentos_login numeric(18, 0),@nombre varchar(25) , @ret numeric(18,0) output)
@@ -375,3 +410,33 @@ AS BEGIN
 	END
 END
 GO
+
+CREATE FUNCTION VIDA_ESTATICA.roles_usuario(@username varchar(255))
+RETURNS @roles TABLE (rol int, nombre varchar(255)) AS
+BEGIN
+	INSERT INTO @roles
+		SELECT id, nombre
+		FROM
+			VIDA_ESTATICA.Rol_Usuario JOIN VIDA_ESTATICA.Rol
+			ON Rol_Usuario.rol = Rol.id
+		WHERE Rol_Usuario.usuario = @username
+	RETURN
+END
+GO
+
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Cliente';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Cuenta';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Rol';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM de Usuario';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='Consulta saldos';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='Depositos';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='Facturacion';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='Listados';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='Retiros';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='Transferencias';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Consulta saldos';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Depositos';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Retiros';
+EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Transferencias';
+
+
