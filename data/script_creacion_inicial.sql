@@ -345,7 +345,7 @@ INSERT INTO VIDA_ESTATICA.Rol_Usuario VALUES
 ('admin', 1),
 ('admin', 2)
 
-exec sp_columns Rol_Usuario;
+-- exec sp_columns Rol_Usuario;
 
 --
 -- MIGRATION
@@ -385,6 +385,12 @@ GO
 IF OBJECT_ID('VIDA_ESTATICA.addFuncionalidad') IS NOT NULL
 BEGIN
 	DROP PROCEDURE VIDA_ESTATICA.addFuncionalidad;
+END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.roles_usuario') IS NOT NULL
+BEGIN
+	DROP FUNCTION VIDA_ESTATICA.roles_usuario;
 END;
 GO
 
