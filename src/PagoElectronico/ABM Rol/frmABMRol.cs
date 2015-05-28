@@ -35,22 +35,7 @@ namespace PagoElectronico.ABM_Rol
 
         public void actualizarGrilla()
         {
-            if (txtNombre.Text != "" && operacion == "Baja")
-            
-                // Traer todos los roles que cumplen con el filtro
-                lstRoles = Roles.ObtenerRolesActivo(txtNombre.Text);
-           
-            else if (txtNombre.Text == "" && operacion == "Baja")
-            {
-                lstRoles = Roles.ObtenerTodosActivos();
-            }
-            else if (operacion != "Baja" && txtNombre.Text != "")
-            {
-                lstRoles = Roles.ObtenerRoles(txtNombre.Text);
-            }
-            else { lstRoles = Roles.ObtenerTodos(); }
-
-            // Put the list en la dtg
+            // TODO: Evaluar las combinaciones y popular la grid
             dtgRol.DataSource = lstRoles;
         }
 
@@ -63,8 +48,6 @@ namespace PagoElectronico.ABM_Rol
 
             dtgRol.Columns.Add(colNombre);
 
-            if (operacion == "Baja") cmdOperacion.Text = "Eliminar";
-            else cmdOperacion.Text = "Modificar";
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -73,10 +56,5 @@ namespace PagoElectronico.ABM_Rol
             catch { MessageBox.Show("No existe rol con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
         }
 
-        #region -- DataGrid --
-
-     
-
-        #endregion
     }
 }
