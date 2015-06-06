@@ -10,6 +10,7 @@ using PagoElectronico.Models;
 using PagoElectronico.Login;
 using PagoElectronico.Models.BO;
 using PagoElectronico.ABM_Rol;
+using PagoElectronico.ABM_Cliente;
 
 namespace PagoElectronico
 {
@@ -60,6 +61,12 @@ namespace PagoElectronico
         {
             frmABMRol rol = new frmABMRol();
             rol.Show();
+        }
+
+        private void btnABMCliente_Click(object sender, EventArgs e)
+        {
+            frmABMCliente cliente = new frmABMCliente();
+            cliente.Show();
         }
 
    

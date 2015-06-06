@@ -33,6 +33,7 @@
             this.groupAdmin = new System.Windows.Forms.GroupBox();
             this.btnABMRol = new System.Windows.Forms.Button();
             this.groupCliente = new System.Windows.Forms.GroupBox();
+            this.btnABMCliente = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +59,7 @@
             // 
             // groupAdmin
             // 
+            this.groupAdmin.Controls.Add(this.btnABMCliente);
             this.groupAdmin.Controls.Add(this.btnABMRol);
             this.groupAdmin.Location = new System.Drawing.Point(16, 37);
             this.groupAdmin.Name = "groupAdmin";
@@ -87,6 +89,16 @@
             this.groupCliente.Text = "Funciones Cliente";
             this.groupCliente.Visible = false;
             // 
+            // btnABMCliente
+            // 
+            this.btnABMCliente.Location = new System.Drawing.Point(88, 20);
+            this.btnABMCliente.Name = "btnABMCliente";
+            this.btnABMCliente.Size = new System.Drawing.Size(75, 23);
+            this.btnABMCliente.TabIndex = 1;
+            this.btnABMCliente.Text = "ABM Cliente";
+            this.btnABMCliente.UseVisualStyleBackColor = true;
+            this.btnABMCliente.Click += new System.EventHandler(this.btnABMCliente_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -113,5 +125,6 @@
         private System.Windows.Forms.GroupBox groupAdmin;
         private System.Windows.Forms.GroupBox groupCliente;
         private System.Windows.Forms.Button btnABMRol;
+        private System.Windows.Forms.Button btnABMCliente;
     }
 }
