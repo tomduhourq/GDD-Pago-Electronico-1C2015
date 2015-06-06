@@ -12,7 +12,7 @@ namespace PagoElectronico.Models.BO
         public static List<Funcionalidad> ObtenerFuncionalidades() {
             List<Funcionalidad> l = new List<Funcionalidad>();
 
-            SqlDataReader lector = DBAcess.GetDataReader("SELECT * from VIDA_ESTATICA.Rol", "T", new List<SqlParameter>());
+            SqlDataReader lector = DBAcess.GetDataReader("SELECT * from VIDA_ESTATICA.Funcionalidad", "T", new List<SqlParameter>());
 
             if (lector.HasRows)
             {
