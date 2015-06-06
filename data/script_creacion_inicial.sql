@@ -176,7 +176,7 @@ CREATE TABLE VIDA_ESTATICA.Pais (
 
 
 CREATE TABLE VIDA_ESTATICA.Banco(
-	cod numeric(18,0) IDENTITY NOT NULL,
+	cod numeric(18,0) NOT NULL,
 	nombre varchar(40) NOT NULL,
 	direccion varchar(50),
 	PRIMARY KEY (cod),
@@ -208,9 +208,8 @@ CREATE TABLE VIDA_ESTATICA.Tipo_Cuenta(
 
 
 CREATE TABLE VIDA_ESTATICA.Cuenta(
-	id numeric(18,0) NOT NULL IDENTITY,
+	id numeric(16,0) NOT NULL,
 	cod_banco numeric(18,0),
-	nro_cuenta numeric(16,0) NOT NULL,
 	fecha_creacion DATETIME,
 	estado numeric(4,0),
 	pais numeric(18,0),
@@ -246,7 +245,7 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	fecha_nac DATETIME NOT NULL,
 	mail varchar(50) NOT NULL,
 	nacionalidad numeric(18,0),
-	cuenta numeric(18,0),
+	cuenta numeric(16,0),
 	banco numeric(18,0),
 	tipo_documento numeric(18,0),
 	PRIMARY KEY (id),
@@ -271,7 +270,7 @@ CREATE TABLE VIDA_ESTATICA.Tarjeta(
 	fecha_vencimiento DATETIME,
 	cod_seguridad numeric(18,0),
 	emisor numeric(4,0),
-	cuenta numeric(18,0),
+	cuenta numeric(16,0),
 	cod_banco numeric(18,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (emisor) REFERENCES VIDA_ESTATICA.Emisor(id),
@@ -285,7 +284,7 @@ CREATE TABLE VIDA_ESTATICA.Deposito(
 	importe numeric(15,2) NOT NULL,
 	tipo_moneda numeric(4,0),
 	tarjeta_id numeric(18,0),
-	cuenta_destino numeric(18,0),
+	cuenta_destino numeric(16,0),
 	cod_banco numeric(18,0),
 	PRIMARY KEY (cod),
 	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(id),
@@ -299,7 +298,7 @@ CREATE TABLE VIDA_ESTATICA.Transferencia(
 	fecha DATETIME,
 	importe numeric(15,2) NOT NULL,
 	costo numeric(10,2) NOT NULL,
-	cuenta_destino numeric(18,0),
+	cuenta_destino numeric(16,0),
 	tipo_moneda numeric(4,0),
 	cod_banco numeric(18,0),
 	PRIMARY KEY (id),
@@ -313,7 +312,7 @@ CREATE TABLE VIDA_ESTATICA.Cheque(
 	retiro_codigo numeric(18,0) NOT NULL,
 	retiro_importe numeric(15,2) NOT NULL,
 	cheque_importe numeric(15,2) NOT NULL,
-	cuenta_destino numeric(18,0),
+	cuenta_destino numeric(16,0),
 	tipo_moneda numeric(4,0),
 	cod_banco numeric(18,0),
 	PRIMARY KEY (id),
@@ -369,9 +368,15 @@ INSERT INTO VIDA_ESTATICA.Tipo_Documento(id, descripcion)
 SELECT DISTINCT Cli_Tipo_Doc_Cod, Cli_Tipo_Doc_Desc
 FROM gd_esquema.Maestra
 
-INSERT INTO VIDA_ESTATICA.Estado_Cuenta
-SELECT DISTINCT Cuenta_Estado
-FROM gd_esquema.Maestra where(Cuenta_Estado is not null)
+INSERT INTO VIDA_ESTATICA.Banco
+SELECT DISTINCT Banco_Cogido,Banco_Direccion, Banco_Nombre FROM gd_esquema.Maestra
+WHERE Banco_Cogido is not null
+
+INSERT INTO VIDA_ESTATICA.Estado_Cuenta Values
+('PendienteActivacion'),
+('Cerrada'),
+('Inhabilitada'),
+('Habilitada');
 
 INSERT INTO VIDA_ESTATICA.Emisor
 SELECT DISTINCT Tarjeta_Emisor_Descripcion
@@ -385,6 +390,9 @@ INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
 ('Plata',80,365),
 ('Oro',120,600);
 
+INSERT INTO VIDA_ESTATICA.Cuenta
+SELECT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1
+FROM gd_esquema.Maestra 
 
 --INSERT INTO VIDA_ESTATICA.Cliente
 --SELECT [Cli_Nombre],[Cli_Apellido],[Cli_Nro_Doc],[Cli_Dom_Calle],[Cli_Dom_Nro],[Cli_Dom_Piso],

@@ -16,10 +16,7 @@ namespace PagoElectronico.Models.Utils{
         static private string username { get; set; }
         static private string password { get; set; }
  
- 	//TODO: Make datasource load from a text file
- 	 //private string datasource = "localhost\\SQLSERVER2008";
-     static private string strCon = "Data Source=" + "localhost\\SQLSERVER2008" + ";Initial Catalog=prode;Persist Security Info=True;User ID=gd;Password=gd2015";
- 
+        static private string strCon = "Data Source=" + "localhost\\SQLSERVER2008" + ";Persist Security Info=True;User ID=gd;Password=gd2015"; 
         static private SqlConnection sqlCon = new SqlConnection(strCon);
         static public Exception exception;
  
