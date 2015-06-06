@@ -144,6 +144,7 @@
             this.txtNumID.Name = "txtNumID";
             this.txtNumID.Size = new System.Drawing.Size(120, 20);
             this.txtNumID.TabIndex = 8;
+            this.txtNumID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumID_KeyPress);
             // 
             // txtEmail
             // 

@@ -24,7 +24,27 @@ namespace PagoElectronico.ABM_Cliente
         
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
+            txtNombre.Text = "";
+            txtApellido.Text = "";
+            txtNumID.Text = "";
+            txtEmail.Text = "";
+        }
+        
+        public bool isCaracterInvalido(Char c)
+        {
+            if (char.IsLetter(c))
+            {
+                return true;
+            }
+            return false;
+        }
 
+        private void txtNumID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (isCaracterInvalido(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
     }
