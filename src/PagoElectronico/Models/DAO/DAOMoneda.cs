@@ -10,7 +10,7 @@ using PagoElectronico.Models.Utils;
 namespace PagoElectronico.Models.DAO {
     public partial class DAOMoneda: DAOBase<TipoMoneda> {
         public DAOMoneda()
-            : base("Moneda", "id") {
+            : base("VIDA_ESTATICA.Moneda", "id") {
         }
 
         public TipoMoneda update(TipoMoneda _Moneda)
