@@ -10,7 +10,7 @@ using PagoElectronico.Models.Utils;
 namespace PagoElectronico.Models.DAO {
     public partial class DAOTipoCuenta: DAOBase<TipoCuenta> {
         public DAOTipoCuenta()
-            : base("Tipo_Cuenta", "id") {
+            : base("VIDA_ESTATICA.Tipo_Cuenta", "id") {
         }
         
         public TipoCuenta update(TipoCuenta _Tipo_Cuenta) {

@@ -12,7 +12,7 @@ using PagoElectronico.Models.DataBase;
 namespace PagoElectronico.Models.DAO {
     public partial class DAORol: DAOBase<Rol> {
         public DAORol()
-            : base("Rol", "id") {
+            : base("VIDA_ESTATICA.Rol", "id") {
         }
 
         public Rol update(Rol _Rol)

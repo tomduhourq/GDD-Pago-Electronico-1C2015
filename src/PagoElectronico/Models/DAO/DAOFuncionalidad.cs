@@ -12,7 +12,7 @@ namespace PagoElectronico.Models.DAO
     public partial class DAOFuncionalidad : DAOBase<Funcionalidad>
     {
         public DAOFuncionalidad()
-            : base("Funcionalidad", "id")
+            : base("VIDA_ESTATICA.Funcionalidad", "id")
         {
         }
 

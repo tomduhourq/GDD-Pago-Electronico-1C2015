@@ -10,7 +10,7 @@ using PagoElectronico.Models.Utils;
 namespace PagoElectronico.Models.DAO {
     public partial class DAOPais: DAOBase<Pais> {
         public DAOPais()
-            : base("Pais", "id") {
+            : base("VIDA_ESTATICA.Pais", "id") {
         }
         
         public Pais update(Pais _Pais) {
