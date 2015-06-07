@@ -17,7 +17,7 @@ namespace PagoElectronico
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmABMRol());
+            Application.Run(new frmLogin());
         }
     }
 }
