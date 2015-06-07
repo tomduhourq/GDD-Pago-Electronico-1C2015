@@ -78,6 +78,12 @@
     <Compile Include="ABM Rol\FormABMRol.Designer.cs">
       <DependentUpon>FormABMRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Depositos\frmDepositos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Depositos\frmDepositos.Designer.cs">
+      <DependentUpon>frmDepositos.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +138,9 @@
     <EmbeddedResource Include="ABM Rol\FormABMRol.resx">
       <DependentUpon>FormABMRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Depositos\frmDepositos.resx">
+      <DependentUpon>frmDepositos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,7 +170,6 @@
   <ItemGroup>
     <Folder Include="ABM de Usuario\" />
     <Folder Include="Consulta Saldos\" />
-    <Folder Include="Depositos\" />
     <Folder Include="Facturacion\" />
     <Folder Include="Listados\" />
     <Folder Include="Retiros\" />

@@ -395,7 +395,7 @@ INSERT INTO VIDA_ESTATICA.Cuenta
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 
-JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc 
+JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
 
 
 -- Stored Procedures

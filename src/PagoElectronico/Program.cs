@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PagoElectronico.Login;
 using PagoElectronico.ABM_Rol;
+using PagoElectronico.Depositos;
 
 namespace PagoElectronico
 {
@@ -17,7 +18,7 @@ namespace PagoElectronico
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormLogin());
+            Application.Run(new frmDepositos());
         }
     }
 }
