@@ -11,9 +11,9 @@ using PagoElectronico.Models;
 
 namespace PagoElectronico.Login
 {
-    public partial class frmLogin : Form
+    public partial class FormLogin : Form
     {
-        public frmLogin()
+        public FormLogin()
         {
             InitializeComponent();
         }
@@ -47,7 +47,7 @@ namespace PagoElectronico.Login
                                 user.ReiniciarFallidos();
 
                                 // Paso al form Principal (requiere user siempre)
-                                frmPrincipal formPrincipal = new frmPrincipal(user);
+                                FormPrincipal formPrincipal = new FormPrincipal(user);
                                 this.Hide();
                                 formPrincipal.Show();
                             }

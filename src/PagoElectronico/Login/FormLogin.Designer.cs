@@ -1,6 +1,6 @@
 ﻿namespace PagoElectronico.Login
 {
-    partial class frmLogin
+    partial class FormLogin
     {
         /// <summary>
         /// Required designer variable.

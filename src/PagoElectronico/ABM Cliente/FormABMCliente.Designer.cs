@@ -1,6 +1,6 @@
 ﻿namespace PagoElectronico.ABM_Cliente
 {
-    partial class frmABMCliente
+    partial class FormABMCliente
     {
         /// <summary>
         /// Required designer variable.

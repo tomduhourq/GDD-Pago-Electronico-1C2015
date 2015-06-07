@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace PagoElectronico.ABM_Cliente
 {
-    public partial class frmABMCliente : Form
+    public partial class FormABMCliente : Form
     {
-        public frmABMCliente()
+        public FormABMCliente()
         {
             InitializeComponent();
         }

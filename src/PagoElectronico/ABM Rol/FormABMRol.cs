@@ -11,9 +11,9 @@ using PagoElectronico.Models.DAO;
 
 namespace PagoElectronico.ABM_Rol
 {
-    public partial class frmABMRol : Form
+    public partial class FormABMRol : Form
     {
-        public frmABMRol()
+        public FormABMRol()
         {
             InitializeComponent();
         }

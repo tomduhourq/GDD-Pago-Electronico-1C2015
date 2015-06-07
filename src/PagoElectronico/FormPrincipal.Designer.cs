@@ -1,6 +1,6 @@
 ﻿namespace PagoElectronico
 {
-    partial class frmPrincipal
+    partial class FormPrincipal
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +31,10 @@
             this.lblSeleccionRol = new System.Windows.Forms.Label();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.groupAdmin = new System.Windows.Forms.GroupBox();
+            this.btnABMCliente = new System.Windows.Forms.Button();
             this.btnABMRol = new System.Windows.Forms.Button();
             this.groupCliente = new System.Windows.Forms.GroupBox();
-            this.btnABMCliente = new System.Windows.Forms.Button();
+            this.btnABMCuentas = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +60,7 @@
             // 
             // groupAdmin
             // 
+            this.groupAdmin.Controls.Add(this.btnABMCuentas);
             this.groupAdmin.Controls.Add(this.btnABMCliente);
             this.groupAdmin.Controls.Add(this.btnABMRol);
             this.groupAdmin.Location = new System.Drawing.Point(16, 37);
@@ -68,6 +70,16 @@
             this.groupAdmin.TabStop = false;
             this.groupAdmin.Text = "Funciones Administrador";
             this.groupAdmin.Visible = false;
+            // 
+            // btnABMCliente
+            // 
+            this.btnABMCliente.Location = new System.Drawing.Point(88, 20);
+            this.btnABMCliente.Name = "btnABMCliente";
+            this.btnABMCliente.Size = new System.Drawing.Size(75, 23);
+            this.btnABMCliente.TabIndex = 1;
+            this.btnABMCliente.Text = "ABM Cliente";
+            this.btnABMCliente.UseVisualStyleBackColor = true;
+            this.btnABMCliente.Click += new System.EventHandler(this.btnABMCliente_Click);
             // 
             // btnABMRol
             // 
@@ -89,15 +101,15 @@
             this.groupCliente.Text = "Funciones Cliente";
             this.groupCliente.Visible = false;
             // 
-            // btnABMCliente
+            // btnABMCuentas
             // 
-            this.btnABMCliente.Location = new System.Drawing.Point(88, 20);
-            this.btnABMCliente.Name = "btnABMCliente";
-            this.btnABMCliente.Size = new System.Drawing.Size(75, 23);
-            this.btnABMCliente.TabIndex = 1;
-            this.btnABMCliente.Text = "ABM Cliente";
-            this.btnABMCliente.UseVisualStyleBackColor = true;
-            this.btnABMCliente.Click += new System.EventHandler(this.btnABMCliente_Click);
+            this.btnABMCuentas.Location = new System.Drawing.Point(169, 20);
+            this.btnABMCuentas.Name = "btnABMCuentas";
+            this.btnABMCuentas.Size = new System.Drawing.Size(75, 23);
+            this.btnABMCuentas.TabIndex = 2;
+            this.btnABMCuentas.Text = "ABM Cuenta";
+            this.btnABMCuentas.UseVisualStyleBackColor = true;
+            this.btnABMCuentas.Click += new System.EventHandler(this.btnABMCuentas_Click);
             // 
             // frmPrincipal
             // 
@@ -126,5 +138,6 @@
         private System.Windows.Forms.GroupBox groupCliente;
         private System.Windows.Forms.Button btnABMRol;
         private System.Windows.Forms.Button btnABMCliente;
+        private System.Windows.Forms.Button btnABMCuentas;
     }
 }

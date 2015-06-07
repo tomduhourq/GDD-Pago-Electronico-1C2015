@@ -11,12 +11,13 @@ using PagoElectronico.Login;
 using PagoElectronico.Models.BO;
 using PagoElectronico.ABM_Rol;
 using PagoElectronico.ABM_Cliente;
+using PagoElectronico.ABM_Cuenta;
 
 namespace PagoElectronico
 {
-    public partial class frmPrincipal : Form
+    public partial class FormPrincipal : Form
     {
-        public frmPrincipal(Usuario invoker)
+        public FormPrincipal(Usuario invoker)
         {
             InitializeComponent();
             user = invoker;
@@ -41,7 +42,7 @@ namespace PagoElectronico
                 cmbRol.ValueMember = "id";
             } else {
                 MessageBox.Show("El usuario no tiene ningun rol asignado!", "Error!", MessageBoxButtons.OK);
-                frmLogin login = new frmLogin();
+                FormLogin login = new FormLogin();
                 login.Show();
                 this.Close();
             }
@@ -59,14 +60,20 @@ namespace PagoElectronico
         // Inicializar la ventana
         private void btnABMRol_Click(object sender, EventArgs e)
         {
-            frmABMRol rol = new frmABMRol();
+            FormABMRol rol = new FormABMRol();
             rol.Show();
         }
 
         private void btnABMCliente_Click(object sender, EventArgs e)
         {
-            frmABMCliente cliente = new frmABMCliente();
+            FormABMCliente cliente = new FormABMCliente();
             cliente.Show();
+        }
+
+        private void btnABMCuentas_Click(object sender, EventArgs e)
+        {
+            FormABMCuenta frmCuentas = new FormABMCuenta();
+            frmCuentas.Show();
         }
 
    
