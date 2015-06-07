@@ -71,7 +71,7 @@ namespace PagoElectronico.ABM_Rol
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             Rol delete = (Rol)dtgRol.CurrentRow.DataBoundItem;
-            if (Funcionalidades.DependeDe((int)delete.id).Count > 0)
+            if (Funcionalidad.DependeDe((int)delete.id).Count > 0)
                 MessageBox.Show("No puede eliminarse el rol por estar asociado a una funcionalidad");
             else { 
                 if(dao.delete((int)(decimal)delete.id))

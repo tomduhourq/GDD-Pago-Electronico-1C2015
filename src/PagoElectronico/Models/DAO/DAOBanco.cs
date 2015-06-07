@@ -12,7 +12,7 @@ namespace PagoElectronico.Models.DAO
     public partial class DAOBanco : DAOBase<Banco>
     {
         public DAOBanco()
-            : base("Banco", "cod")
+            : base("VIDA_ESTATICA.Banco", "cod")
         {
         }
 

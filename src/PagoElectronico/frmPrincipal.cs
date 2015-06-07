@@ -28,7 +28,7 @@ namespace PagoElectronico
 
         private void frmPrincipal_Load_1(object sender, EventArgs e)
         {
-            lstRoles = Usuarios.ObtenerRoles(user);
+            lstRoles = Usuario.ObtenerRoles(user);
             if (lstRoles.Count > 0)
             {
                 // Enable selección de rol

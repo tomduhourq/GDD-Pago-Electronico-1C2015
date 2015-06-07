@@ -29,7 +29,7 @@ namespace PagoElectronico.ABM_Rol
         private void AltaRol_Load(object sender, EventArgs e)
         {
             List<Funcionalidad> l = new List<Funcionalidad>();
-            l = Funcionalidades.ObtenerFuncionalidades();
+            l = Funcionalidad.ObtenerFuncionalidades();
             grillaFuncionalidades.DataSource = l;
             grillaFuncionalidades.ValueMember = "Id";
             grillaFuncionalidades.DisplayMember = "Nombre";
@@ -37,7 +37,7 @@ namespace PagoElectronico.ABM_Rol
             if (rol.id != null) {
                 txtNombre.Text = rol.nombre;
                 chkActivo.Checked = (bool)rol.activo;
-                List<Funcionalidad> actuales = Funcionalidades.ObtenerFuncionalidades((int)rol.id);
+                List<Funcionalidad> actuales = Funcionalidad.ObtenerFuncionalidades((int)rol.id);
                 for (int i = 0; i <= (grillaFuncionalidades.Items.Count - 1); i++)
                 {
                     if (actuales.Contains((Funcionalidad)grillaFuncionalidades.Items[i]))

@@ -12,7 +12,7 @@ namespace PagoElectronico.Models.DAO
     public partial class DAOCliente: DAOBase<Cliente>
     {
         public DAOCliente()
-            : base("Cliente", "id")
+            : base("VIDA_ESTATICA.Cliente", "id")
         {
         }
 

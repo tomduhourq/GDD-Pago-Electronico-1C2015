@@ -12,7 +12,7 @@ namespace PagoElectronico.Models.DAO
     public partial class DAOEstadoCuenta : DAOBase<EstadoCuenta>
     {
         public DAOEstadoCuenta()
-            : base("Estado_Cuenta", "id")
+            : base("VIDA_ESTATICA.Estado_Cuenta", "id")
         {
         }
 

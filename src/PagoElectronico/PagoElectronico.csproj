@@ -84,14 +84,21 @@
     <Compile Include="Login\frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\BO\Banco.cs" />
+    <Compile Include="Models\BO\Cliente.cs" />
+    <Compile Include="Models\BO\Cuenta.cs" />
+    <Compile Include="Models\BO\EstadoCuenta.cs" />
     <Compile Include="Models\BO\Funcionalidad.cs" />
-    <Compile Include="Models\BO\Funcionalidades.cs" />
     <Compile Include="Models\BO\Rol.cs" />
     <Compile Include="Models\BO\TipoCuenta.cs" />
     <Compile Include="Models\BO\TipoMoneda.cs" />
     <Compile Include="Models\BO\IBO.cs" />
     <Compile Include="Models\BO\Pais.cs" />
+    <Compile Include="Models\DAO\DAOCuenta.cs" />
+    <Compile Include="Models\DAO\DAOBanco.cs" />
     <Compile Include="Models\DAO\DAOBase.cs" />
+    <Compile Include="Models\DAO\DAOCliente.cs" />
+    <Compile Include="Models\DAO\DAOEstado_Cuenta.cs" />
     <Compile Include="Models\DAO\DAOFuncionalidad.cs" />
     <Compile Include="Models\DAO\DAOMoneda.cs" />
     <Compile Include="Models\DAO\DAOPais.cs" />
@@ -99,7 +106,6 @@
     <Compile Include="Models\DAO\DAOTipo_Cuenta.cs" />
     <Compile Include="Models\DataBase\DBAcess.cs" />
     <Compile Include="Models\Usuario.cs" />
-    <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\Utils\DB.cs" />
     <Compile Include="Models\Utils\MyException.cs" />
     <Compile Include="Models\Utils\Utils.cs" />

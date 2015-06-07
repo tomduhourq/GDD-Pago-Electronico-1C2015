@@ -38,7 +38,7 @@ namespace PagoElectronico.Models.DAO {
                 {
                     // alta de funcionalidades para ese rol
                     foreach (Funcionalidad unaFunc in l)
-                        Funcionalidades.AgregarFuncionalidadEnRol(ret, unaFunc);
+                        Funcionalidad.AgregarFuncionalidadEnRol(ret, unaFunc);
                     return true;
                 }
                 else { return false; }
