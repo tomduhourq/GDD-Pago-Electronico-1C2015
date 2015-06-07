@@ -60,6 +60,12 @@
     <Compile Include="ABM Cuenta\Cuentas.Designer.cs">
       <DependentUpon>Cuentas.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Rol\AltaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\AltaRol.Designer.cs">
+      <DependentUpon>AltaRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\frmABMRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,7 @@
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\Utils\DB.cs" />
     <Compile Include="Models\Utils\MyException.cs" />
+    <Compile Include="Models\Utils\Utils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM Cliente\frmABMCliente.resx">
@@ -103,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Cuenta\Cuentas.resx">
       <DependentUpon>Cuentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\AltaRol.resx">
+      <DependentUpon>AltaRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\frmABMRol.resx">
       <DependentUpon>frmABMRol.cs</DependentUpon>

@@ -21,7 +21,7 @@ namespace PagoElectronico.Models.BO
 
         public int? id { get; set; }
         public string nombre { get; set; }
-        public bool? activo{ get; set; }
+        public bool? activo { get; set; }
 
         public Rol initialize(DataRow _dr)
         {
@@ -70,5 +70,14 @@ namespace PagoElectronico.Models.BO
             return base.GetHashCode();
         }
 
+
+        #region Miembros de IBO<Rol>
+
+        Rol IBO<Rol>.setData(DataRow dr)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

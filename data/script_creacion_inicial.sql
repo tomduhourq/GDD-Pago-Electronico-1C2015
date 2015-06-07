@@ -421,6 +421,12 @@ BEGIN
 END;
 GO
 
+IF OBJECT_ID('VIDA_ESTATICA.agregarRol') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.agregarRol;
+END;
+GO
+
 CREATE PROCEDURE VIDA_ESTATICA.addFuncionalidad(@rol varchar(255), @func varchar(255)) AS
 BEGIN
 	INSERT INTO VIDA_ESTATICA.Funcionalidad_Rol (rol, funcionalidad)
@@ -454,6 +460,13 @@ BEGIN
 			ON Rol_Usuario.rol = Rol.id
 		WHERE Rol_Usuario.usuario = @username
 	RETURN
+END
+GO
+
+CREATE PROCEDURE VIDA_ESTATICA.agregarRol(@nombreRol varchar(255), @ret numeric(18,0) output)
+AS BEGIN
+	INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES (@nombreRol, 1)
+	SET @ret = SCOPE_IDENTITY()
 END
 GO
 
