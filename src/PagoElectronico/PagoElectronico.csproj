@@ -78,11 +78,11 @@
     <Compile Include="ABM Rol\FormABMRol.Designer.cs">
       <DependentUpon>FormABMRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="Depositos\frmDepositos.cs">
+    <Compile Include="Depositos\FormDepositos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Depositos\frmDepositos.Designer.cs">
-      <DependentUpon>frmDepositos.cs</DependentUpon>
+    <Compile Include="Depositos\FormDepositos.Designer.cs">
+      <DependentUpon>FormDepositos.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>
@@ -138,8 +138,8 @@
     <EmbeddedResource Include="ABM Rol\FormABMRol.resx">
       <DependentUpon>FormABMRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Depositos\frmDepositos.resx">
-      <DependentUpon>frmDepositos.cs</DependentUpon>
+    <EmbeddedResource Include="Depositos\FormDepositos.resx">
+      <DependentUpon>FormDepositos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
@@ -151,6 +151,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\BuscadorCliente.resx">
+      <DependentUpon>BuscadorCliente.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -166,6 +169,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Shared\BuscadorCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shared\BuscadorCliente.Designer.cs">
+      <DependentUpon>BuscadorCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\UIUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ABM de Usuario\" />

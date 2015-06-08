@@ -42,6 +42,8 @@
             this.lblPais = new System.Windows.Forms.Label();
             this.tbCliente = new System.Windows.Forms.TextBox();
             this.lblCliente = new System.Windows.Forms.Label();
+            this.btnCerrar = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbEstado
@@ -159,11 +161,33 @@
             this.lblCliente.TabIndex = 26;
             this.lblCliente.Text = "Cliente";
             // 
+            // btnCerrar
+            // 
+            this.btnCerrar.Location = new System.Drawing.Point(300, 214);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(75, 23);
+            this.btnCerrar.TabIndex = 27;
+            this.btnCerrar.Text = "Cancelar";
+            this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
+            // 
+            // btnGuardar
+            // 
+            this.btnGuardar.Location = new System.Drawing.Point(391, 214);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(75, 23);
+            this.btnGuardar.TabIndex = 28;
+            this.btnGuardar.Text = "Crear";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // 
             // FormAltaCuenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 219);
+            this.ClientSize = new System.Drawing.Size(498, 249);
+            this.Controls.Add(this.btnGuardar);
+            this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.tbCliente);
             this.Controls.Add(this.lblCliente);
             this.Controls.Add(this.tbEstado);
@@ -179,6 +203,7 @@
             this.Controls.Add(this.lblMoneda);
             this.Controls.Add(this.lblPais);
             this.Name = "FormAltaCuenta";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nueva Cuenta";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -201,5 +226,7 @@
         private System.Windows.Forms.Label lblPais;
         private System.Windows.Forms.TextBox tbCliente;
         private System.Windows.Forms.Label lblCliente;
+        private System.Windows.Forms.Button btnCerrar;
+        private System.Windows.Forms.Button btnGuardar;
     }
 }

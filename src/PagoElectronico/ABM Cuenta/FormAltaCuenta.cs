@@ -15,11 +15,22 @@ namespace PagoElectronico.ABM_Cuenta
         public FormAltaCuenta(Cliente cli)
         {
             InitializeComponent();
+            tbCliente.Text = String.Format("{0} {1}", cli.nombre,cli.apellido);
         }
 
         public FormAltaCuenta(Cliente cli, Cuenta cuenta):this(cli)
         {
             this.Text = "Modificar Cuenta";
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -110,6 +110,7 @@
             this.btnCerrar.TabIndex = 23;
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // dtgRol
             // 
@@ -138,7 +139,9 @@
             this.Controls.Add(this.dtgRol);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormABMCuenta";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cuentas";
+            this.Load += new System.EventHandler(this.FormABMCuenta_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgRol)).EndInit();

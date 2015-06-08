@@ -42,5 +42,39 @@ namespace PagoElectronico.Models.DAO
         {
             return DB.ExecuteReaderSingle<Cliente>("SELECT * FROM " + tabla + " WHERE id = @1", _value);
         }
+
+        public List<Cliente> retrieveByInfo(string id, string numeroDoc, string nombre, string apellido)
+        {
+
+            if (String.IsNullOrEmpty(id) && String.IsNullOrEmpty(nombre) &&
+                String.IsNullOrEmpty(numeroDoc) && String.IsNullOrEmpty(apellido))
+            {
+                return retrieveBase();
+            }
+
+            string baseQuery = String.Format("SELECT * FROM {0} WHERE", tabla);
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                baseQuery += String.Format(" id = {0} AND", id);
+            }
+            if (!String.IsNullOrEmpty(numeroDoc))
+            {
+                baseQuery += String.Format(" documento = {0} AND", numeroDoc);
+            }
+            if (!String.IsNullOrEmpty(nombre))
+            {
+                baseQuery += String.Format(" nombre LIKE '%{0}%' AND", nombre);
+            }
+            if (!String.IsNullOrEmpty(apellido))
+            {
+                baseQuery += String.Format(" apellido LIKE '%{0}%' AND", apellido);
+            }
+            
+            baseQuery = baseQuery.Substring(0, baseQuery.Length - 3);
+            
+            return DB.ExecuteReader<Cliente>(baseQuery);
+        }
+
     }
 }

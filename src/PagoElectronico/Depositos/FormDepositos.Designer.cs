@@ -1,6 +1,6 @@
 ﻿namespace PagoElectronico.Depositos
 {
-    partial class frmDepositos
+    partial class FormDepositos
     {
         /// <summary>
         /// Required designer variable.

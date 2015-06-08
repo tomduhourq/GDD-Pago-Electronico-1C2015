@@ -10,9 +10,9 @@ using PagoElectronico.Models.Utils;
 
 namespace PagoElectronico.Depositos
 {
-    public partial class frmDepositos : Form
+    public partial class FormDepositos : Form
     {
-        public frmDepositos()
+        public FormDepositos()
         {
             InitializeComponent();
         }
