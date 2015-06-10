@@ -202,6 +202,7 @@
             this.Controls.Add(this.lblTipoCuenta);
             this.Controls.Add(this.lblMoneda);
             this.Controls.Add(this.lblPais);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormAltaCuenta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nueva Cuenta";

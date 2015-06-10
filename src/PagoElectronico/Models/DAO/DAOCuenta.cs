@@ -42,5 +42,10 @@ namespace PagoElectronico.Models.DAO
         {
             return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM " + tabla + " WHERE id = @1", _value);
         }
+
+        public List<Cuenta> retrieveBy_Cliente(object cliID)
+        {
+            return DB.ExecuteReader<Cuenta>("SELECT * FROM " + tabla + " WHERE cod_cli = @1", cliID);
+        }
     }
 }

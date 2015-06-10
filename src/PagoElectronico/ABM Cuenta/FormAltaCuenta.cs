@@ -21,6 +21,9 @@ namespace PagoElectronico.ABM_Cuenta
         public FormAltaCuenta(Cliente cli, Cuenta cuenta):this(cli)
         {
             this.Text = "Modificar Cuenta";
+            tbEstado.Text = cuenta.estado.ToString();
+            tbNroCuenta.Text = cuenta.numCuenta.ToString();
+            dtFechaApertura.Value = (DateTime)cuenta.fechaCreacion;
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

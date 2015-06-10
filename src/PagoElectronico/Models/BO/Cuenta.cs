@@ -19,8 +19,8 @@ namespace PagoElectronico.Models.BO
             initialize(dr);
         }
         
-        public int? id { get; set; }
-        public int? numCuenta { get; set; }
+        public long? id { get; set; }
+        public long? numCuenta { get; set; }
         public int? codBanco { get; set; }
         public DateTime? fechaCreacion { get; set; }
         public int? estado { get; set; }
@@ -37,9 +37,9 @@ namespace PagoElectronico.Models.BO
             DataColumnCollection dcc = dr.Table.Columns;
 
             if (dcc.Contains("id"))
-                id = (dr["id"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["id"]);
+                id = (dr["id"] == DBNull.Value) ? null : (long?)Convert.ToInt64(dr["id"]);
             if (dcc.Contains("num_cuenta"))
-                numCuenta = (dr["num_cuenta"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["num_cuenta"]);
+                numCuenta = (dr["num_cuenta"] == DBNull.Value) ? null : (long?)Convert.ToInt64(dr["num_cuenta"]);
             if (dcc.Contains("cod_banco"))
                 codBanco = (dr["cod_banco"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cod_banco"]);
             if (dcc.Contains("fecha_creacion"))
