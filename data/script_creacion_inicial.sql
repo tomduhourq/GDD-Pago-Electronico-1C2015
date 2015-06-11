@@ -365,7 +365,7 @@ SELECT DISTINCT Cli_Tipo_Doc_Cod, Cli_Tipo_Doc_Desc
 FROM gd_esquema.Maestra
 
 INSERT INTO VIDA_ESTATICA.Banco
-SELECT DISTINCT Banco_Cogido,Banco_Direccion, Banco_Nombre FROM gd_esquema.Maestra
+SELECT DISTINCT Banco_Cogido,Banco_Nombre,Banco_Direccion FROM gd_esquema.Maestra
 WHERE Banco_Cogido is not null
 
 INSERT INTO VIDA_ESTATICA.Estado_Cuenta Values

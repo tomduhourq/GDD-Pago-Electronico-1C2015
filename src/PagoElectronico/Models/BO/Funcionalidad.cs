@@ -132,5 +132,10 @@ namespace PagoElectronico.Models.BO
 
             return DBAcess.WriteInBase("INSERT INTO VIDA_ESTATICA.Funcionalidad_Rol (rol, funcionalidad) VALUES (@idRol, @idFunc)", "T", ListaParametros);
         }
+
+        public override string ToString()
+        {
+            return this.nombre;
+        }
     }
 }

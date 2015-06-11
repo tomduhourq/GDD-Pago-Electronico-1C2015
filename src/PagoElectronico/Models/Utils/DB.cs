@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,8 +16,7 @@ namespace PagoElectronico.Models.Utils{
         static private string username { get; set; }
         static private string password { get; set; }
  
-
-        static private string strCon = "Data Source=" + "localhost\\SQLSERVER2008" + ";Persist Security Info=True;User ID=gd;Password=gd2015"; 
+        static private string strCon = "Data Source=" + "localhost\\SQLSERVER2008" + ";Persist Security Info=True;User ID=gd;Password=gd2015";
 
         static private SqlConnection sqlCon = new SqlConnection(strCon);
         static public Exception exception;
@@ -251,6 +250,17 @@ namespace PagoElectronico.Models.Utils{
         static public int ExecuteCardinal(string command) {
             return ExecuteCardinal(command, null, new object[0]);
         }
+
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Ejecuta comando y devuelve un número grande
+        /// </summary>
+        /// <param name="command">Comando</param>
+        /// <returns></returns>
+        static public long ExecuteBigCardinal(string command)
+        {
+            return ExecuteBigCardinal(command, null, new object[0]);
+        }
  
         /// <summary>
         /// Ejecuta comando y devuelve un número
@@ -306,6 +316,48 @@ namespace PagoElectronico.Models.Utils{
             }
             return temp;
         }
+
+        /// <summary>
+        /// Ejecuta comando y devuelve un número
+        /// </summary>
+        /// <param name="command">Comando</param>
+        /// <param name="transaccion">Transacción a utilizar</param>
+        /// <param name="parameters">Parámetros del comando</param>
+        /// <returns></returns>
+        static public long ExecuteBigCardinal(string command, Transaccion transaccion, params object[] parameters)
+        {
+            SqlDataReader reader = null;
+            long temp = -1;
+
+            try
+            {
+
+                if (sqlCon.State != ConnectionState.Open)
+                    sqlCon.Open();
+
+                SqlCommand com = CompleteCommand(command, transaccion, parameters);
+
+                reader = com.ExecuteReader();
+
+                if (reader.Read())
+                    //--Es convert porque hay veces que trae Decimal y el getInt no entiende nada :)
+                    temp = Convert.ToInt64(reader[0]);
+
+            }
+            catch (Exception ex)
+            {
+                if (transaccion != null)
+                    RollBackTransaction(transaccion);
+                throw new MyException(ex);
+            }
+            finally
+            {
+
+                sqlCon.Close();
+            }
+            return temp;
+        }
+ 
  
         //---------------------------------------------------------------------
         /// <summary>

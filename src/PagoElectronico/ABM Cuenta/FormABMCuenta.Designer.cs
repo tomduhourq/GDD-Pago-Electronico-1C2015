@@ -45,6 +45,7 @@
             // 
             this.tbCliente.Location = new System.Drawing.Point(18, 31);
             this.tbCliente.Name = "tbCliente";
+            this.tbCliente.ReadOnly = true;
             this.tbCliente.Size = new System.Drawing.Size(322, 20);
             this.tbCliente.TabIndex = 13;
             // 
@@ -115,10 +116,17 @@
             // 
             // grillaCuentas
             // 
+            this.grillaCuentas.AllowUserToAddRows = false;
+            this.grillaCuentas.AllowUserToDeleteRows = false;
+            this.grillaCuentas.AllowUserToResizeColumns = false;
+            this.grillaCuentas.AllowUserToResizeRows = false;
             this.grillaCuentas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.grillaCuentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grillaCuentas.Location = new System.Drawing.Point(12, 155);
+            this.grillaCuentas.MultiSelect = false;
             this.grillaCuentas.Name = "grillaCuentas";
+            this.grillaCuentas.ReadOnly = true;
+            this.grillaCuentas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grillaCuentas.Size = new System.Drawing.Size(479, 182);
             this.grillaCuentas.TabIndex = 20;
             // 

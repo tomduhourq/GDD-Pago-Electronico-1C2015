@@ -81,7 +81,7 @@ namespace PagoElectronico.Shared
             }
             catch (Exception exp)
             {
-                MessageBox.Show("No hay ningun cliente en ese lugar");
+                MessageBox.Show("No hay ningun cliente en ese lugar" + exp.ToString());
                 return;
             }
             string selectedID = row.Cells["ID"].Value.ToString();

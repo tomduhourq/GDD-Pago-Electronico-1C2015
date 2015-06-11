@@ -45,8 +45,9 @@
             // 
             this.tbNumeroDoc.Location = new System.Drawing.Point(15, 81);
             this.tbNumeroDoc.Name = "tbNumeroDoc";
-            this.tbNumeroDoc.Size = new System.Drawing.Size(100, 20);
-            this.tbNumeroDoc.TabIndex = 0;
+            this.tbNumeroDoc.Size = new System.Drawing.Size(138, 20);
+            this.tbNumeroDoc.TabIndex = 1;
+            this.tbNumeroDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbNumeroDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbNumeroDoc_KeyPress);
             // 
             // btnBuscar
@@ -54,7 +55,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(15, 215);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(138, 23);
-            this.btnBuscar.TabIndex = 1;
+            this.btnBuscar.TabIndex = 4;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
@@ -82,7 +83,7 @@
             this.tbNombre.Location = new System.Drawing.Point(15, 130);
             this.tbNombre.Name = "tbNombre";
             this.tbNombre.Size = new System.Drawing.Size(138, 20);
-            this.tbNombre.TabIndex = 3;
+            this.tbNombre.TabIndex = 2;
             // 
             // label3
             // 
@@ -98,7 +99,7 @@
             this.tbApellido.Location = new System.Drawing.Point(15, 181);
             this.tbApellido.Name = "tbApellido";
             this.tbApellido.Size = new System.Drawing.Size(138, 20);
-            this.tbApellido.TabIndex = 5;
+            this.tbApellido.TabIndex = 3;
             // 
             // label4
             // 
@@ -113,15 +114,23 @@
             // 
             this.tbNroCli.Location = new System.Drawing.Point(15, 35);
             this.tbNroCli.Name = "tbNroCli";
-            this.tbNroCli.Size = new System.Drawing.Size(100, 20);
-            this.tbNroCli.TabIndex = 7;
+            this.tbNroCli.Size = new System.Drawing.Size(138, 20);
+            this.tbNroCli.TabIndex = 0;
+            this.tbNroCli.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbNroCli.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbNroCli_KeyPress);
             // 
             // grillaClientes
             // 
+            this.grillaClientes.AllowUserToAddRows = false;
+            this.grillaClientes.AllowUserToDeleteRows = false;
+            this.grillaClientes.AllowUserToResizeColumns = false;
+            this.grillaClientes.AllowUserToResizeRows = false;
             this.grillaClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grillaClientes.Location = new System.Drawing.Point(167, 15);
+            this.grillaClientes.MultiSelect = false;
             this.grillaClientes.Name = "grillaClientes";
+            this.grillaClientes.ReadOnly = true;
+            this.grillaClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grillaClientes.Size = new System.Drawing.Size(385, 223);
             this.grillaClientes.TabIndex = 9;
             this.grillaClientes.DoubleClick += new System.EventHandler(this.grillaClientes_DoubleClick);

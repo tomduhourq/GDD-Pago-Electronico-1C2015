@@ -35,7 +35,7 @@ namespace PagoElectronico.Models.DAO
 
         public void delete(int Cuenta_id)
         {
-            DB.ExecuteNonQuery("DELETE FROM" + tabla + " WHERE id = @1", Cuenta_id);
+            DB.ExecuteNonQuery("DELETE FROM " + tabla + " WHERE id = @1", Cuenta_id);
         }
 
         public Cuenta retrieveBy_id(object _value)
@@ -46,6 +46,12 @@ namespace PagoElectronico.Models.DAO
         public List<Cuenta> retrieveBy_Cliente(object cliID)
         {
             return DB.ExecuteReader<Cuenta>("SELECT * FROM " + tabla + " WHERE cod_cli = @1", cliID);
+        }
+        // SELECT MAX(num_cuenta) FROM VIDA_ESTATICA.Cuenta
+
+        public long proximoNumeroDeCuenta()
+        {
+            return DB.ExecuteBigCardinal("SELECT MAX(num_cuenta) FROM "+ tabla) + 1;
         }
     }
 }

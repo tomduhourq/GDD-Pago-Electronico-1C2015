@@ -31,7 +31,7 @@ namespace PagoElectronico.ABM_Cuenta
             cli = _cli;
             tbCliente.Text = String.Format("{0} {1}", cli.nombre, cli.apellido);
             btnBuscarCli.Enabled = false;
-            updateGrilla(cli);
+            cargarGrilla(cli);
             activarABM(true);
         }
 
@@ -50,7 +50,7 @@ namespace PagoElectronico.ABM_Cuenta
             {
                 cli = buscadorCliente.getCliente();
                 tbCliente.Text = String.Format("{0} {1}", cli.nombre, cli.apellido);
-                updateGrilla(cli);
+                cargarGrilla(cli);
                 activarABM(true);
             }
         }
@@ -70,8 +70,15 @@ namespace PagoElectronico.ABM_Cuenta
 
         private void btnEliminarCuenta_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Esta seguro que quiere eliminar la cuenta Nro: " + 1 + "?",  //REHARDCODED
-                "Eliminar Cuenta",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Cuenta seleccionada = obtenerCuentaSeleccionada();
+            if (MessageBox.Show("Esta seguro que quiere eliminar la cuenta Nro: " + seleccionada.numCuenta + "?",  //REHARDCODED
+                "Eliminar Cuenta", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                new DAOCuenta().delete(1);
+                MessageBox.Show("La Cuenta " + seleccionada.numCuenta + " Fue Eliminada");
+            }
+
+            cargarGrilla(cli);
         }
 
         private void FormABMCuenta_Load(object sender, EventArgs e)
@@ -91,7 +98,7 @@ namespace PagoElectronico.ABM_Cuenta
             btnEliminarCuenta.Enabled = value;
         }
 
-        private void updateGrilla(Cliente cli)
+        private void cargarGrilla(Cliente cli)
         {
             cuentas = daoCuenta.retrieveBy_Cliente(cli.id);
 
@@ -125,6 +132,7 @@ namespace PagoElectronico.ABM_Cuenta
 
             grillaCuentas.DataSource = table;
             grillaCuentas.Columns[0].Visible = false;
+            grillaCuentas.Columns["Numero"].Width = 150;
 
         }
 

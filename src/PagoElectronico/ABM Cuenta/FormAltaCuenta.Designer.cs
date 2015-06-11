@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbEstado = new System.Windows.Forms.TextBox();
             this.lblEstado = new System.Windows.Forms.Label();
             this.dtFechaApertura = new System.Windows.Forms.DateTimePicker();
             this.tbNroCuenta = new System.Windows.Forms.TextBox();
@@ -44,19 +43,15 @@
             this.lblCliente = new System.Windows.Forms.Label();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
+            this.cbEstado = new System.Windows.Forms.ComboBox();
+            this.cbBanco = new System.Windows.Forms.ComboBox();
+            this.lblBanco = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // tbEstado
-            // 
-            this.tbEstado.Location = new System.Drawing.Point(161, 81);
-            this.tbEstado.Name = "tbEstado";
-            this.tbEstado.Size = new System.Drawing.Size(100, 20);
-            this.tbEstado.TabIndex = 23;
             // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(158, 64);
+            this.lblEstado.Location = new System.Drawing.Point(269, 85);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(40, 13);
             this.lblEstado.TabIndex = 24;
@@ -64,30 +59,33 @@
             // 
             // dtFechaApertura
             // 
-            this.dtFechaApertura.Location = new System.Drawing.Point(313, 129);
+            this.dtFechaApertura.Location = new System.Drawing.Point(311, 166);
             this.dtFechaApertura.Name = "dtFechaApertura";
-            this.dtFechaApertura.Size = new System.Drawing.Size(153, 20);
-            this.dtFechaApertura.TabIndex = 22;
+            this.dtFechaApertura.Size = new System.Drawing.Size(199, 20);
+            this.dtFechaApertura.TabIndex = 5;
             // 
             // tbNroCuenta
             // 
-            this.tbNroCuenta.Location = new System.Drawing.Point(37, 81);
+            this.tbNroCuenta.Location = new System.Drawing.Point(335, 34);
             this.tbNroCuenta.Name = "tbNroCuenta";
-            this.tbNroCuenta.Size = new System.Drawing.Size(100, 20);
+            this.tbNroCuenta.ReadOnly = true;
+            this.tbNroCuenta.Size = new System.Drawing.Size(151, 20);
             this.tbNroCuenta.TabIndex = 13;
+            this.tbNroCuenta.TabStop = false;
             // 
             // cbTipoCuenta
             // 
+            this.cbTipoCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoCuenta.FormattingEnabled = true;
-            this.cbTipoCuenta.Location = new System.Drawing.Point(312, 170);
+            this.cbTipoCuenta.Location = new System.Drawing.Point(345, 120);
             this.cbTipoCuenta.Name = "cbTipoCuenta";
-            this.cbTipoCuenta.Size = new System.Drawing.Size(154, 21);
-            this.cbTipoCuenta.TabIndex = 21;
+            this.cbTipoCuenta.Size = new System.Drawing.Size(165, 21);
+            this.cbTipoCuenta.TabIndex = 3;
             // 
             // lblNroCuenta
             // 
             this.lblNroCuenta.AutoSize = true;
-            this.lblNroCuenta.Location = new System.Drawing.Point(34, 64);
+            this.lblNroCuenta.Location = new System.Drawing.Point(332, 18);
             this.lblNroCuenta.Name = "lblNroCuenta";
             this.lblNroCuenta.Size = new System.Drawing.Size(81, 13);
             this.lblNroCuenta.TabIndex = 14;
@@ -95,24 +93,26 @@
             // 
             // cbMoneda
             // 
+            this.cbMoneda.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMoneda.FormattingEnabled = true;
-            this.cbMoneda.Location = new System.Drawing.Point(86, 170);
+            this.cbMoneda.Location = new System.Drawing.Point(71, 123);
             this.cbMoneda.Name = "cbMoneda";
-            this.cbMoneda.Size = new System.Drawing.Size(121, 21);
-            this.cbMoneda.TabIndex = 20;
+            this.cbMoneda.Size = new System.Drawing.Size(162, 21);
+            this.cbMoneda.TabIndex = 2;
             // 
             // cbPais
             // 
+            this.cbPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPais.FormattingEnabled = true;
-            this.cbPais.Location = new System.Drawing.Point(86, 129);
+            this.cbPais.Location = new System.Drawing.Point(71, 82);
             this.cbPais.Name = "cbPais";
-            this.cbPais.Size = new System.Drawing.Size(121, 21);
-            this.cbPais.TabIndex = 19;
+            this.cbPais.Size = new System.Drawing.Size(162, 21);
+            this.cbPais.TabIndex = 0;
             // 
             // lblFechaApertura
             // 
             this.lblFechaApertura.AutoSize = true;
-            this.lblFechaApertura.Location = new System.Drawing.Point(226, 132);
+            this.lblFechaApertura.Location = new System.Drawing.Point(224, 168);
             this.lblFechaApertura.Name = "lblFechaApertura";
             this.lblFechaApertura.Size = new System.Drawing.Size(80, 13);
             this.lblFechaApertura.TabIndex = 18;
@@ -121,7 +121,7 @@
             // lblTipoCuenta
             // 
             this.lblTipoCuenta.AutoSize = true;
-            this.lblTipoCuenta.Location = new System.Drawing.Point(226, 173);
+            this.lblTipoCuenta.Location = new System.Drawing.Point(269, 123);
             this.lblTipoCuenta.Name = "lblTipoCuenta";
             this.lblTipoCuenta.Size = new System.Drawing.Size(65, 13);
             this.lblTipoCuenta.TabIndex = 17;
@@ -130,7 +130,7 @@
             // lblMoneda
             // 
             this.lblMoneda.AutoSize = true;
-            this.lblMoneda.Location = new System.Drawing.Point(34, 173);
+            this.lblMoneda.Location = new System.Drawing.Point(19, 126);
             this.lblMoneda.Name = "lblMoneda";
             this.lblMoneda.Size = new System.Drawing.Size(46, 13);
             this.lblMoneda.TabIndex = 16;
@@ -139,7 +139,7 @@
             // lblPais
             // 
             this.lblPais.AutoSize = true;
-            this.lblPais.Location = new System.Drawing.Point(34, 132);
+            this.lblPais.Location = new System.Drawing.Point(19, 85);
             this.lblPais.Name = "lblPais";
             this.lblPais.Size = new System.Drawing.Size(27, 13);
             this.lblPais.TabIndex = 15;
@@ -147,15 +147,17 @@
             // 
             // tbCliente
             // 
-            this.tbCliente.Location = new System.Drawing.Point(89, 21);
+            this.tbCliente.Location = new System.Drawing.Point(22, 34);
             this.tbCliente.Name = "tbCliente";
-            this.tbCliente.Size = new System.Drawing.Size(363, 20);
+            this.tbCliente.ReadOnly = true;
+            this.tbCliente.Size = new System.Drawing.Size(270, 20);
             this.tbCliente.TabIndex = 25;
+            this.tbCliente.TabStop = false;
             // 
             // lblCliente
             // 
             this.lblCliente.AutoSize = true;
-            this.lblCliente.Location = new System.Drawing.Point(34, 24);
+            this.lblCliente.Location = new System.Drawing.Point(26, 18);
             this.lblCliente.Name = "lblCliente";
             this.lblCliente.Size = new System.Drawing.Size(39, 13);
             this.lblCliente.TabIndex = 26;
@@ -163,34 +165,63 @@
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(300, 214);
+            this.btnCerrar.Location = new System.Drawing.Point(344, 208);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
-            this.btnCerrar.TabIndex = 27;
+            this.btnCerrar.TabIndex = 7;
             this.btnCerrar.Text = "Cancelar";
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(391, 214);
+            this.btnGuardar.Location = new System.Drawing.Point(435, 208);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
-            this.btnGuardar.TabIndex = 28;
+            this.btnGuardar.TabIndex = 6;
             this.btnGuardar.Text = "Crear";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // 
+            // cbEstado
+            // 
+            this.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEstado.FormattingEnabled = true;
+            this.cbEstado.Location = new System.Drawing.Point(345, 82);
+            this.cbEstado.Name = "cbEstado";
+            this.cbEstado.Size = new System.Drawing.Size(165, 21);
+            this.cbEstado.TabIndex = 1;
+            // 
+            // cbBanco
+            // 
+            this.cbBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBanco.FormattingEnabled = true;
+            this.cbBanco.Location = new System.Drawing.Point(71, 165);
+            this.cbBanco.Name = "cbBanco";
+            this.cbBanco.Size = new System.Drawing.Size(133, 21);
+            this.cbBanco.TabIndex = 4;
+            // 
+            // lblBanco
+            // 
+            this.lblBanco.AutoSize = true;
+            this.lblBanco.Location = new System.Drawing.Point(19, 168);
+            this.lblBanco.Name = "lblBanco";
+            this.lblBanco.Size = new System.Drawing.Size(38, 13);
+            this.lblBanco.TabIndex = 31;
+            this.lblBanco.Text = "Banco";
             // 
             // FormAltaCuenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 249);
+            this.ClientSize = new System.Drawing.Size(532, 245);
+            this.Controls.Add(this.lblBanco);
+            this.Controls.Add(this.cbBanco);
+            this.Controls.Add(this.cbEstado);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.tbCliente);
             this.Controls.Add(this.lblCliente);
-            this.Controls.Add(this.tbEstado);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.dtFechaApertura);
             this.Controls.Add(this.tbNroCuenta);
@@ -213,7 +244,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox tbEstado;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.DateTimePicker dtFechaApertura;
         private System.Windows.Forms.TextBox tbNroCuenta;
@@ -229,5 +259,8 @@
         private System.Windows.Forms.Label lblCliente;
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.ComboBox cbEstado;
+        private System.Windows.Forms.ComboBox cbBanco;
+        private System.Windows.Forms.Label lblBanco;
     }
 }

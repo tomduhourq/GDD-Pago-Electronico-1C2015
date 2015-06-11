@@ -66,5 +66,10 @@ namespace PagoElectronico.Models.BO
         {
             return base.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return this.descripcion;
+        }
     }
 }
