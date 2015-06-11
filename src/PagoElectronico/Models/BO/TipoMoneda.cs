@@ -8,18 +8,18 @@ using System.Collections.Generic;
 using PagoElectronico.Models.DAO;
 
 namespace PagoElectronico.Models.BO {
-    public partial class TipoMoneda : IBO<TipoMoneda>{
+    public partial class Moneda : IBO<Moneda>{
 		
-        public TipoMoneda() {}
+        public Moneda() {}
 
-        public TipoMoneda(DataRow dr) {
+        public Moneda(DataRow dr) {
             initialize(dr);
         }
 		
         public int? id {get; set;}
         public string descripcion {get; set;}
 		
-        public TipoMoneda initialize(DataRow _dr) {
+        public Moneda initialize(DataRow _dr) {
 			
 			dr = _dr;
             DataColumnCollection dcc = dr.Table.Columns;
@@ -34,7 +34,7 @@ namespace PagoElectronico.Models.BO {
 		
         private DataRow dr;
 		
-		public TipoMoneda setData(DataRow dr) {
+		public Moneda setData(DataRow dr) {
             initialize(dr);
 			
 			return this;
@@ -48,7 +48,7 @@ namespace PagoElectronico.Models.BO {
             if (obj == null)
                 return false;
 
-            TipoMoneda aux = obj as TipoMoneda;
+            Moneda aux = obj as Moneda;
             if ((object)aux == null)
                 return false;
 

@@ -8,22 +8,22 @@ using PagoElectronico.Models.BO;
 using PagoElectronico.Models.Utils;
 
 namespace PagoElectronico.Models.DAO {
-    public partial class DAOMoneda: DAOBase<TipoMoneda> {
+    public partial class DAOMoneda: DAOBase<Moneda> {
         public DAOMoneda()
             : base("VIDA_ESTATICA.Moneda", "id") {
         }
 
-        public TipoMoneda update(TipoMoneda _Moneda)
+        public Moneda update(Moneda _Moneda)
         {
 			DB.ExecuteNonQuery("UPDATE"); 
-			return DB.ExecuteReaderSingle<TipoMoneda>("SELECT * FROM Moneda WHERE id = @1", _Moneda.id);
+			return DB.ExecuteReaderSingle<Moneda>("SELECT * FROM Moneda WHERE id = @1", _Moneda.id);
         }
 
-        public TipoMoneda create(TipoMoneda _Moneda)
+        public Moneda create(Moneda _Moneda)
         {
             if (_Moneda.id == null || !_Moneda.id.HasValue) {
                 int id = DB.ExecuteCastable<int>("INSERT INTO Moneda () values (); SELECT SCOPE_IDENTITY();"); //FIXIT
-                return DB.ExecuteReaderSingle<TipoMoneda>("SELECT * FROM Moneda WHERE id = @1", id);
+                return DB.ExecuteReaderSingle<Moneda>("SELECT * FROM Moneda WHERE id = @1", id);
 			} else
 				return update(_Moneda);
         }
@@ -32,9 +32,9 @@ namespace PagoElectronico.Models.DAO {
 			DB.ExecuteNonQuery("DELETE FROM" + tabla + " WHERE tipo = @1", Moneda_id);
         }
         
-        public TipoMoneda retrieveBy_id(object _value)
+        public Moneda retrieveBy_id(object _value)
         {
-            return DB.ExecuteReaderSingle<TipoMoneda>("SELECT * FROM " + tabla + " WHERE tipo = @1", _value);
+            return DB.ExecuteReaderSingle<Moneda>("SELECT * FROM " + tabla + " WHERE tipo = @1", _value);
 		}
     }
 }

@@ -31,11 +31,13 @@
             this.lblSeleccionRol = new System.Windows.Forms.Label();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.groupAdmin = new System.Windows.Forms.GroupBox();
+            this.btnABMCuentas = new System.Windows.Forms.Button();
             this.btnABMCliente = new System.Windows.Forms.Button();
             this.btnABMRol = new System.Windows.Forms.Button();
             this.groupCliente = new System.Windows.Forms.GroupBox();
-            this.btnABMCuentas = new System.Windows.Forms.Button();
+            this.btnDepositos = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
+            this.groupCliente.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSeleccionRol
@@ -50,6 +52,7 @@
             // 
             // cmbRol
             // 
+            this.cmbRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRol.FormattingEnabled = true;
             this.cmbRol.Location = new System.Drawing.Point(61, 10);
             this.cmbRol.Name = "cmbRol";
@@ -70,6 +73,16 @@
             this.groupAdmin.TabStop = false;
             this.groupAdmin.Text = "Funciones Administrador";
             this.groupAdmin.Visible = false;
+            // 
+            // btnABMCuentas
+            // 
+            this.btnABMCuentas.Location = new System.Drawing.Point(169, 20);
+            this.btnABMCuentas.Name = "btnABMCuentas";
+            this.btnABMCuentas.Size = new System.Drawing.Size(75, 23);
+            this.btnABMCuentas.TabIndex = 2;
+            this.btnABMCuentas.Text = "ABM Cuenta";
+            this.btnABMCuentas.UseVisualStyleBackColor = true;
+            this.btnABMCuentas.Click += new System.EventHandler(this.btnABMCuentas_Click);
             // 
             // btnABMCliente
             // 
@@ -93,6 +106,7 @@
             // 
             // groupCliente
             // 
+            this.groupCliente.Controls.Add(this.btnDepositos);
             this.groupCliente.Location = new System.Drawing.Point(16, 138);
             this.groupCliente.Name = "groupCliente";
             this.groupCliente.Size = new System.Drawing.Size(470, 100);
@@ -101,17 +115,17 @@
             this.groupCliente.Text = "Funciones Cliente";
             this.groupCliente.Visible = false;
             // 
-            // btnABMCuentas
+            // btnDepositos
             // 
-            this.btnABMCuentas.Location = new System.Drawing.Point(169, 20);
-            this.btnABMCuentas.Name = "btnABMCuentas";
-            this.btnABMCuentas.Size = new System.Drawing.Size(75, 23);
-            this.btnABMCuentas.TabIndex = 2;
-            this.btnABMCuentas.Text = "ABM Cuenta";
-            this.btnABMCuentas.UseVisualStyleBackColor = true;
-            this.btnABMCuentas.Click += new System.EventHandler(this.btnABMCuentas_Click);
+            this.btnDepositos.Location = new System.Drawing.Point(7, 20);
+            this.btnDepositos.Name = "btnDepositos";
+            this.btnDepositos.Size = new System.Drawing.Size(75, 23);
+            this.btnDepositos.TabIndex = 0;
+            this.btnDepositos.Text = "Depósitos";
+            this.btnDepositos.UseVisualStyleBackColor = true;
+            this.btnDepositos.Click += new System.EventHandler(this.btnDepositos_Click);
             // 
-            // frmPrincipal
+            // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -120,11 +134,12 @@
             this.Controls.Add(this.groupAdmin);
             this.Controls.Add(this.cmbRol);
             this.Controls.Add(this.lblSeleccionRol);
-            this.Name = "frmPrincipal";
+            this.Name = "FormPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Selección de Funcionalidad";
             this.Load += new System.EventHandler(this.frmPrincipal_Load_1);
             this.groupAdmin.ResumeLayout(false);
+            this.groupCliente.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,5 +154,6 @@
         private System.Windows.Forms.Button btnABMRol;
         private System.Windows.Forms.Button btnABMCliente;
         private System.Windows.Forms.Button btnABMCuentas;
+        private System.Windows.Forms.Button btnDepositos;
     }
 }

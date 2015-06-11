@@ -12,6 +12,8 @@ using PagoElectronico.Models.BO;
 using PagoElectronico.ABM_Rol;
 using PagoElectronico.ABM_Cliente;
 using PagoElectronico.ABM_Cuenta;
+using PagoElectronico.Models.DAO;
+using PagoElectronico.Depositos;
 
 namespace PagoElectronico
 {
@@ -74,6 +76,13 @@ namespace PagoElectronico
         {
             FormABMCuenta frmCuentas = new FormABMCuenta();
             frmCuentas.Show();
+        }
+
+        private void btnDepositos_Click(object sender, EventArgs e)
+        {
+            DAOCliente dao = new DAOCliente();
+            FormDepositos frmDepo = new FormDepositos(dao.retrieveBy_user(user.Name));
+            frmDepo.Show();
         }
 
    

@@ -108,6 +108,7 @@
     <Compile Include="Models\BO\EstadoCuenta.cs" />
     <Compile Include="Models\BO\Funcionalidad.cs" />
     <Compile Include="Models\BO\Rol.cs" />
+    <Compile Include="Models\BO\Tarjeta.cs" />
     <Compile Include="Models\BO\TipoCuenta.cs" />
     <Compile Include="Models\BO\TipoDocumento.cs" />
     <Compile Include="Models\BO\TipoMoneda.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Models\DAO\DAOMoneda.cs" />
     <Compile Include="Models\DAO\DAOPais.cs" />
     <Compile Include="Models\DAO\DAORol.cs" />
+    <Compile Include="Models\DAO\DAOTarjeta.cs" />
     <Compile Include="Models\DAO\DAOTipo_Cuenta.cs" />
     <Compile Include="Models\DAO\DAOTipo_Documento.cs" />
     <Compile Include="Models\DataBase\DBAcess.cs" />

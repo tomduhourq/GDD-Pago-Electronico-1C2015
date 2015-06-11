@@ -38,6 +38,11 @@ namespace PagoElectronico.Models.DAO
             DB.ExecuteNonQuery("DELETE FROM" + tabla + " WHERE id = @1", Cuenta_id);
         }
 
+        public List<Cuenta> retrieveByClientId(object _value)
+        {
+            return DB.ExecuteReader<Cuenta>("SELECT * FROM " + tabla + " WHERE id = @1", _value);
+        }
+
         public Cuenta retrieveBy_id(object _value)
         {
             return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM " + tabla + " WHERE id = @1", _value);

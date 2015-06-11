@@ -21,6 +21,11 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Rol_Usuario;
 END;
 
+IF OBJECT_ID('VIDA_ESTATICA.Cliente') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Cliente;
+END;
+
 IF OBJECT_ID('VIDA_ESTATICA.Usuario') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Usuario;
@@ -61,13 +66,6 @@ IF OBJECT_ID('VIDA_ESTATICA.Cuenta') IS NOT NULL
 BEGIN
 	DROP TABLE VIDA_ESTATICA.Cuenta;
 END;
-
-IF OBJECT_ID('VIDA_ESTATICA.Cliente') IS NOT NULL
-BEGIN
-	DROP TABLE VIDA_ESTATICA.Cliente;
-END;
-
-
 
 IF OBJECT_ID('VIDA_ESTATICA.Estado_Cuenta') IS NOT NULL
 BEGIN
@@ -226,9 +224,11 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	mail varchar(50) NOT NULL,
 	nacionalidad numeric(18,0),
 	tipo_documento numeric(18,0),
+	usuario varchar(25),
 	PRIMARY KEY (id),
 	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id),
-	FOREIGN KEY (tipo_documento) REFERENCES VIDA_ESTATICA.Tipo_Documento(id)
+	FOREIGN KEY (tipo_documento) REFERENCES VIDA_ESTATICA.Tipo_Documento(id),
+	FOREIGN KEY (usuario) REFERENCES VIDA_ESTATICA.Usuario(name)
 )
 
 CREATE TABLE VIDA_ESTATICA.Cuenta(
@@ -256,7 +256,6 @@ CREATE TABLE VIDA_ESTATICA.Emisor(
 	nombre varchar(40) NOT NULL,
 	PRIMARY KEY(id)
 )
-
 
 CREATE TABLE VIDA_ESTATICA.Tarjeta(
 	id numeric(18,0) IDENTITY NOT NULL,
@@ -378,6 +377,13 @@ INSERT INTO VIDA_ESTATICA.Emisor
 SELECT DISTINCT Tarjeta_Emisor_Descripcion
 FROM gd_esquema.Maestra where(Tarjeta_Emisor_Descripcion is not null)
 
+INSERT INTO VIDA_ESTATICA.Tarjeta 
+SELECT DISTINCT Tarjeta_Numero, Tarjeta_Fecha_Emision, Tarjeta_Fecha_Vencimiento, Tarjeta_Codigo_Seg,
+e.id, NULL, NULL
+FROM gd_esquema.Maestra m
+INNER JOIN VIDA_ESTATICA.Emisor e
+ON m.Tarjeta_Emisor_Descripcion = e.nombre;
+
 INSERT INTO VIDA_ESTATICA.Moneda(descripcion) Values('Dolar');
 
 INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
@@ -388,8 +394,16 @@ INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
 
 INSERT INTO VIDA_ESTATICA.Cliente
 SELECT DISTINCT Cli_Nombre, Cli_Apellido, Cli_Nro_Doc, Cli_Dom_Calle,Cli_Dom_Nro,Cli_Dom_Piso,
-Cli_Dom_Depto,Cli_Fecha_Nac,Cli_Mail,Cli_Pais_Codigo, Cli_Tipo_Doc_Cod
+Cli_Dom_Depto,Cli_Fecha_Nac,Cli_Mail,Cli_Pais_Codigo, Cli_Tipo_Doc_Cod, NULL
 FROM [GD1C2015].[gd_esquema].[Maestra]
+
+UPDATE VIDA_ESTATICA.Cliente
+SET usuario = 'admin'
+WHERE id = 1;
+
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cuenta = 1
+WHERE id IN (1,2,3,4);
 
 INSERT INTO VIDA_ESTATICA.Cuenta
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
