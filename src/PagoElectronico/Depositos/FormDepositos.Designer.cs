@@ -34,7 +34,7 @@
             this.txtImporte = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbMoneda = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblTarjeta = new System.Windows.Forms.Label();
             this.cmbTarjeta = new System.Windows.Forms.ComboBox();
             this.btnDepositar = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
@@ -51,6 +51,7 @@
             // 
             // cmbCuenta
             // 
+            this.cmbCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCuenta.FormattingEnabled = true;
             this.cmbCuenta.Location = new System.Drawing.Point(16, 39);
             this.cmbCuenta.Name = "cmbCuenta";
@@ -85,23 +86,25 @@
             // 
             // cmbMoneda
             // 
+            this.cmbMoneda.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMoneda.FormattingEnabled = true;
             this.cmbMoneda.Location = new System.Drawing.Point(68, 112);
             this.cmbMoneda.Name = "cmbMoneda";
             this.cmbMoneda.Size = new System.Drawing.Size(123, 21);
             this.cmbMoneda.TabIndex = 5;
             // 
-            // label4
+            // lblTarjeta
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 148);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Tarjeta";
+            this.lblTarjeta.AutoSize = true;
+            this.lblTarjeta.Location = new System.Drawing.Point(16, 148);
+            this.lblTarjeta.Name = "lblTarjeta";
+            this.lblTarjeta.Size = new System.Drawing.Size(40, 13);
+            this.lblTarjeta.TabIndex = 6;
+            this.lblTarjeta.Text = "Tarjeta";
             // 
             // cmbTarjeta
             // 
+            this.cmbTarjeta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarjeta.FormattingEnabled = true;
             this.cmbTarjeta.Location = new System.Drawing.Point(68, 145);
             this.cmbTarjeta.Name = "cmbTarjeta";
@@ -127,7 +130,7 @@
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
-            // frmDepositos
+            // FormDepositos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -135,16 +138,17 @@
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.btnDepositar);
             this.Controls.Add(this.cmbTarjeta);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblTarjeta);
             this.Controls.Add(this.cmbMoneda);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtImporte);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbCuenta);
             this.Controls.Add(this.label1);
-            this.Name = "frmDepositos";
+            this.Name = "FormDepositos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Depósitos";
+            this.Load += new System.EventHandler(this.FormDepositos_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,7 +162,7 @@
         private System.Windows.Forms.TextBox txtImporte;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbMoneda;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblTarjeta;
         private System.Windows.Forms.ComboBox cmbTarjeta;
         private System.Windows.Forms.Button btnDepositar;
         private System.Windows.Forms.Button btnCerrar;

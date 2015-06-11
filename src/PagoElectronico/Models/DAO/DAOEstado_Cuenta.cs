@@ -11,6 +11,7 @@ namespace PagoElectronico.Models.DAO
 {
     public partial class DAOEstadoCuenta : DAOBase<EstadoCuenta>
     {
+        private static string HABILITADA = "Habilitada";
         public DAOEstadoCuenta()
             : base("VIDA_ESTATICA.Estado_Cuenta", "id")
         {
@@ -41,7 +42,10 @@ namespace PagoElectronico.Models.DAO
         {
 
             return DB.ExecuteReaderSingle<EstadoCuenta>("SELECT * FROM " + tabla + " WHERE id = @1", _value);
+        }
 
+        public EstadoCuenta habilitado() {
+            return DB.ExecuteReaderSingle<EstadoCuenta>("SELECT * FROM " + tabla +" WHERE descripcion = @1", HABILITADA);
         }
     }
 }

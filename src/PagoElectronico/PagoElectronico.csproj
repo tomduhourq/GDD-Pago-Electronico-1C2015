@@ -85,6 +85,12 @@
     <Compile Include="ABM Cliente\FormABMCliente.Designer.cs">
       <DependentUpon>FormABMCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Cliente\FormAltaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Cliente\FormAltaCliente.Designer.cs">
+      <DependentUpon>FormAltaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Cuenta\FormABMCuenta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,7 +139,9 @@
     <Compile Include="Models\BO\EstadoCuenta.cs" />
     <Compile Include="Models\BO\Funcionalidad.cs" />
     <Compile Include="Models\BO\Rol.cs" />
+    <Compile Include="Models\BO\Tarjeta.cs" />
     <Compile Include="Models\BO\TipoCuenta.cs" />
+    <Compile Include="Models\BO\TipoDocumento.cs" />
     <Compile Include="Models\BO\TipoMoneda.cs" />
     <Compile Include="Models\BO\IBO.cs" />
     <Compile Include="Models\BO\Pais.cs" />
@@ -146,7 +154,9 @@
     <Compile Include="Models\DAO\DAOMoneda.cs" />
     <Compile Include="Models\DAO\DAOPais.cs" />
     <Compile Include="Models\DAO\DAORol.cs" />
+    <Compile Include="Models\DAO\DAOTarjeta.cs" />
     <Compile Include="Models\DAO\DAOTipo_Cuenta.cs" />
+    <Compile Include="Models\DAO\DAOTipo_Documento.cs" />
     <Compile Include="Models\DataBase\DBAcess.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Utils\DB.cs" />
@@ -156,6 +166,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM Cliente\FormABMCliente.resx">
       <DependentUpon>FormABMCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Cliente\FormAltaCliente.resx">
+      <DependentUpon>FormAltaCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Cuenta\FormABMCuenta.resx">
       <DependentUpon>FormABMCuenta.cs</DependentUpon>

@@ -76,5 +76,10 @@ namespace PagoElectronico.Models.DAO
             return DB.ExecuteReader<Cliente>(baseQuery);
         }
 
+
+        public Cliente retrieveBy_user(string userId)
+        {
+            return DB.ExecuteReaderSingle<Cliente>("SELECT * FROM " + tabla + " WHERE usuario = @1", userId);
+        }
     }
 }

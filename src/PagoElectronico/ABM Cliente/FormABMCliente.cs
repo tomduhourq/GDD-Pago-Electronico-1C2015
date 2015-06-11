@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using PagoElectronico.Models.BO;
 
 namespace PagoElectronico.ABM_Cliente
 {
@@ -16,8 +17,24 @@ namespace PagoElectronico.ABM_Cliente
             InitializeComponent();
         }
 
+        private List<TipoDocumento> lstTipos = new List<TipoDocumento>();
+
         private void frmABMCliente_Load(object sender, EventArgs e)
         {
+            lstTipos = TipoDocumento.ObtenerTiposDocumento();
+
+            if (lstTipos.Count > 0)
+            {
+                cmbTipoID.Visible = true;
+
+                cmbTipoID.DataSource = lstTipos;
+                cmbTipoID.DisplayMember = "descripcion";
+                cmbTipoID.ValueMember = "id";
+                Console.ReadLine();
+            } else {
+
+            }
+
             dtgCliente.AutoGenerateColumns = false;
             dtgCliente.MultiSelect = false;
         }

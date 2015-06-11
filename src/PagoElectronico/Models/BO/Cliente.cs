@@ -30,8 +30,8 @@ namespace PagoElectronico.Models.BO
         public int? dom_pais { get; set; }
         public string mail { get; set; }
         public int? nacionalidad { get; set; }
-        public int? cuenta { get; set; }
-        public int? banco { get; set; }
+        public string usuario { get; set; }
+        
 
         public Cliente initialize(DataRow _dr)
         {
@@ -61,10 +61,8 @@ namespace PagoElectronico.Models.BO
                 mail = (dr["mail"] == DBNull.Value) ? null : dr["mail"].ToString();
             if (dcc.Contains("nacionalidad"))
                 nacionalidad = (dr["nacionalidad"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["nacionalidad"]);
-            if (dcc.Contains("cuenta"))
-                cuenta = (dr["cuenta"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cuenta"]);
-            if (dcc.Contains("banco"))
-                banco = (dr["banco"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["banco"]);
+            if (dcc.Contains("usuario"))
+                usuario = (dr["usuario"] == DBNull.Value) ? null : dr["usuario"].ToString();
 
 
             return this;
