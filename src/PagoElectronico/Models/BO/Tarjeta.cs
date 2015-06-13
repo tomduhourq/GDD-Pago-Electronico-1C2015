@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using PagoElectronico.Models.DAO;
 
 namespace PagoElectronico.Models.BO
 {
@@ -18,10 +19,21 @@ namespace PagoElectronico.Models.BO
         public DateTime? fecha_vencimiento {get; set; }
         public int? cod_seguridad {get; set; }
         public int? emisor {get; set; }
-        public int? cuenta {get; set; }
         public int? cod_banco {get; set;}
+        public int? cli_cod { get; set; }
 
         private DataRow dr;
+
+        // Data de visualización
+        public string Visualize { get { return ShowLastFourDigits() + " - " + tEmisor.nombre + " - " + banco.nombre; } }
+
+        private string ShowLastFourDigits()
+        {
+            return "*" + numero.ToString().Substring(numero.ToString().Length - 4);
+        }
+
+        public Banco banco { get; set; }
+        public Emisor tEmisor { get; set; }
 
         public Tarjeta initialize(DataRow _dr)
         {
@@ -40,10 +52,16 @@ namespace PagoElectronico.Models.BO
                 cod_seguridad = (dr["cod_seguridad"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cod_seguridad"]);
             if (dcc.Contains("emisor"))
                 emisor = (dr["emisor"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["emisor"]);
-            if (dcc.Contains("cuenta"))
-                cuenta = (dr["cuenta"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cuenta"]);
-            if (dcc.Contains("banco"))
-               cod_banco = (dr["banco"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["banco"]);
+            if (dcc.Contains("cod_banco"))
+               cod_banco = (dr["cod_banco"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cod_banco"]);
+            if (dcc.Contains("cli_cod"))
+                cli_cod = (dr["cli_cod"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cli_cod"]);
+
+            // Popular banco y emisor
+            DAOBanco daoBanco = new DAOBanco();
+            DAOEmisor daoEmisor = new DAOEmisor();
+            banco = daoBanco.retrieveBy_id(cod_banco);
+            tEmisor = daoEmisor.retrieveBy_id(emisor);
             return this;
         }
 

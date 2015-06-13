@@ -53,9 +53,9 @@
             // 
             this.cmbCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCuenta.FormattingEnabled = true;
-            this.cmbCuenta.Location = new System.Drawing.Point(16, 39);
+            this.cmbCuenta.Location = new System.Drawing.Point(12, 38);
             this.cmbCuenta.Name = "cmbCuenta";
-            this.cmbCuenta.Size = new System.Drawing.Size(175, 21);
+            this.cmbCuenta.Size = new System.Drawing.Size(277, 21);
             this.cmbCuenta.TabIndex = 1;
             // 
             // label2
@@ -71,7 +71,7 @@
             // 
             this.txtImporte.Location = new System.Drawing.Point(61, 74);
             this.txtImporte.Name = "txtImporte";
-            this.txtImporte.Size = new System.Drawing.Size(130, 20);
+            this.txtImporte.Size = new System.Drawing.Size(228, 20);
             this.txtImporte.TabIndex = 3;
             this.txtImporte.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtImporte_KeyPress);
             // 
@@ -90,7 +90,7 @@
             this.cmbMoneda.FormattingEnabled = true;
             this.cmbMoneda.Location = new System.Drawing.Point(68, 112);
             this.cmbMoneda.Name = "cmbMoneda";
-            this.cmbMoneda.Size = new System.Drawing.Size(123, 21);
+            this.cmbMoneda.Size = new System.Drawing.Size(221, 21);
             this.cmbMoneda.TabIndex = 5;
             // 
             // lblTarjeta
@@ -108,21 +108,22 @@
             this.cmbTarjeta.FormattingEnabled = true;
             this.cmbTarjeta.Location = new System.Drawing.Point(68, 145);
             this.cmbTarjeta.Name = "cmbTarjeta";
-            this.cmbTarjeta.Size = new System.Drawing.Size(123, 21);
+            this.cmbTarjeta.Size = new System.Drawing.Size(221, 21);
             this.cmbTarjeta.TabIndex = 7;
             // 
             // btnDepositar
             // 
-            this.btnDepositar.Location = new System.Drawing.Point(12, 181);
+            this.btnDepositar.Location = new System.Drawing.Point(110, 181);
             this.btnDepositar.Name = "btnDepositar";
             this.btnDepositar.Size = new System.Drawing.Size(83, 23);
             this.btnDepositar.TabIndex = 8;
             this.btnDepositar.Text = "Depositar";
             this.btnDepositar.UseVisualStyleBackColor = true;
+            this.btnDepositar.Click += new System.EventHandler(this.btnDepositar_Click);
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(101, 181);
+            this.btnCerrar.Location = new System.Drawing.Point(199, 181);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(90, 23);
             this.btnCerrar.TabIndex = 9;
@@ -134,7 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(200, 216);
+            this.ClientSize = new System.Drawing.Size(301, 216);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.btnDepositar);
             this.Controls.Add(this.cmbTarjeta);

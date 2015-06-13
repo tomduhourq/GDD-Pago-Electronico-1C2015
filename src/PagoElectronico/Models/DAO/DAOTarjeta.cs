@@ -11,8 +11,9 @@ namespace PagoElectronico.Models.DAO
     {
         public DAOTarjeta()
             : base("VIDA_ESTATICA.Tarjeta", "id") { }
+
         public List<Tarjeta> retrieveByClientId(object val) {
-            return DB.ExecuteReader<Tarjeta>("SELECT * FROM "+ tabla +" WHERE id = @1", val);
+            return DB.ExecuteReader<Tarjeta>("SELECT * FROM "+ tabla +" WHERE cod_cli = @1", val);
         }
     }
 }

@@ -15,30 +15,28 @@ namespace PagoElectronico.Depositos
     public partial class FormDepositos : Form
     {
         private Cliente cliente { get; set; }
+        private double importe { get; set; }
         private List<Cuenta> cuentas { get; set; }
-        private List<Tarjeta> tarjetas { get; set; }
         private List<Moneda> monedas { get; set; }
+        private List<Tarjeta> tarjetas { get; set; }
         private DAOTarjeta daoTarjeta = new DAOTarjeta();
         private DAOCuenta daoCuenta = new DAOCuenta();
         private DAOMoneda daoMoneda = new DAOMoneda();
         private DAOEstadoCuenta daoEstado = new DAOEstadoCuenta();
+        private DAODeposito daoDeposito = new DAODeposito();
 
         public FormDepositos(Cliente cli)
         {
             cliente = cli;
+            // Traer cuentas validadas para este cliente. Si no hay habilitadas, cerrar el form.
             cuentas = daoCuenta
-                      .retrieveByClientId(cliente.id)
-                      .FindAll(cuenta => 
-                          cuenta.estado == daoEstado.habilitado().id);
+                .retrieveByClientId(cliente.id)
+                .FindAll(cuenta => cuenta.estado == daoEstado.habilitado().id);
+            tarjetas = daoTarjeta
+                .retrieveByClientId(cliente.id)
+                .FindAll(t => t.fecha_vencimiento < DateTime.Now);
             ValidarHabilitadas();
             InitializeComponent();
-            DeshabilitarTarjetas();
-        }
-
-        private void DeshabilitarTarjetas()
-        {
-            lblTarjeta.Visible = false;
-            cmbTarjeta.Visible = false;
         }
 
         private void ValidarHabilitadas()
@@ -48,16 +46,25 @@ namespace PagoElectronico.Depositos
                 MessageBox.Show("No posee cuentas habilitadas, esta ventana se cerrará");
                 this.Close();
             }
+
+            if(tarjetas.Count() == 0)
+            {
+                MessageBox.Show("No posee tarjetas vigentes, esta ventana se cerrará");
+                this.Close();
+            }
         }
 
         private void FormDepositos_Load(object sender, EventArgs e)
         {
-            // Traer cuentas y para la que seleccione traer la/s tarjetas asociadas
-            tarjetas = daoTarjeta.retrieveByClientId(cliente.id);
+            // Popular combos
             monedas = daoMoneda.retrieveBase();
 
+            cmbTarjeta.DataSource = tarjetas;
+                cmbTarjeta.DisplayMember = "Visualize";
+            cmbTarjeta.ValueMember = "id";
+
             cmbCuenta.DataSource = cuentas;
-            cmbCuenta.DisplayMember = "numCuenta";
+            cmbCuenta.DisplayMember = "Visualize";
             cmbCuenta.ValueMember = "id";
 
             cmbMoneda.DataSource = monedas;
@@ -70,7 +77,7 @@ namespace PagoElectronico.Depositos
             char keypress = e.KeyChar;
             if (!Utils.isNumeric(keypress))
             {
-                MessageBox.Show(" Solo puede ingresar un número o ,!");
+                MessageBox.Show(" Solo puede ingresar un número o .!");
                 txtImporte.Text = "";
             }
         }
@@ -78,6 +85,49 @@ namespace PagoElectronico.Depositos
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnDepositar_Click(object sender, EventArgs e)
+        {
+            if (!ValidarImporte()) return ;
+            try
+            {
+                Deposito d = daoDeposito.create(CrearDeposito());
+                // Out of the box validation.
+                if(d.importe == importe)
+                    MessageBox.Show("Creación exitosa!");
+            }
+            catch
+            {
+                MessageBox.Show("Hubo un error al registrar su depósito. Reintente.");
+                return;
+            }
+        }
+
+        private Deposito CrearDeposito()
+        {
+            Deposito depo = new Deposito();
+            depo.fecha = Utils.fechaSistema;
+            depo.importe = importe;
+            depo.tarjeta_id = Convert.ToInt32(cmbTarjeta.SelectedValue);
+            depo.tipo_moneda = Convert.ToInt32(cmbMoneda.SelectedValue);
+            depo.cuenta_destino = Convert.ToInt64(cmbCuenta.SelectedValue);
+            return depo;
+        }
+
+        private bool ValidarImporte()
+        {
+            if (txtImporte.Text == "") { MessageBox.Show("Ingrese un número no vacío"); return false; }
+            try
+            {
+                importe = Double.Parse(txtImporte.Text);
+                return true;
+            }
+            catch {
+                MessageBox.Show("Formato incorrecto de importe! Debe ser números con una sola ,");
+                txtImporte.Text = "";
+                return false;
+            }
         }
     }
 }

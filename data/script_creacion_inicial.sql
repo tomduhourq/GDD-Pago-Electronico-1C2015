@@ -264,27 +264,30 @@ CREATE TABLE VIDA_ESTATICA.Tarjeta(
 	fecha_vencimiento DATETIME,
 	cod_seguridad numeric(18,0),
 	emisor numeric(4,0),
-	cuenta numeric(16,0),
 	cod_banco numeric(18,0),
+	cod_cli numeric(18, 0)
 	PRIMARY KEY (id),
 	FOREIGN KEY (emisor) REFERENCES VIDA_ESTATICA.Emisor(id),
-	FOREIGN KEY (cuenta) REFERENCES VIDA_ESTATICA.Cuenta(id)
+	FOREIGN KEY (cod_cli) REFERENCES VIDA_ESTATICA.Cliente(id)
 )
 
 
 CREATE TABLE VIDA_ESTATICA.Deposito(
-	cod numeric(18,0) IDENTITY NOT NULL,
+	id numeric(18,0) IDENTITY NOT NULL,
 	fecha DATETIME,
 	importe numeric(15,2) NOT NULL,
 	tipo_moneda numeric(4,0),
 	tarjeta_id numeric(18,0),
 	cuenta_destino numeric(16,0),
-	cod_banco numeric(18,0),
-	PRIMARY KEY (cod),
+	PRIMARY KEY (id),
 	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(id),
 	FOREIGN KEY (tarjeta_id) REFERENCES VIDA_ESTATICA.Tarjeta(id),
 	FOREIGN KEY (cuenta_destino) REFERENCES VIDA_ESTATICA.Cuenta(id)
 )
+
+INSERT INTO VIDA_ESTATICA.Deposito(fecha,importe,tipo_moneda,tarjeta_id,cuenta_destino) 
+VALUES (20/01/2015 ,123.1,1,1,150)
+
 
 
 CREATE TABLE VIDA_ESTATICA.Transferencia(
@@ -377,12 +380,16 @@ INSERT INTO VIDA_ESTATICA.Emisor
 SELECT DISTINCT Tarjeta_Emisor_Descripcion
 FROM gd_esquema.Maestra where(Tarjeta_Emisor_Descripcion is not null)
 
-INSERT INTO VIDA_ESTATICA.Tarjeta 
+INSERT INTO VIDA_ESTATICA.Tarjeta(numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_banco, cod_cli)
 SELECT DISTINCT Tarjeta_Numero, Tarjeta_Fecha_Emision, Tarjeta_Fecha_Vencimiento, Tarjeta_Codigo_Seg,
-e.id, NULL, NULL
+e.id, ABS(Checksum(NewID()) % 3) + 10002, NULL
 FROM gd_esquema.Maestra m
 INNER JOIN VIDA_ESTATICA.Emisor e
 ON m.Tarjeta_Emisor_Descripcion = e.nombre;
+
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cod_cli = 1
+WHERE id in (1,2,3,4,5,6);
 
 INSERT INTO VIDA_ESTATICA.Moneda(descripcion) Values('Dolar');
 
@@ -401,16 +408,12 @@ UPDATE VIDA_ESTATICA.Cliente
 SET usuario = 'admin'
 WHERE id = 1;
 
-UPDATE VIDA_ESTATICA.Tarjeta
-SET cuenta = 1
-WHERE id IN (1,2,3,4);
-
 INSERT INTO VIDA_ESTATICA.Cuenta
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 
 JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
-
+WHERE Banco_Cogido IS NOT NULL;
 
 -- Stored Procedures
 GO

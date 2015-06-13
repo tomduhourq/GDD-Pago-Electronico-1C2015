@@ -15,7 +15,7 @@ namespace PagoElectronico.ABM_Cuenta
     {
         List<Pais> paises;
         List<EstadoCuenta> estados;
-        List<TipoMoneda> monedas;
+        List<Moneda> monedas;
         List<TipoCuenta> cuentas;
         List<Banco> bancos;
 
