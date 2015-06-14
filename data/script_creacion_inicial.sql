@@ -170,7 +170,6 @@ CREATE TABLE VIDA_ESTATICA.Pais (
 	PRIMARY KEY (id)
 )
 
-
 CREATE TABLE VIDA_ESTATICA.Banco(
 	cod numeric(18,0) NOT NULL,
 	nombre varchar(40) NOT NULL,
@@ -301,10 +300,9 @@ CREATE TABLE VIDA_ESTATICA.Transferencia(
 
 CREATE TABLE VIDA_ESTATICA.Cheque(
 	id numeric(18,0) IDENTITY NOT NULL,
+	id_egreso numeric(18,0) NOT NULL,
 	retiro_fecha DATETIME,
-	retiro_codigo numeric(18,0) NOT NULL,
-	retiro_importe numeric(15,2) NOT NULL,
-	cheque_importe numeric(15,2) NOT NULL,
+	importe numeric(15,2) NOT NULL,
 	cuenta_destino numeric(16,0),
 	tipo_moneda numeric(4,0),
 	cod_banco numeric(18,0),
@@ -383,10 +381,6 @@ FROM gd_esquema.Maestra m
 INNER JOIN VIDA_ESTATICA.Emisor e
 ON m.Tarjeta_Emisor_Descripcion = e.nombre;
 
-UPDATE VIDA_ESTATICA.Tarjeta
-SET cod_cli = 1
-WHERE id in (1,2,3,4,5,6);
-
 INSERT INTO VIDA_ESTATICA.Moneda(descripcion) Values('Dolar');
 
 INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
@@ -435,6 +429,12 @@ GO
 IF OBJECT_ID('VIDA_ESTATICA.agregarRol') IS NOT NULL
 BEGIN
 	DROP PROCEDURE VIDA_ESTATICA.agregarRol;
+END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.agregarCliente') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.agregarCliente;
 END;
 GO
 
@@ -536,3 +536,31 @@ AS BEGIN TRANSACTION
 	SET saldo = saldo + @uImporte
 	WHERE id = @uCuenta;
 COMMIT;
+
+GO
+
+CREATE TRIGGER updateSaldoAfterRetiro ON VIDA_ESTATICA.Cheque
+AFTER INSERT
+AS BEGIN TRANSACTION
+
+	DECLARE @uImporte numeric(15, 2);
+	DECLARE @uCuenta numeric(16, 0);
+	
+	-- Necesito la última fila insertada.
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino
+	FROM inserted 
+	ORDER BY id DESC;
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo - @uImporte
+	WHERE id = @uCuenta;
+COMMIT;
+
+GO
+-- Extra update para Tarjeta
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cod_cli = 1
+WHERE id in (1,2,3,4,5,6);
+
+GO
+
