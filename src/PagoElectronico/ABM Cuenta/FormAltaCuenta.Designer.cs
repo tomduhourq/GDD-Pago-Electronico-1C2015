@@ -51,7 +51,7 @@
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(269, 85);
+            this.lblEstado.Location = new System.Drawing.Point(247, 85);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(40, 13);
             this.lblEstado.TabIndex = 24;
@@ -59,9 +59,11 @@
             // 
             // dtFechaApertura
             // 
-            this.dtFechaApertura.Location = new System.Drawing.Point(311, 166);
+            this.dtFechaApertura.Enabled = false;
+            this.dtFechaApertura.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFechaApertura.Location = new System.Drawing.Point(338, 166);
             this.dtFechaApertura.Name = "dtFechaApertura";
-            this.dtFechaApertura.Size = new System.Drawing.Size(199, 20);
+            this.dtFechaApertura.Size = new System.Drawing.Size(144, 20);
             this.dtFechaApertura.TabIndex = 5;
             // 
             // tbNroCuenta
@@ -77,9 +79,9 @@
             // 
             this.cbTipoCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoCuenta.FormattingEnabled = true;
-            this.cbTipoCuenta.Location = new System.Drawing.Point(345, 120);
+            this.cbTipoCuenta.Location = new System.Drawing.Point(338, 120);
             this.cbTipoCuenta.Name = "cbTipoCuenta";
-            this.cbTipoCuenta.Size = new System.Drawing.Size(165, 21);
+            this.cbTipoCuenta.Size = new System.Drawing.Size(144, 21);
             this.cbTipoCuenta.TabIndex = 3;
             // 
             // lblNroCuenta
@@ -112,7 +114,7 @@
             // lblFechaApertura
             // 
             this.lblFechaApertura.AutoSize = true;
-            this.lblFechaApertura.Location = new System.Drawing.Point(224, 168);
+            this.lblFechaApertura.Location = new System.Drawing.Point(247, 168);
             this.lblFechaApertura.Name = "lblFechaApertura";
             this.lblFechaApertura.Size = new System.Drawing.Size(80, 13);
             this.lblFechaApertura.TabIndex = 18;
@@ -121,7 +123,7 @@
             // lblTipoCuenta
             // 
             this.lblTipoCuenta.AutoSize = true;
-            this.lblTipoCuenta.Location = new System.Drawing.Point(269, 123);
+            this.lblTipoCuenta.Location = new System.Drawing.Point(247, 123);
             this.lblTipoCuenta.Name = "lblTipoCuenta";
             this.lblTipoCuenta.Size = new System.Drawing.Size(65, 13);
             this.lblTipoCuenta.TabIndex = 17;
@@ -165,7 +167,7 @@
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(344, 208);
+            this.btnCerrar.Location = new System.Drawing.Point(323, 208);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
             this.btnCerrar.TabIndex = 7;
@@ -175,7 +177,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(435, 208);
+            this.btnGuardar.Location = new System.Drawing.Point(414, 208);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 6;
@@ -186,10 +188,11 @@
             // cbEstado
             // 
             this.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbEstado.Enabled = false;
             this.cbEstado.FormattingEnabled = true;
-            this.cbEstado.Location = new System.Drawing.Point(345, 82);
+            this.cbEstado.Location = new System.Drawing.Point(338, 82);
             this.cbEstado.Name = "cbEstado";
-            this.cbEstado.Size = new System.Drawing.Size(165, 21);
+            this.cbEstado.Size = new System.Drawing.Size(144, 21);
             this.cbEstado.TabIndex = 1;
             // 
             // cbBanco
@@ -214,7 +217,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 245);
+            this.ClientSize = new System.Drawing.Size(505, 245);
             this.Controls.Add(this.lblBanco);
             this.Controls.Add(this.cbBanco);
             this.Controls.Add(this.cbEstado);

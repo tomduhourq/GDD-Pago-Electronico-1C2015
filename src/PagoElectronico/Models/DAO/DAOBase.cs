@@ -34,6 +34,13 @@ namespace PagoElectronico.Models.DAO{
 
         virtual public int nextIdentity() {
 			return DB.ExecuteCardinal("SELECT IDENT_CURRENT('" + tabla + "') + IDENT_INCR('" + tabla + "')");
-		}
+        }
+
+        protected string fechaQuereable(DateTime? fecha)
+        {
+            return " \'" + ((DateTime)fecha).ToString("yyyy-MM-dd hh:mm:ss") + "\' ";
+        }
+
+
     }
 }
