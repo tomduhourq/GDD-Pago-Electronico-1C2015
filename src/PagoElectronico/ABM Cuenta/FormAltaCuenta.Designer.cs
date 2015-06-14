@@ -46,12 +46,14 @@
             this.cbEstado = new System.Windows.Forms.ComboBox();
             this.cbBanco = new System.Windows.Forms.ComboBox();
             this.lblBanco = new System.Windows.Forms.Label();
+            this.tbSaldo = new System.Windows.Forms.TextBox();
+            this.lblSaldo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(247, 85);
+            this.lblEstado.Location = new System.Drawing.Point(242, 85);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(40, 13);
             this.lblEstado.TabIndex = 24;
@@ -59,9 +61,8 @@
             // 
             // dtFechaApertura
             // 
-            this.dtFechaApertura.Enabled = false;
             this.dtFechaApertura.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFechaApertura.Location = new System.Drawing.Point(338, 166);
+            this.dtFechaApertura.Location = new System.Drawing.Point(333, 166);
             this.dtFechaApertura.Name = "dtFechaApertura";
             this.dtFechaApertura.Size = new System.Drawing.Size(144, 20);
             this.dtFechaApertura.TabIndex = 5;
@@ -79,7 +80,7 @@
             // 
             this.cbTipoCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoCuenta.FormattingEnabled = true;
-            this.cbTipoCuenta.Location = new System.Drawing.Point(338, 120);
+            this.cbTipoCuenta.Location = new System.Drawing.Point(333, 120);
             this.cbTipoCuenta.Name = "cbTipoCuenta";
             this.cbTipoCuenta.Size = new System.Drawing.Size(144, 21);
             this.cbTipoCuenta.TabIndex = 3;
@@ -99,7 +100,7 @@
             this.cbMoneda.FormattingEnabled = true;
             this.cbMoneda.Location = new System.Drawing.Point(71, 123);
             this.cbMoneda.Name = "cbMoneda";
-            this.cbMoneda.Size = new System.Drawing.Size(162, 21);
+            this.cbMoneda.Size = new System.Drawing.Size(146, 21);
             this.cbMoneda.TabIndex = 2;
             // 
             // cbPais
@@ -108,13 +109,13 @@
             this.cbPais.FormattingEnabled = true;
             this.cbPais.Location = new System.Drawing.Point(71, 82);
             this.cbPais.Name = "cbPais";
-            this.cbPais.Size = new System.Drawing.Size(162, 21);
+            this.cbPais.Size = new System.Drawing.Size(146, 21);
             this.cbPais.TabIndex = 0;
             // 
             // lblFechaApertura
             // 
             this.lblFechaApertura.AutoSize = true;
-            this.lblFechaApertura.Location = new System.Drawing.Point(247, 168);
+            this.lblFechaApertura.Location = new System.Drawing.Point(242, 168);
             this.lblFechaApertura.Name = "lblFechaApertura";
             this.lblFechaApertura.Size = new System.Drawing.Size(80, 13);
             this.lblFechaApertura.TabIndex = 18;
@@ -123,7 +124,7 @@
             // lblTipoCuenta
             // 
             this.lblTipoCuenta.AutoSize = true;
-            this.lblTipoCuenta.Location = new System.Drawing.Point(247, 123);
+            this.lblTipoCuenta.Location = new System.Drawing.Point(242, 123);
             this.lblTipoCuenta.Name = "lblTipoCuenta";
             this.lblTipoCuenta.Size = new System.Drawing.Size(65, 13);
             this.lblTipoCuenta.TabIndex = 17;
@@ -188,9 +189,8 @@
             // cbEstado
             // 
             this.cbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEstado.Enabled = false;
             this.cbEstado.FormattingEnabled = true;
-            this.cbEstado.Location = new System.Drawing.Point(338, 82);
+            this.cbEstado.Location = new System.Drawing.Point(333, 82);
             this.cbEstado.Name = "cbEstado";
             this.cbEstado.Size = new System.Drawing.Size(144, 21);
             this.cbEstado.TabIndex = 1;
@@ -201,7 +201,7 @@
             this.cbBanco.FormattingEnabled = true;
             this.cbBanco.Location = new System.Drawing.Point(71, 165);
             this.cbBanco.Name = "cbBanco";
-            this.cbBanco.Size = new System.Drawing.Size(133, 21);
+            this.cbBanco.Size = new System.Drawing.Size(146, 21);
             this.cbBanco.TabIndex = 4;
             // 
             // lblBanco
@@ -213,11 +213,32 @@
             this.lblBanco.TabIndex = 31;
             this.lblBanco.Text = "Banco";
             // 
+            // tbSaldo
+            // 
+            this.tbSaldo.BackColor = System.Drawing.Color.White;
+            this.tbSaldo.Enabled = false;
+            this.tbSaldo.Location = new System.Drawing.Point(104, 208);
+            this.tbSaldo.Name = "tbSaldo";
+            this.tbSaldo.Size = new System.Drawing.Size(113, 20);
+            this.tbSaldo.TabIndex = 32;
+            // 
+            // lblSaldo
+            // 
+            this.lblSaldo.AutoSize = true;
+            this.lblSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSaldo.Location = new System.Drawing.Point(19, 211);
+            this.lblSaldo.Name = "lblSaldo";
+            this.lblSaldo.Size = new System.Drawing.Size(79, 13);
+            this.lblSaldo.TabIndex = 33;
+            this.lblSaldo.Text = "Saldo Actual";
+            // 
             // FormAltaCuenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 245);
+            this.Controls.Add(this.lblSaldo);
+            this.Controls.Add(this.tbSaldo);
             this.Controls.Add(this.lblBanco);
             this.Controls.Add(this.cbBanco);
             this.Controls.Add(this.cbEstado);
@@ -265,5 +286,7 @@
         private System.Windows.Forms.ComboBox cbEstado;
         private System.Windows.Forms.ComboBox cbBanco;
         private System.Windows.Forms.Label lblBanco;
+        private System.Windows.Forms.TextBox tbSaldo;
+        private System.Windows.Forms.Label lblSaldo;
     }
 }

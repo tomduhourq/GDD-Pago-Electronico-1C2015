@@ -23,7 +23,7 @@ namespace PagoElectronico.ABM_Cuenta
         long? id = null;
         int? codCli;
 
-        public FormAltaCuenta(Cliente cli)
+        public FormAltaCuenta(Cliente cli, bool esCliente)
         {
             InitializeComponent();
             tbCliente.Text = String.Format("{0} {1}", cli.nombre,cli.apellido);
@@ -32,15 +32,22 @@ namespace PagoElectronico.ABM_Cuenta
             cargarCombos();
             cbEstado.SelectedIndex = 0;
             codCli = cli.id;
+            cbEstado.Enabled = !esCliente;
+            dtFechaApertura.Enabled = !esCliente;
+            tbSaldo.Visible = false;
+            lblSaldo.Visible = false;
         }
 
-        public FormAltaCuenta(Cliente cli, Cuenta cuenta):this(cli)
+        public FormAltaCuenta(Cliente cli, Cuenta cuenta, bool esCliente):this(cli, esCliente)
         {
             this.Text = "Modificar Cuenta";
             btnGuardar.Text = "Modificar";
-            cbBanco.Enabled = false;
             volcarDatosCliente(cuenta);
             id = cuenta.id;
+            cbBanco.Enabled = !esCliente;
+            tbSaldo.Visible = true;
+            lblSaldo.Visible = true;
+            
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

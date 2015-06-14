@@ -15,7 +15,8 @@ namespace PagoElectronico.Models.BO {
         public TipoCuenta(DataRow dr) {
             initialize(dr);
         }
-		
+
+        public enum TiposCuenta { Gratuita = 1,Bronce, Plata,Oro}
         public int? id {get; set;}
         public string descripcion {get; set;}
 		

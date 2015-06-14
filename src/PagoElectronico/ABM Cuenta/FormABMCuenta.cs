@@ -17,6 +17,7 @@ namespace PagoElectronico.ABM_Cuenta
         private Cliente cli;
         private List<Cuenta> cuentas;
         private DAOCuenta daoCuenta;
+        private bool esCliente = false;
 
         public FormABMCuenta()
         {
@@ -30,14 +31,16 @@ namespace PagoElectronico.ABM_Cuenta
         {
             cli = _cli;
             tbCliente.Text = String.Format("{0} {1}", cli.nombre, cli.apellido);
-            btnBuscarCli.Enabled = false;
+            btnBuscarCli.Visible = false;
+            tbCliente.Width += 120;
             cargarGrilla(cli);
             activarABM(true);
+            esCliente = true;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            FormAltaCuenta frmAlta = new FormAltaCuenta(cli);
+            FormAltaCuenta frmAlta = new FormAltaCuenta(cli,esCliente);
             frmAlta.ShowDialog();
             cargarGrilla(cli);
         }
@@ -65,7 +68,7 @@ namespace PagoElectronico.ABM_Cuenta
             }
 
             Cuenta seleccionada = obtenerCuentaSeleccionada();
-            FormAltaCuenta frmAlta = new FormAltaCuenta(cli, seleccionada); 
+            FormAltaCuenta frmAlta = new FormAltaCuenta(cli, seleccionada,esCliente); 
             frmAlta.ShowDialog();
             cargarGrilla(cli);
         }
@@ -119,15 +122,15 @@ namespace PagoElectronico.ABM_Cuenta
                 newRow = table.NewRow();
                 newRow["ID"] = cuenta.id;
                 newRow["Numero"] = cuenta.numCuenta;
-                newRow["Tipo"] = cuenta.tipoCuenta;
-                newRow["Estado"] = cuenta.estado;
+                newRow["Tipo"] = (TipoCuenta.TiposCuenta)cuenta.tipoCuenta;
+                newRow["Estado"] = (EstadoCuenta.EstadosCuenta)cuenta.estado;
 
                 if (cuenta.codBanco != null)
                 {
                     newRow["Banco"] = cuenta.codBanco;
                 }
 
-                newRow["Moneda"] = cuenta.tipoMoneda;
+                newRow["Moneda"] = (Moneda.Monedas)cuenta.tipoMoneda;
 
                 table.Rows.Add(newRow);
             }

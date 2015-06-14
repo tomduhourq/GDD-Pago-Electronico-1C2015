@@ -28,9 +28,11 @@ namespace PagoElectronico
         public Usuario user { get; set; }
         private Rol rol { get; set; }
         private List<Rol> lstRoles = new List<Rol>();
+        DAOCliente dao;
 
         private void frmPrincipal_Load_1(object sender, EventArgs e)
         {
+            dao = new DAOCliente();
             lstRoles = Usuario.ObtenerRoles(user);
             if (lstRoles.Count > 0)
             {
@@ -80,9 +82,14 @@ namespace PagoElectronico
 
         private void btnDepositos_Click(object sender, EventArgs e)
         {
-            DAOCliente dao = new DAOCliente();
             FormDepositos frmDepo = new FormDepositos(dao.retrieveBy_user(user.Name));
             frmDepo.Show();
+        }
+
+        private void btnCuentasCliente_Click(object sender, EventArgs e)
+        {
+            FormABMCuenta frmCuentas = new FormABMCuenta(dao.retrieveBy_user(user.Name));
+            frmCuentas.Show();
         }
 
    

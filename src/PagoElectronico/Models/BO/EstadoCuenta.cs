@@ -19,6 +19,7 @@ namespace PagoElectronico.Models.BO
             initialize(dr);
         }
 
+        public enum EstadosCuenta { PendienteActivacion = 1, Cerrada, Inhabilitada, Habilitada };
         public int? id { get; set; }
         public string descripcion { get; set; }
 
