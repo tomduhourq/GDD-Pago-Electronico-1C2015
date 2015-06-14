@@ -39,5 +39,14 @@ namespace PagoElectronico.Models.Utils
                 keypress == Convert.ToChar(Keys.Back) ||
                 keypress == ',';
         }
+        
+        public static bool isCaracterInvalido(Char c)
+        {
+            if (char.IsLetter(c))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
