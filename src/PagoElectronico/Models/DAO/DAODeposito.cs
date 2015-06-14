@@ -26,8 +26,11 @@ namespace PagoElectronico.Models.DAO
         private string CreateValues(Deposito depo)
         {
             string[] imp = depo.importe.ToString().Split(',');
+            string sqlDouble = "";
+            if (imp.Length == 2) sqlDouble = imp[0] + "." + imp[1];
+            else sqlDouble = imp[0];
             return depo.fecha.ToString("dd/MM/yyyy") + "," +
-                   imp[0]+"."+imp[1] + "," +
+                   sqlDouble + "," +
                    depo.tipo_moneda.ToString() + "," +
                    depo.tarjeta_id.ToString() + "," +
                    depo.cuenta_destino.ToString();

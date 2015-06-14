@@ -14,6 +14,7 @@ using PagoElectronico.ABM_Cliente;
 using PagoElectronico.ABM_Cuenta;
 using PagoElectronico.Models.DAO;
 using PagoElectronico.Depositos;
+using PagoElectronico.Retiros;
 
 namespace PagoElectronico
 {
@@ -28,6 +29,7 @@ namespace PagoElectronico
         public Usuario user { get; set; }
         private Rol rol { get; set; }
         private List<Rol> lstRoles = new List<Rol>();
+        DAOCliente dao = new DAOCliente();
 
         private void frmPrincipal_Load_1(object sender, EventArgs e)
         {
@@ -80,9 +82,14 @@ namespace PagoElectronico
 
         private void btnDepositos_Click(object sender, EventArgs e)
         {
-            DAOCliente dao = new DAOCliente();
             FormDepositos frmDepo = new FormDepositos(dao.retrieveBy_user(user.Name));
             frmDepo.Show();
+        }
+
+        private void btnRetiros_Click(object sender, EventArgs e)
+        {
+            FormRetiros frmRetiros = new FormRetiros(dao.retrieveBy_user(user.Name));
+            frmRetiros.Show();
         }
 
    
