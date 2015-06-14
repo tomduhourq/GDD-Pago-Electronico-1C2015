@@ -127,6 +127,7 @@
             this.btnAlta.TabIndex = 1;
             this.btnAlta.Text = "Alta";
             this.btnAlta.UseVisualStyleBackColor = true;
+            this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
             // txtNombre
             // 

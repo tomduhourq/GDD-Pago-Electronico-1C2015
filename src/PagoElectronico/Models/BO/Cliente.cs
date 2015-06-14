@@ -22,12 +22,13 @@ namespace PagoElectronico.Models.BO
         public int? id { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
+        public DateTime fecha_nac { get; set; }
         public int? documento { get; set; }
         public int? tipo_documento { get; set; }
         public string dom_calle { get; set; }
         public int? dom_piso { get; set; }
         public char? dom_dpto { get; set; }
-        public int? dom_pais { get; set; }
+        public int? dom_nro { get; set; }
         public string mail { get; set; }
         public int? nacionalidad { get; set; }
         public string usuario { get; set; }
@@ -55,8 +56,8 @@ namespace PagoElectronico.Models.BO
                 dom_piso = (dr["dom_piso"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["dom_piso"]);
             if (dcc.Contains("dom_calle"))
                 dom_calle = (dr["dom_calle"] == DBNull.Value) ? null : dr["dom_calle"].ToString();
-            if (dcc.Contains("dom_pais"))
-                dom_pais = (dr["dom_pais"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["dom_pais"]);
+            if (dcc.Contains("dom_nro"))
+                dom_nro = (dr["dom_nro"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["dom_nro"]);
             if (dcc.Contains("mail"))
                 mail = (dr["mail"] == DBNull.Value) ? null : dr["mail"].ToString();
             if (dcc.Contains("nacionalidad"))

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using PagoElectronico.Models.BO;
+using PagoElectronico.Models.DAO;
+using PagoElectronico.Models.Utils;
 
 namespace PagoElectronico.ABM_Cliente
 {
@@ -17,6 +19,8 @@ namespace PagoElectronico.ABM_Cliente
             InitializeComponent();
         }
 
+        private DAOCliente dao = new DAOCliente();
+        private List<Cliente> lstClientes { get; set; }
         private List<TipoDocumento> lstTipos = new List<TipoDocumento>();
 
         private void frmABMCliente_Load(object sender, EventArgs e)
@@ -46,22 +50,19 @@ namespace PagoElectronico.ABM_Cliente
             txtNumID.Text = "";
             txtEmail.Text = "";
         }
-        
-        public bool isCaracterInvalido(Char c)
-        {
-            if (char.IsLetter(c))
-            {
-                return true;
-            }
-            return false;
-        }
 
         private void txtNumID_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (isCaracterInvalido(e.KeyChar))
+            if (Utils.isCaracterInvalido(e.KeyChar))
             {
                 e.Handled = true;
             }
+        }
+
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            FormAltaCliente ac = new FormAltaCliente(new Cliente());
+            ac.Show();
         }
 
     }

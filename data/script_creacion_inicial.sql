@@ -485,6 +485,24 @@ AS BEGIN
 END
 GO
 
+CREATE PROCEDURE VIDA_ESTATICA.agregarCliente(@nombreCliente varchar(255), @apellidoCliente varchar(255), 
+												@documentoCliente numeric(8,0), @domCalleCliente varchar(50), 
+												@domNroCliente numeric(6,0), @domPisoCliente numeric(2,0), 
+												@domDptoCliente varchar(1), @fecNacCliente Datetime, 
+												@mailCliente varchar(50), @nacionalidadCliente numeric(18, 0),
+												@tipoDocCliente numeric(18, 0), @usuarioCliente varchar(25),
+												@ret numeric(18,0) output)
+AS BEGIN
+	INSERT INTO VIDA_ESTATICA.Cliente (nombre, apellido, documento, dom_calle, dom_nro, 
+									   dom_piso, dom_dpto, fecha_nac, mail, nacionalidad, 
+									   tipo_documento, usuario) VALUES (@nombreCliente, @apellidoCliente, @documentoCliente,
+																		@domCalleCliente, @domNroCliente, @domPisoCliente,
+																		@domDptoCliente, @fecNacCliente, @mailCliente,
+																		@nacionalidadCliente, @tipoDocCliente, @usuarioCliente)
+	SET @ret = SCOPE_IDENTITY()
+END
+GO
+
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Cliente';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Cuenta';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Rol';
