@@ -26,6 +26,7 @@ namespace PagoElectronico.Models.BO
         public int? estado { get; set; }
         public int? pais { get; set; }
         public DateTime? fechaCierre { get; set; }
+        public double saldo { get; set; }
         public int? tipoMoneda { get; set; }
         public int? tipoCuenta { get; set; }
         public int? codigoCliente { get; set; }
@@ -55,6 +56,8 @@ namespace PagoElectronico.Models.BO
                 pais = (dr["pais"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["pais"]);
             if (dcc.Contains("fecha_cierre"))
                 fechaCierre = (dr["fecha_cierre"] == DBNull.Value) ? (DateTime?)null : Convert.ToDateTime(dr["fecha_cierre"]);
+            if (dcc.Contains("saldo"))
+                saldo = Convert.ToDouble(dr["saldo"]);
             if (dcc.Contains("tipo_moneda"))
                 tipoMoneda = (dr["tipo_moneda"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["tipo_moneda"]);
             if (dcc.Contains("tipo_cuenta"))

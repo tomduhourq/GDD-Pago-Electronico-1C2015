@@ -37,6 +37,7 @@
             this.groupCliente = new System.Windows.Forms.GroupBox();
             this.btnDepositos = new System.Windows.Forms.Button();
             this.btnCuentasCliente = new System.Windows.Forms.Button();
+            this.btnRetiros = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.groupCliente.SuspendLayout();
             this.SuspendLayout();
@@ -108,6 +109,7 @@
             // groupCliente
             // 
             this.groupCliente.Controls.Add(this.btnCuentasCliente);
+            this.groupCliente.Controls.Add(this.btnRetiros);
             this.groupCliente.Controls.Add(this.btnDepositos);
             this.groupCliente.Location = new System.Drawing.Point(16, 138);
             this.groupCliente.Name = "groupCliente";
@@ -136,6 +138,15 @@
             this.btnCuentasCliente.Text = "Cuentas";
             this.btnCuentasCliente.UseVisualStyleBackColor = true;
             this.btnCuentasCliente.Click += new System.EventHandler(this.btnCuentasCliente_Click);
+            // btnRetiros
+            // 
+            this.btnRetiros.Location = new System.Drawing.Point(88, 19);
+            this.btnRetiros.Name = "btnRetiros";
+            this.btnRetiros.Size = new System.Drawing.Size(75, 23);
+            this.btnRetiros.TabIndex = 1;
+            this.btnRetiros.Text = "Retiros";
+            this.btnRetiros.UseVisualStyleBackColor = true;
+            this.btnRetiros.Click += new System.EventHandler(this.btnRetiros_Click);
             // 
             // FormPrincipal
             // 
@@ -168,5 +179,6 @@
         private System.Windows.Forms.Button btnABMCuentas;
         private System.Windows.Forms.Button btnDepositos;
         private System.Windows.Forms.Button btnCuentasCliente;
+        private System.Windows.Forms.Button btnRetiros;
     }
 }

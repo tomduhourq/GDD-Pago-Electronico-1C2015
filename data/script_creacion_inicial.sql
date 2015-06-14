@@ -170,7 +170,6 @@ CREATE TABLE VIDA_ESTATICA.Pais (
 	PRIMARY KEY (id)
 )
 
-
 CREATE TABLE VIDA_ESTATICA.Banco(
 	cod numeric(18,0) NOT NULL,
 	nombre varchar(40) NOT NULL,
@@ -239,6 +238,7 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	estado numeric(4,0),
 	pais numeric(18,0),
 	fecha_cierre DATETIME,
+	saldo numeric(15, 1) NOT NULL DEFAULT 0.0,
 	tipo_moneda numeric(4,0),
 	tipo_cuenta numeric(4,0),
 	cod_cli numeric(18,0),
@@ -285,11 +285,6 @@ CREATE TABLE VIDA_ESTATICA.Deposito(
 	FOREIGN KEY (cuenta_destino) REFERENCES VIDA_ESTATICA.Cuenta(id)
 )
 
-INSERT INTO VIDA_ESTATICA.Deposito(fecha,importe,tipo_moneda,tarjeta_id,cuenta_destino) 
-VALUES (20/01/2015 ,123.1,1,1,150)
-
-
-
 CREATE TABLE VIDA_ESTATICA.Transferencia(
 	id numeric(18,0) IDENTITY NOT NULL,
 	fecha DATETIME,
@@ -305,10 +300,9 @@ CREATE TABLE VIDA_ESTATICA.Transferencia(
 
 CREATE TABLE VIDA_ESTATICA.Cheque(
 	id numeric(18,0) IDENTITY NOT NULL,
+	id_egreso numeric(18,0) NOT NULL,
 	retiro_fecha DATETIME,
-	retiro_codigo numeric(18,0) NOT NULL,
-	retiro_importe numeric(15,2) NOT NULL,
-	cheque_importe numeric(15,2) NOT NULL,
+	importe numeric(15,2) NOT NULL,
 	cuenta_destino numeric(16,0),
 	tipo_moneda numeric(4,0),
 	cod_banco numeric(18,0),
@@ -387,10 +381,6 @@ FROM gd_esquema.Maestra m
 INNER JOIN VIDA_ESTATICA.Emisor e
 ON m.Tarjeta_Emisor_Descripcion = e.nombre;
 
-UPDATE VIDA_ESTATICA.Tarjeta
-SET cod_cli = 1
-WHERE id in (1,2,3,4,5,6);
-
 INSERT INTO VIDA_ESTATICA.Moneda(descripcion) Values('Dolar');
 
 INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
@@ -408,7 +398,7 @@ UPDATE VIDA_ESTATICA.Cliente
 SET usuario = 'admin'
 WHERE id = 1;
 
-INSERT INTO VIDA_ESTATICA.Cuenta
+INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta, cod_banco, fecha_creacion, estado, pais, fecha_cierre, tipo_moneda, tipo_cuenta, cod_cli)
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 
@@ -439,6 +429,12 @@ GO
 IF OBJECT_ID('VIDA_ESTATICA.agregarRol') IS NOT NULL
 BEGIN
 	DROP PROCEDURE VIDA_ESTATICA.agregarRol;
+END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.agregarCliente') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.agregarCliente;
 END;
 GO
 
@@ -518,4 +514,53 @@ EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Depositos';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Retiros';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Transferencias';
 
+GO
+--
+-- TRIGGERS
+--
+
+-- Trigger para cambiar el saldo de la cuenta cuando alguien deposita.
+CREATE TRIGGER updateSaldoAfterDeposit ON VIDA_ESTATICA.Deposito
+AFTER INSERT
+AS BEGIN TRANSACTION
+
+	DECLARE @uImporte numeric(15, 2);
+	DECLARE @uCuenta numeric(16, 0);
+	
+	-- Necesito la última fila insertada.
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino 
+	FROM inserted 
+	ORDER BY id DESC;
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo + @uImporte
+	WHERE id = @uCuenta;
+COMMIT;
+
+GO
+
+CREATE TRIGGER updateSaldoAfterRetiro ON VIDA_ESTATICA.Cheque
+AFTER INSERT
+AS BEGIN TRANSACTION
+
+	DECLARE @uImporte numeric(15, 2);
+	DECLARE @uCuenta numeric(16, 0);
+	
+	-- Necesito la última fila insertada.
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino
+	FROM inserted 
+	ORDER BY id DESC;
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo - @uImporte
+	WHERE id = @uCuenta;
+COMMIT;
+
+GO
+-- Extra update para Tarjeta
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cod_cli = 1
+WHERE id in (1,2,3,4,5,6);
+
+GO
 
