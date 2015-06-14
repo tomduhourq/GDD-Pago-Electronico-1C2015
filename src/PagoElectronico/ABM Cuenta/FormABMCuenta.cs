@@ -39,6 +39,7 @@ namespace PagoElectronico.ABM_Cuenta
         {
             FormAltaCuenta frmAlta = new FormAltaCuenta(cli);
             frmAlta.ShowDialog();
+            cargarGrilla(cli);
         }
 
         private void btnBuscarCli_Click(object sender, EventArgs e)
@@ -66,15 +67,16 @@ namespace PagoElectronico.ABM_Cuenta
             Cuenta seleccionada = obtenerCuentaSeleccionada();
             FormAltaCuenta frmAlta = new FormAltaCuenta(cli, seleccionada); 
             frmAlta.ShowDialog();
+            cargarGrilla(cli);
         }
 
         private void btnEliminarCuenta_Click(object sender, EventArgs e)
         {
             Cuenta seleccionada = obtenerCuentaSeleccionada();
-            if (MessageBox.Show("Esta seguro que quiere eliminar la cuenta Nro: " + seleccionada.numCuenta + "?",  //REHARDCODED
+            if (MessageBox.Show("Esta seguro que quiere eliminar la cuenta Nro: " + seleccionada.numCuenta + "?", 
                 "Eliminar Cuenta", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
             {
-                new DAOCuenta().delete(1);
+                new DAOCuenta().delete((long)seleccionada.id);
                 MessageBox.Show("La Cuenta " + seleccionada.numCuenta + " Fue Eliminada");
             }
 

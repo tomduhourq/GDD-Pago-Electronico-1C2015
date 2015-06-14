@@ -18,24 +18,36 @@ namespace PagoElectronico.Models.DAO
 
         public Cuenta update(Cuenta _Cuenta)
         {
-            DB.ExecuteNonQuery("UPDATE"); //FIXIT
-            return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM Cuenta WHERE id = @1", _Cuenta.id);
+            string update = String.Format("UPDATE " + tabla + " SET pais={0},tipo_moneda={1},tipo_cuenta={2} WHERE id = {3}", _Cuenta.pais, _Cuenta.tipoMoneda, _Cuenta.tipoCuenta, _Cuenta.id);
+            DB.ExecuteNonQuery(update); 
+            return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM " +tabla+ " WHERE id = @1", _Cuenta.id);
         }
 
-        public Cuenta create(Cuenta _Cuenta)
+        public Cuenta create(Cuenta c)
         {
-            if (_Cuenta.id == null || !_Cuenta.id.HasValue)
+            if (c.id == null || !c.id.HasValue)
             {
-                int id = DB.ExecuteCastable<int>("INSERT INTO Cuenta () values (); SELECT SCOPE_IDENTITY();"); //FIXIT
-                return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM Cuenta WHERE id = @1", id);
+                if (existeNumeroBanco(c.numCuenta, c.codBanco))
+                {
+                    throw new MyException("ya existe una cuenta con ese numero y banco");
+                }
+
+                string comando = "INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta,cod_banco,fecha_creacion,estado,pais,fecha_cierre,tipo_moneda,tipo_cuenta,cod_cli)"
+                                    + "VALUES ({0}, {1},{2},{3},{4},{5},{6},{7},{8});"
+                                    + "SELECT SCOPE_IDENTITY();";
+                comando = String.Format(comando,c.numCuenta,c.codBanco,fechaQuereable(c.fechaCreacion), c.estado, c.pais, "NULL", c.tipoMoneda,c.tipoCuenta,c.codigoCliente);
+                int insertado = DB.ExecuteCardinal(comando);
+                return retrieveBy_id(insertado);
             }
             else
-                return update(_Cuenta);
+                return update(c);
         }
 
-        public void delete(int Cuenta_id)
+        public void delete(long cuentaID)
         {
-            DB.ExecuteNonQuery("DELETE FROM " + tabla + " WHERE id = @1", Cuenta_id);
+            string update = String.Format("UPDATE " + tabla + " SET fecha_cierre={0},estado=2 WHERE id = {1}", fechaQuereable(DateTime.Today), cuentaID);
+            DB.ExecuteNonQuery(update);
+            return;
         }
 
         public List<Cuenta> retrieveByClientId(object _value)
@@ -50,7 +62,7 @@ namespace PagoElectronico.Models.DAO
 
         public List<Cuenta> retrieveBy_Cliente(object cliID)
         {
-            return DB.ExecuteReader<Cuenta>("SELECT * FROM " + tabla + " WHERE cod_cli = @1", cliID);
+            return DB.ExecuteReader<Cuenta>("SELECT * FROM " + tabla + " WHERE cod_cli = @1 and fecha_cierre is NULL", cliID);
         }
         // SELECT MAX(num_cuenta) FROM VIDA_ESTATICA.Cuenta
 
@@ -58,5 +70,11 @@ namespace PagoElectronico.Models.DAO
         {
             return DB.ExecuteBigCardinal("SELECT MAX(num_cuenta) FROM "+ tabla) + 1;
         }
+
+        public bool existeNumeroBanco(object numero, object banco)
+        {
+            return DB.ExecuteCardinal("SELECT Count(*) FROM " + tabla + " WHERE cod_banco = @1 and num_cuenta = @2", banco, numero) > 0;
+        }
+
     }
 }
