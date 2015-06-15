@@ -34,38 +34,39 @@ namespace PagoElectronico.Depositos
                 .FindAll(cuenta => cuenta.estado == daoEstado.habilitado().id);
             tarjetas = daoTarjeta
                 .retrieveByClientId(cliente.id)
-                .FindAll(t => t.fecha_vencimiento < DateTime.Now);
-            ValidarHabilitadas();
+                .FindAll(t => Utils.fechaSistema < t.fecha_vencimiento);
             InitializeComponent();
         }
 
-        private void ValidarHabilitadas()
-        {
-            if (cuentas.Count() == 0)
-            {
-                MessageBox.Show("No posee cuentas habilitadas, esta ventana se cerrará");
-                this.Close();
-            }
-
-            if(tarjetas.Count() == 0)
-            {
-                MessageBox.Show("No posee tarjetas vigentes, esta ventana se cerrará");
-                this.Close();
-            }
-        }
 
         private void FormDepositos_Load(object sender, EventArgs e)
         {
             // Popular combos
             monedas = daoMoneda.retrieveBase();
 
-            cmbTarjeta.DataSource = tarjetas;
+            if (tarjetas.Count() == 0)
+            {
+                MessageBox.Show("No posee tarjetas vigentes, esta ventana se cerrará");
+                this.Close();
+            }
+            else
+            {
+                cmbTarjeta.DataSource = tarjetas;
                 cmbTarjeta.DisplayMember = "Visualize";
-            cmbTarjeta.ValueMember = "id";
+                cmbTarjeta.ValueMember = "id";
+            }
+            if (cuentas.Count() == 0)
+            {
+                MessageBox.Show("No posee cuentas habilitadas, esta ventana se cerrará");
+                this.Close();
+            }
+            else
+            {
 
-            cmbCuenta.DataSource = cuentas;
-            cmbCuenta.DisplayMember = "Visualize";
-            cmbCuenta.ValueMember = "id";
+                cmbCuenta.DataSource = cuentas;
+                cmbCuenta.DisplayMember = "Visualize";
+                cmbCuenta.ValueMember = "id";
+            }
 
             cmbMoneda.DataSource = monedas;
             cmbMoneda.DisplayMember = "descripcion";

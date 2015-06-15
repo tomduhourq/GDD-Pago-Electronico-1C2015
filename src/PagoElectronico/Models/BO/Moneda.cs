@@ -15,7 +15,8 @@ namespace PagoElectronico.Models.BO {
         public Moneda(DataRow dr) {
             initialize(dr);
         }
-		
+
+        public enum Monedas { Dolar = 1 };
         public int? id {get; set;}
         public string descripcion {get; set;}
 		

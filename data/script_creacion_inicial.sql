@@ -171,7 +171,6 @@ CREATE TABLE VIDA_ESTATICA.Pais (
 	PRIMARY KEY (id)
 )
 
-
 CREATE TABLE VIDA_ESTATICA.Banco(
 	cod numeric(18,0) NOT NULL,
 	nombre varchar(40) NOT NULL,
@@ -240,6 +239,7 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	estado numeric(4,0),
 	pais numeric(18,0),
 	fecha_cierre DATETIME,
+	saldo numeric(15, 1) NOT NULL DEFAULT 0.0,
 	tipo_moneda numeric(4,0),
 	tipo_cuenta numeric(4,0),
 	cod_cli numeric(18,0),
@@ -301,10 +301,9 @@ CREATE TABLE VIDA_ESTATICA.Transferencia(
 
 CREATE TABLE VIDA_ESTATICA.Cheque(
 	id numeric(18,0) IDENTITY NOT NULL,
+	id_egreso numeric(18,0) NOT NULL,
 	retiro_fecha DATETIME,
-	retiro_codigo numeric(18,0) NOT NULL,
-	retiro_importe numeric(15,2) NOT NULL,
-	cheque_importe numeric(15,2) NOT NULL,
+	importe numeric(15,2) NOT NULL,
 	cuenta_destino numeric(16,0),
 	tipo_moneda numeric(4,0),
 	cod_banco numeric(18,0),
@@ -400,6 +399,7 @@ UPDATE VIDA_ESTATICA.Cliente
 SET usuario = 'admin'
 WHERE id = 1;
 
+
 UPDATE VIDA_ESTATICA.Tarjeta
 SET cod_cli = 1
 WHERE id in (1,2,3,4,5,6);
@@ -436,6 +436,12 @@ GO
 IF OBJECT_ID('VIDA_ESTATICA.agregarRol') IS NOT NULL
 BEGIN
 	DROP PROCEDURE VIDA_ESTATICA.agregarRol;
+END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.agregarCliente') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.agregarCliente;
 END;
 GO
 
@@ -515,5 +521,58 @@ EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Depositos';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Retiros';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Transferencias';
 
+<<<<<<< HEAD
 select * from VIDA_ESTATICA.Pais
 select LTRIM(Cli_Pais_Desc) from gd_esquema.Maestra where (Cli_Pais_Desc = ' Guam')
+=======
+GO
+--
+-- TRIGGERS
+--
+
+-- Trigger para cambiar el saldo de la cuenta cuando alguien deposita.
+CREATE TRIGGER updateSaldoAfterDeposit ON VIDA_ESTATICA.Deposito
+AFTER INSERT
+AS BEGIN TRANSACTION
+
+	DECLARE @uImporte numeric(15, 2);
+	DECLARE @uCuenta numeric(16, 0);
+	
+	-- Necesito la última fila insertada.
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino 
+	FROM inserted 
+	ORDER BY id DESC;
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo + @uImporte
+	WHERE id = @uCuenta;
+COMMIT;
+
+GO
+
+CREATE TRIGGER updateSaldoAfterRetiro ON VIDA_ESTATICA.Cheque
+AFTER INSERT
+AS BEGIN TRANSACTION
+
+	DECLARE @uImporte numeric(15, 2);
+	DECLARE @uCuenta numeric(16, 0);
+	
+	-- Necesito la última fila insertada.
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino
+	FROM inserted 
+	ORDER BY id DESC;
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo - @uImporte
+	WHERE id = @uCuenta;
+COMMIT;
+
+GO
+-- Extra update para Tarjeta
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cod_cli = 1
+WHERE id in (1,2,3,4,5,6);
+
+GO
+
+>>>>>>> 828417dbeecc080f10d7892d73a029d2bedff162
