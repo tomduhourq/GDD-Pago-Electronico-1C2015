@@ -521,10 +521,7 @@ EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Depositos';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Retiros';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Transferencias';
 
-<<<<<<< HEAD
-select * from VIDA_ESTATICA.Pais
-select LTRIM(Cli_Pais_Desc) from gd_esquema.Maestra where (Cli_Pais_Desc = ' Guam')
-=======
+
 GO
 --
 -- TRIGGERS
@@ -574,5 +571,3 @@ SET cod_cli = 1
 WHERE id in (1,2,3,4,5,6);
 
 GO
-
->>>>>>> 828417dbeecc080f10d7892d73a029d2bedff162
