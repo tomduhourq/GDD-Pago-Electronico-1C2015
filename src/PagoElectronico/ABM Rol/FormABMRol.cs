@@ -77,7 +77,6 @@ namespace PagoElectronico.ABM_Rol
                 if(dao.delete((int)(decimal)delete.id))
                     MessageBox.Show("Rol seteado a inactivo correctamente");
             }
-
         }
 
         private void btnAlta_Click(object sender, EventArgs e)
