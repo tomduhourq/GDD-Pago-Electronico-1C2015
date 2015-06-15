@@ -1,3 +1,4 @@
+USE GD1C2015;
 IF NOT EXISTS (
 SELECT  schema_name
 FROM    information_schema.schemata
@@ -285,11 +286,6 @@ CREATE TABLE VIDA_ESTATICA.Deposito(
 	FOREIGN KEY (cuenta_destino) REFERENCES VIDA_ESTATICA.Cuenta(id)
 )
 
-INSERT INTO VIDA_ESTATICA.Deposito(fecha,importe,tipo_moneda,tarjeta_id,cuenta_destino) 
-VALUES (20/01/2015 ,123.1,1,1,150)
-
-
-
 CREATE TABLE VIDA_ESTATICA.Transferencia(
 	id numeric(18,0) IDENTITY NOT NULL,
 	fecha DATETIME,
@@ -351,7 +347,7 @@ INSERT INTO VIDA_ESTATICA.Rol_Usuario VALUES
 
 -- Two columns contains different values, we need to add all the posibilities
 INSERT INTO VIDA_ESTATICA.Pais 
-SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc 
+SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc
 FROM gd_esquema.Maestra 
 ORDER BY Cli_Pais_Codigo;
 INSERT INTO VIDA_ESTATICA.Pais
@@ -387,10 +383,6 @@ FROM gd_esquema.Maestra m
 INNER JOIN VIDA_ESTATICA.Emisor e
 ON m.Tarjeta_Emisor_Descripcion = e.nombre;
 
-UPDATE VIDA_ESTATICA.Tarjeta
-SET cod_cli = 1
-WHERE id in (1,2,3,4,5,6);
-
 INSERT INTO VIDA_ESTATICA.Moneda(descripcion) Values('Dolar');
 
 INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
@@ -408,12 +400,17 @@ UPDATE VIDA_ESTATICA.Cliente
 SET usuario = 'admin'
 WHERE id = 1;
 
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cod_cli = 1
+WHERE id in (1,2,3,4,5,6);
+
 INSERT INTO VIDA_ESTATICA.Cuenta
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 
 JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
 WHERE Banco_Cogido IS NOT NULL;
+
 
 -- Stored Procedures
 GO
@@ -518,4 +515,5 @@ EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Depositos';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Retiros';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Cliente', @func ='Transferencias';
 
-
+select * from VIDA_ESTATICA.Pais
+select LTRIM(Cli_Pais_Desc) from gd_esquema.Maestra where (Cli_Pais_Desc = ' Guam')
