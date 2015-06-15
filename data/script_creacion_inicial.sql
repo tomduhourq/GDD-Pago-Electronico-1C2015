@@ -1,3 +1,4 @@
+USE GD1C2015;
 IF NOT EXISTS (
 SELECT  schema_name
 FROM    information_schema.schemata
@@ -362,7 +363,7 @@ INSERT INTO VIDA_ESTATICA.Rol_Usuario VALUES
 
 -- Two columns contains different values, we need to add all the posibilities
 INSERT INTO VIDA_ESTATICA.Pais 
-SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc 
+SELECT DISTINCT Cli_Pais_Codigo, Cli_Pais_Desc
 FROM gd_esquema.Maestra 
 ORDER BY Cli_Pais_Codigo;
 INSERT INTO VIDA_ESTATICA.Pais
@@ -407,12 +408,24 @@ UPDATE VIDA_ESTATICA.Cliente
 SET usuario = 'admin'
 WHERE id = 1;
 
-INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta, cod_banco, fecha_creacion, estado, pais, fecha_cierre, tipo_moneda, tipo_cuenta, cod_cli)
+
+UPDATE VIDA_ESTATICA.Tarjeta
+SET cod_cli = 1
+WHERE id in (1,2,3,4,5,6);
+
+INSERT INTO VIDA_ESTATICA.Cuenta
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 
 JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
 WHERE Banco_Cogido IS NOT NULL;
+GO
+
+UPDATE VIDA_ESTATICA.Cuenta
+SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe), 0) 
+			 FROM gd_esquema.Maestra 
+			 WHERE num_cuenta = Cuenta_Numero AND Banco_Cogido = Cuenta.cod_banco )
+GO
 
 INSERT INTO VIDA_ESTATICA.Tarjeta(numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_banco, cod_cli)
 SELECT DISTINCT Tarjeta_Numero, Tarjeta_Fecha_Emision, Tarjeta_Fecha_Vencimiento, Tarjeta_Codigo_Seg,
@@ -438,6 +451,7 @@ IF OBJECT_ID('VIDA_ESTATICA.updateSaldoAfterDeposit') IS NOT NULL
 BEGIN
 	DROP TRIGGER VIDA_ESTATICA.updateSaldoAfterDeposit;
 END;
+
 GO
 
 IF OBJECT_ID('VIDA_ESTATICA.updateSaldoAfterRetiro') IS NOT NULL
@@ -509,6 +523,7 @@ INNER JOIN VIDA_ESTATICA.Cuenta c
 ON c.num_cuenta = m.Cuenta_Numero
 WHERE Cheque_Numero IS NOT NULL;
 GO
+
 -- Stored Procedures
 
 IF OBJECT_ID('VIDA_ESTATICA.updateIntentos') IS NOT NULL

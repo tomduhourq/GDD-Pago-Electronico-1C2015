@@ -66,6 +66,7 @@
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -75,24 +76,27 @@
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Apellido";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 305);
+            this.label3.Location = new System.Drawing.Point(14, 302);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Numero ID";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 279);
+            this.label4.Location = new System.Drawing.Point(12, 276);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Tipo ID";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
@@ -102,6 +106,7 @@
             this.label5.Size = new System.Drawing.Size(26, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Mail";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -111,6 +116,7 @@
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Numero";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label7
             // 
@@ -120,6 +126,7 @@
             this.label7.Size = new System.Drawing.Size(27, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Piso";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
@@ -129,6 +136,7 @@
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 7;
             this.label8.Text = "Calle";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 
@@ -138,6 +146,7 @@
             this.label9.Size = new System.Drawing.Size(36, 13);
             this.label9.TabIndex = 8;
             this.label9.Text = "Depto";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
@@ -147,6 +156,7 @@
             this.label10.Size = new System.Drawing.Size(43, 13);
             this.label10.TabIndex = 9;
             this.label10.Text = "Usuario";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // label11
             // 
@@ -156,6 +166,7 @@
             this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 10;
             this.label11.Text = "Nacionalidad";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // label12
             // 
@@ -165,6 +176,7 @@
             this.label12.Size = new System.Drawing.Size(108, 13);
             this.label12.TabIndex = 11;
             this.label12.Text = "Fecha de Nacimiento";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // dateNacimiento
             // 
@@ -172,6 +184,7 @@
             this.dateNacimiento.Name = "dateNacimiento";
             this.dateNacimiento.Size = new System.Drawing.Size(208, 20);
             this.dateNacimiento.TabIndex = 12;
+            this.dateNacimiento.ValueChanged += new System.EventHandler(this.dateNacimiento_ValueChanged);
             // 
             // txtNombre
             // 
@@ -179,6 +192,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(207, 20);
             this.txtNombre.TabIndex = 13;
+            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
             // 
             // txtApellido
             // 
@@ -186,6 +200,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(207, 20);
             this.txtApellido.TabIndex = 14;
+            this.txtApellido.TextChanged += new System.EventHandler(this.txtApellido_TextChanged);
             // 
             // txtMail
             // 
@@ -193,6 +208,7 @@
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(207, 20);
             this.txtMail.TabIndex = 15;
+            this.txtMail.TextChanged += new System.EventHandler(this.txtMail_TextChanged);
             // 
             // txtNacionalidad
             // 
@@ -200,6 +216,7 @@
             this.txtNacionalidad.Name = "txtNacionalidad";
             this.txtNacionalidad.Size = new System.Drawing.Size(207, 20);
             this.txtNacionalidad.TabIndex = 16;
+            this.txtNacionalidad.TextChanged += new System.EventHandler(this.txtNacionalidad_TextChanged);
             // 
             // txtNumero
             // 
@@ -207,6 +224,7 @@
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(207, 20);
             this.txtNumero.TabIndex = 17;
+            this.txtNumero.TextChanged += new System.EventHandler(this.txtNumero_TextChanged);
             this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // txtUsuario
@@ -215,6 +233,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(207, 20);
             this.txtUsuario.TabIndex = 18;
+            this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
             // 
             // txtPiso
             // 
@@ -222,6 +241,7 @@
             this.txtPiso.Name = "txtPiso";
             this.txtPiso.Size = new System.Drawing.Size(207, 20);
             this.txtPiso.TabIndex = 19;
+            this.txtPiso.TextChanged += new System.EventHandler(this.txtPiso_TextChanged);
             this.txtPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // txtCalle
@@ -230,6 +250,7 @@
             this.txtCalle.Name = "txtCalle";
             this.txtCalle.Size = new System.Drawing.Size(207, 20);
             this.txtCalle.TabIndex = 20;
+            this.txtCalle.TextChanged += new System.EventHandler(this.txtCalle_TextChanged);
             // 
             // txtDepto
             // 
@@ -237,6 +258,7 @@
             this.txtDepto.Name = "txtDepto";
             this.txtDepto.Size = new System.Drawing.Size(207, 20);
             this.txtDepto.TabIndex = 21;
+            this.txtDepto.TextChanged += new System.EventHandler(this.txtDepto_TextChanged);
             // 
             // txtTipoID
             // 
@@ -244,6 +266,7 @@
             this.txtTipoID.Name = "txtTipoID";
             this.txtTipoID.Size = new System.Drawing.Size(207, 20);
             this.txtTipoID.TabIndex = 22;
+            this.txtTipoID.TextChanged += new System.EventHandler(this.txtTipoID_TextChanged);
             // 
             // txtNumID
             // 
@@ -251,25 +274,28 @@
             this.txtNumID.Name = "txtNumID";
             this.txtNumID.Size = new System.Drawing.Size(207, 20);
             this.txtNumID.TabIndex = 23;
+            this.txtNumID.TextChanged += new System.EventHandler(this.txtNumID_TextChanged);
             this.txtNumID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(180, 328);
+            this.btnCrear.Location = new System.Drawing.Point(179, 328);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
             this.btnCrear.TabIndex = 24;
             this.btnCrear.Text = "Crear";
             this.btnCrear.UseVisualStyleBackColor = true;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click_1);
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(261, 328);
+            this.btnCancelar.Location = new System.Drawing.Point(260, 328);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 25;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
             // 
             // groupBox1
             // 
@@ -287,12 +313,13 @@
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Domicilio";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // FormAltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(358, 359);
+            this.ClientSize = new System.Drawing.Size(358, 365);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnCrear);
