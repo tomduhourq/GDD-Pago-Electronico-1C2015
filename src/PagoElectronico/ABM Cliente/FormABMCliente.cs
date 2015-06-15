@@ -67,8 +67,18 @@ namespace PagoElectronico.ABM_Cliente
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-
+            FormModifCliente mc = new FormModifCliente();
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+            dtgCliente.DataSource = dao.search(txtNombre.Text, txtApellido.Text, cmbTipoID.SelectedText, txtNumID.Text, txtEmail.Text);
+        }
+
+        private void cmbTipoID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

@@ -112,5 +112,42 @@ namespace PagoElectronico.Models.DAO
         {
             return DB.ExecuteReaderSingle<Cliente>("SELECT * FROM " + tabla + " WHERE usuario = @1", userId);
         }
+
+        public List<Cliente> search(string first_name, string last_name, string identification_type, string identification_number, string email) { 
+            List<Cliente> lc = new List<Cliente>();
+
+            if (String.IsNullOrEmpty(first_name) && String.IsNullOrEmpty(last_name) && String.IsNullOrEmpty(identification_number)
+                && String.IsNullOrEmpty(identification_number) && String.IsNullOrEmpty(email)) {
+                    String query = String.Format("SELECT * FROM VIDA_ESTATICA.CLiente");
+                    return DB.ExecuteReader<Cliente>(query);
+            }
+
+
+            String base_query = String.Format("SELECT * FROM VIDA_ESTATICA.Cliente WHERE");
+            if (!String.IsNullOrEmpty(first_name))
+            {
+                base_query += String.Format(" nombre = {0} AND", first_name);
+            }
+            if (!String.IsNullOrEmpty(last_name))
+            {
+                base_query += String.Format(" apellido = {0} AND", last_name);
+            }
+            if (!String.IsNullOrEmpty(identification_type))
+            {
+                base_query += String.Format(" tipo_documento = ( select top 1 id from VIDA_ESTATICA.Tipo_Documento where descripcion = '{0}') AND", identification_type);
+            }
+            if (!String.IsNullOrEmpty(identification_number))
+            {
+                base_query += String.Format(" documento ={0} AND", identification_number);
+            }
+            if (!String.IsNullOrEmpty(email))
+            {
+                base_query += String.Format(" apellido LIKE '%{0}%' AND", email);
+            }
+
+            base_query = base_query.Substring(0, base_query.Length - 3);
+
+            return DB.ExecuteReader<Cliente>(base_query);
+        }
     }
 }

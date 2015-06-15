@@ -102,6 +102,7 @@
             this.cmbTipoID.Name = "cmbTipoID";
             this.cmbTipoID.Size = new System.Drawing.Size(120, 21);
             this.cmbTipoID.TabIndex = 7;
+            this.cmbTipoID.SelectedIndexChanged += new System.EventHandler(this.cmbTipoID_SelectedIndexChanged);
             // 
             // btnModificar
             // 
@@ -200,6 +201,7 @@
             this.btnBuscar.TabIndex = 5;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // dtgCliente
             // 
@@ -208,6 +210,7 @@
             this.dtgCliente.Name = "dtgCliente";
             this.dtgCliente.Size = new System.Drawing.Size(274, 121);
             this.dtgCliente.TabIndex = 6;
+            this.dtgCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgCliente_CellContentClick);
             // 
             // FormABMCliente
             // 
