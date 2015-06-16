@@ -11,7 +11,7 @@ namespace PagoElectronico.Models.BO
         public Cheque() { }
 
         private DataRow dr;
-
+      
         public long id {get; set;}
         public long id_egreso {get; set;}
         public DateTime retiro_fecha {get; set;}
@@ -27,8 +27,8 @@ namespace PagoElectronico.Models.BO
                 id = Convert.ToInt64(dr["id"]);
             if (dcc.Contains("id_egreso"))
                 id_egreso = Convert.ToInt64(dr["id_egreso"]);
-            if(dcc.Contains("retiro_fecha"))
-                retiro_fecha = Convert.ToDateTime(dr["retiro_fecha"]);
+            if(dcc.Contains("fecha"))
+                retiro_fecha = Convert.ToDateTime(dr["fecha"]);
             if (dcc.Contains("importe"))
                 importe = Convert.ToDouble(dr["importe"]);
             if (dcc.Contains("cuenta_destino"))

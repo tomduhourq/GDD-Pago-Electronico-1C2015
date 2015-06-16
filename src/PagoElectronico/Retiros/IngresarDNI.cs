@@ -17,6 +17,7 @@ namespace PagoElectronico.Retiros
         private Cliente cliente {get; set;}
         private Cheque cheque { get; set; }
         private DAOCheque daoCheque = new DAOCheque();
+        private DAORetiro daoRetiro = new DAORetiro();
 
         public IngresarDNI(Cliente cli, Cheque cheq)
         {
@@ -44,13 +45,25 @@ namespace PagoElectronico.Retiros
         {
             if(Convert.ToInt64(textBox1.Text) == cliente.documento){
                 Cheque inserted = daoCheque.create(cheque);
-                if(inserted.id_egreso == cheque.id_egreso)
-                    MessageBox.Show("Su cheque tiene número de egreso: " + cheque.id_egreso);
+                Retiro ret = daoRetiro.create(CopyCheque(cheque));
+                if(inserted.id_egreso == cheque.id_egreso && ret.cuenta_destino == cheque.cuenta_destino)
+                    MessageBox.Show("Su cheque tiene número de egreso: " + cheque.id_egreso + " por el mismo banco que su cuenta");
             }
             else {
                 MessageBox.Show("El DNI no coincide con el del cliente logueado. Esta ventana se cerrará.");
                 this.Close();
             }
+        }
+
+        private Retiro CopyCheque(Cheque cheque)
+        {
+            Retiro ret = new Retiro();
+            ret.cuenta_destino = Convert.ToInt64(cheque.cuenta_destino);
+            ret.fecha = cheque.retiro_fecha;
+            ret.importe = cheque.importe;
+            ret.moneda = Convert.ToInt32(cheque.tipo_moneda);
+            return ret;
+
         }
     }
 }

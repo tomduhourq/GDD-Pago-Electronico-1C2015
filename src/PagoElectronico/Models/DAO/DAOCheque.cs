@@ -13,7 +13,7 @@ namespace PagoElectronico.Models.DAO
             : base("VIDA_ESTATICA.Cheque", "id") {
         }
 
-         private static string columns = "id_egreso,retiro_fecha,importe,cuenta_destino,tipo_moneda,cod_banco";
+         private static string columns = "id_egreso,fecha,importe,cuenta_destino,tipo_moneda,cod_banco";
 
          public int generarEgreso()
          {

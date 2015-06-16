@@ -328,6 +328,7 @@ CREATE TABLE VIDA_ESTATICA.Retiro (
 	FOREIGN KEY(moneda) REFERENCES VIDA_ESTATICA.Moneda(id)
 )
 
+
 --
 -- DATA INSERT
 --
@@ -404,16 +405,13 @@ SELECT DISTINCT Cli_Nombre, Cli_Apellido, Cli_Nro_Doc, Cli_Dom_Calle,Cli_Dom_Nro
 Cli_Dom_Depto,Cli_Fecha_Nac,Cli_Mail,Cli_Pais_Codigo, Cli_Tipo_Doc_Cod, NULL
 FROM [GD1C2015].[gd_esquema].[Maestra]
 
+GO
 UPDATE VIDA_ESTATICA.Cliente
 SET usuario = 'admin'
 WHERE id = 1;
+GO
 
-
-UPDATE VIDA_ESTATICA.Tarjeta
-SET cod_cli = 1
-WHERE id in (1,2,3,4,5,6);
-
-INSERT INTO VIDA_ESTATICA.Cuenta
+INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta, cod_banco, fecha_creacion, estado, pais, fecha_cierre, tipo_cuenta, tipo_moneda, cod_cli)
 SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 

@@ -210,7 +210,7 @@
             this.dtgCliente.Name = "dtgCliente";
             this.dtgCliente.Size = new System.Drawing.Size(274, 121);
             this.dtgCliente.TabIndex = 6;
-            this.dtgCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgCliente_CellContentClick);
+            //this.dtgCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgCliente_CellContentClick);
             // 
             // FormABMCliente
             // 

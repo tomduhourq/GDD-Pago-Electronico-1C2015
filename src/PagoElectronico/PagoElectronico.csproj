@@ -147,6 +147,7 @@
     <Compile Include="Models\BO\Emisor.cs" />
     <Compile Include="Models\BO\EstadoCuenta.cs" />
     <Compile Include="Models\BO\Funcionalidad.cs" />
+    <Compile Include="Models\BO\Retiro.cs" />
     <Compile Include="Models\BO\Rol.cs" />
     <Compile Include="Models\BO\Tarjeta.cs" />
     <Compile Include="Models\BO\TipoCuenta.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Models\DAO\DAOFuncionalidad.cs" />
     <Compile Include="Models\DAO\DAOMoneda.cs" />
     <Compile Include="Models\DAO\DAOPais.cs" />
+    <Compile Include="Models\DAO\DAORetiro.cs" />
     <Compile Include="Models\DAO\DAORol.cs" />
     <Compile Include="Models\DAO\DAOTarjeta.cs" />
     <Compile Include="Models\DAO\DAOTipo_Cuenta.cs" />
