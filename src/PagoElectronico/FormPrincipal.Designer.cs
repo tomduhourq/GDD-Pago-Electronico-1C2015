@@ -31,14 +31,16 @@
             this.lblSeleccionRol = new System.Windows.Forms.Label();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.groupAdmin = new System.Windows.Forms.GroupBox();
+            this.btnConSaldoAdm = new System.Windows.Forms.Button();
             this.btnABMCuentas = new System.Windows.Forms.Button();
             this.btnABMCliente = new System.Windows.Forms.Button();
             this.btnABMRol = new System.Windows.Forms.Button();
             this.groupCliente = new System.Windows.Forms.GroupBox();
+            this.btnConSaldo = new System.Windows.Forms.Button();
+            this.btnTransferencias = new System.Windows.Forms.Button();
             this.btnCuentasCliente = new System.Windows.Forms.Button();
             this.btnRetiros = new System.Windows.Forms.Button();
             this.btnDepositos = new System.Windows.Forms.Button();
-            this.btnTransferencias = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.groupCliente.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +68,7 @@
             // 
             // groupAdmin
             // 
+            this.groupAdmin.Controls.Add(this.btnConSaldoAdm);
             this.groupAdmin.Controls.Add(this.btnABMCuentas);
             this.groupAdmin.Controls.Add(this.btnABMCliente);
             this.groupAdmin.Controls.Add(this.btnABMRol);
@@ -76,6 +79,16 @@
             this.groupAdmin.TabStop = false;
             this.groupAdmin.Text = "Funciones Administrador";
             this.groupAdmin.Visible = false;
+            // 
+            // btnConSaldoAdm
+            // 
+            this.btnConSaldoAdm.Location = new System.Drawing.Point(250, 20);
+            this.btnConSaldoAdm.Name = "btnConSaldoAdm";
+            this.btnConSaldoAdm.Size = new System.Drawing.Size(92, 23);
+            this.btnConSaldoAdm.TabIndex = 5;
+            this.btnConSaldoAdm.Text = "Consulta Saldos";
+            this.btnConSaldoAdm.UseVisualStyleBackColor = true;
+            this.btnConSaldoAdm.Click += new System.EventHandler(this.btnConSaldoAdm_Click);
             // 
             // btnABMCuentas
             // 
@@ -109,6 +122,7 @@
             // 
             // groupCliente
             // 
+            this.groupCliente.Controls.Add(this.btnConSaldo);
             this.groupCliente.Controls.Add(this.btnTransferencias);
             this.groupCliente.Controls.Add(this.btnCuentasCliente);
             this.groupCliente.Controls.Add(this.btnRetiros);
@@ -120,6 +134,26 @@
             this.groupCliente.TabStop = false;
             this.groupCliente.Text = "Funciones Cliente";
             this.groupCliente.Visible = false;
+            // 
+            // btnConSaldo
+            // 
+            this.btnConSaldo.Location = new System.Drawing.Point(250, 20);
+            this.btnConSaldo.Name = "btnConSaldo";
+            this.btnConSaldo.Size = new System.Drawing.Size(92, 23);
+            this.btnConSaldo.TabIndex = 4;
+            this.btnConSaldo.Text = "Consulta Saldos";
+            this.btnConSaldo.UseVisualStyleBackColor = true;
+            this.btnConSaldo.Click += new System.EventHandler(this.btnConSaldo_Click);
+            // 
+            // btnTransferencias
+            // 
+            this.btnTransferencias.Location = new System.Drawing.Point(7, 49);
+            this.btnTransferencias.Name = "btnTransferencias";
+            this.btnTransferencias.Size = new System.Drawing.Size(88, 23);
+            this.btnTransferencias.TabIndex = 4;
+            this.btnTransferencias.Text = "Transferencias";
+            this.btnTransferencias.UseVisualStyleBackColor = true;
+            this.btnTransferencias.Click += new System.EventHandler(this.btnTransferencias_Click);
             // 
             // btnCuentasCliente
             // 
@@ -150,16 +184,6 @@
             this.btnDepositos.Text = "Depósitos";
             this.btnDepositos.UseVisualStyleBackColor = true;
             this.btnDepositos.Click += new System.EventHandler(this.btnDepositos_Click);
-            // 
-            // btnTransferencias
-            // 
-            this.btnTransferencias.Location = new System.Drawing.Point(7, 49);
-            this.btnTransferencias.Name = "btnTransferencias";
-            this.btnTransferencias.Size = new System.Drawing.Size(88, 23);
-            this.btnTransferencias.TabIndex = 4;
-            this.btnTransferencias.Text = "Transferencias";
-            this.btnTransferencias.UseVisualStyleBackColor = true;
-            this.btnTransferencias.Click += new System.EventHandler(this.btnTransferencias_Click);
             // 
             // FormPrincipal
             // 
@@ -193,6 +217,8 @@
         private System.Windows.Forms.Button btnDepositos;
         private System.Windows.Forms.Button btnCuentasCliente;
         private System.Windows.Forms.Button btnRetiros;
+        private System.Windows.Forms.Button btnConSaldoAdm;
+        private System.Windows.Forms.Button btnConSaldo;
         private System.Windows.Forms.Button btnTransferencias;
     }
 }

@@ -78,7 +78,7 @@ namespace PagoElectronico
 
         private void btnABMCuentas_Click(object sender, EventArgs e)
         {
-            FormABMCuenta frmCuentas = new FormABMCuenta();
+            FormABMCuenta frmCuentas = new FormABMCuenta(false);
             frmCuentas.Show();
         }
 
@@ -90,7 +90,7 @@ namespace PagoElectronico
 
         private void btnCuentasCliente_Click(object sender, EventArgs e)
         {
-            FormABMCuenta frmCuentas = new FormABMCuenta(dao.retrieveBy_user(user.Name));
+            FormABMCuenta frmCuentas = new FormABMCuenta(dao.retrieveBy_user(user.Name),false);
             frmCuentas.Show();
         }
 
@@ -100,6 +100,17 @@ namespace PagoElectronico
             frmRetiros.Show();
         }
 
+        private void btnConSaldo_Click(object sender, EventArgs e)
+        {
+            FormABMCuenta frmConSaldo = new FormABMCuenta(dao.retrieveBy_user(user.Name), true);
+            frmConSaldo.ShowDialog();
+        }
+
+        private void btnConSaldoAdm_Click(object sender, EventArgs e)
+        {
+            FormABMCuenta frmConSaldo = new FormABMCuenta(true);
+            frmConSaldo.ShowDialog();
+        }
         private void btnTransferencias_Click(object sender, EventArgs e)
         {
             FormTransferencias frmTrans = new FormTransferencias(dao.retrieveBy_user(user.Name));
