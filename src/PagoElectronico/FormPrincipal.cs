@@ -102,7 +102,7 @@ namespace PagoElectronico
 
         private void btnTransferencias_Click(object sender, EventArgs e)
         {
-            FormTransferencias frmTrans = new FormTransferencias();
+            FormTransferencias frmTrans = new FormTransferencias(dao.retrieveBy_user(user.Name));
             frmTrans.Show();
         }
 

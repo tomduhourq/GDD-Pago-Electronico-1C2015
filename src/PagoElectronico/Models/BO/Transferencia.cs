@@ -16,11 +16,18 @@ namespace PagoElectronico.Models.BO
             initialize(dr);
         }
 
+        public Transferencia setData(DataRow dr)
+        {
+            initialize(dr);
+
+            return this;
+        }
         private DataRow dr;
   
         public long id {get; set;}
         public DateTime fecha {get; set;}
         public int costo {get; set;}
+        public double importe { get; set; }
         public long cuenta_origen {get; set;}
         public long cuenta_destino {get; set;}
         public int tipo_moneda {get; set;}
@@ -43,6 +50,8 @@ namespace PagoElectronico.Models.BO
                 cuenta_destino = Convert.ToInt64(dr["cuenta_destino"]);
             if (dcc.Contains("tipo_moneda"))
                 tipo_moneda = Convert.ToInt32(dr["tipo_moneda"]);
+            if (dcc.Contains("importe"))
+                importe = Convert.ToDouble(dr["importe"]);
             
             return this;
         }
