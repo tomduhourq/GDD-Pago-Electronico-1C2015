@@ -15,6 +15,7 @@ using PagoElectronico.ABM_Cuenta;
 using PagoElectronico.Models.DAO;
 using PagoElectronico.Depositos;
 using PagoElectronico.Retiros;
+using PagoElectronico.Transferencias;
 
 namespace PagoElectronico
 {
@@ -97,6 +98,12 @@ namespace PagoElectronico
         {
             FormRetiros frmRetiros = new FormRetiros(dao.retrieveBy_user(user.Name));
             frmRetiros.Show();
+        }
+
+        private void btnTransferencias_Click(object sender, EventArgs e)
+        {
+            FormTransferencias frmTrans = new FormTransferencias();
+            frmTrans.Show();
         }
 
    

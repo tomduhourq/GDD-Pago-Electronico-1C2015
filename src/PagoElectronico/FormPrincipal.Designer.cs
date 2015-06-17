@@ -38,6 +38,7 @@
             this.btnCuentasCliente = new System.Windows.Forms.Button();
             this.btnRetiros = new System.Windows.Forms.Button();
             this.btnDepositos = new System.Windows.Forms.Button();
+            this.btnTransferencias = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.groupCliente.SuspendLayout();
             this.SuspendLayout();
@@ -108,6 +109,7 @@
             // 
             // groupCliente
             // 
+            this.groupCliente.Controls.Add(this.btnTransferencias);
             this.groupCliente.Controls.Add(this.btnCuentasCliente);
             this.groupCliente.Controls.Add(this.btnRetiros);
             this.groupCliente.Controls.Add(this.btnDepositos);
@@ -149,6 +151,16 @@
             this.btnDepositos.UseVisualStyleBackColor = true;
             this.btnDepositos.Click += new System.EventHandler(this.btnDepositos_Click);
             // 
+            // btnTransferencias
+            // 
+            this.btnTransferencias.Location = new System.Drawing.Point(7, 49);
+            this.btnTransferencias.Name = "btnTransferencias";
+            this.btnTransferencias.Size = new System.Drawing.Size(88, 23);
+            this.btnTransferencias.TabIndex = 4;
+            this.btnTransferencias.Text = "Transferencias";
+            this.btnTransferencias.UseVisualStyleBackColor = true;
+            this.btnTransferencias.Click += new System.EventHandler(this.btnTransferencias_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,5 +193,6 @@
         private System.Windows.Forms.Button btnDepositos;
         private System.Windows.Forms.Button btnCuentasCliente;
         private System.Windows.Forms.Button btnRetiros;
+        private System.Windows.Forms.Button btnTransferencias;
     }
 }
