@@ -156,7 +156,7 @@ CREATE TABLE VIDA_ESTATICA.Usuario (
 	activo bit NOT NULL
 		CONSTRAINT "usuario_activo" DEFAULT 1,
 	pregunta varchar(50) NOT NULL,
-	respuesta varchar(25) NOT NULL,
+	respuesta varchar(100) NOT NULL,
 	PRIMARY KEY (name)
 )
 
@@ -204,9 +204,9 @@ CREATE TABLE VIDA_ESTATICA.Tipo_Cuenta(
 	descripcion varchar(40) NOT NULL,
 	valor decimal NOT NULL,
 	duracion int NOT NULL,
+	costo_transaccion INT NOT NULL
 	PRIMARY KEY(id)
 )
-
 
 
 CREATE TABLE VIDA_ESTATICA.Tipo_Documento(
@@ -295,12 +295,13 @@ CREATE TABLE VIDA_ESTATICA.Transferencia(
 	id numeric(18,0) IDENTITY NOT NULL,
 	fecha DATETIME,
 	importe numeric(15,2) NOT NULL,
-	costo numeric(10,2) NOT NULL,
+	costo int NOT NULL,
+	cuenta_origen numeric(16, 0),
 	cuenta_destino numeric(16,0),
 	tipo_moneda numeric(4,0),
-	cod_banco numeric(18,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(id),
+	FOREIGN KEY (cuenta_origen) REFERENCES VIDA_ESTATICA.Cuenta(id),
 	FOREIGN KEY (cuenta_destino) REFERENCES VIDA_ESTATICA.Cuenta(id)
 )
 
@@ -350,7 +351,7 @@ INSERT INTO VIDA_ESTATICA.Rol (nombre, activo) VALUES
 ('Cliente', 1) 
 
 INSERT INTO VIDA_ESTATICA.Usuario VALUES 
-('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', GETDATE(), NULL, 0, 1, 'Dog?', 'Dawg');
+('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', GETDATE(), NULL, 0, 1, 'Dog?', 'F5F4EE52452AD2CF44C2C8C42518A734678F09FBFD809DB1B0BE3AD40DB87403');
 
 INSERT INTO VIDA_ESTATICA.Rol_Usuario VALUES
 ('admin', 1),
@@ -394,11 +395,11 @@ FROM gd_esquema.Maestra where(Tarjeta_Emisor_Descripcion is not null)
 
 INSERT INTO VIDA_ESTATICA.Moneda(descripcion) Values('Dolar');
 
-INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion) Values
-('Gratuita',0,365),
-('Bronce',40,365),
-('Plata',80,365),
-('Oro',120,600);
+INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion, costo_transaccion) Values
+('Gratuita',0,365, 120),
+('Bronce',40,365, 80),
+('Plata',80,365, 60),
+('Oro',120,600, 20);
 
 INSERT INTO VIDA_ESTATICA.Cliente
 SELECT DISTINCT Cli_Nombre, Cli_Apellido, Cli_Nro_Doc, Cli_Dom_Calle,Cli_Dom_Nro,Cli_Dom_Piso,
@@ -419,10 +420,14 @@ JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
 WHERE Banco_Cogido IS NOT NULL;
 GO
 
+-- Calculo antes de migrar los depósitos, retiros y transferencias el saldo inicial de las cuentas
 UPDATE VIDA_ESTATICA.Cuenta
-SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe), 0) 
-			 FROM gd_esquema.Maestra 
+SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe), 0) + ISNULL(SUM(Trans_Importe), 0)
+			 FROM gd_esquema.Maestra
 			 WHERE num_cuenta = Cuenta_Numero AND Banco_Cogido = Cuenta.cod_banco )
+GO
+
+CREATE INDEX cuenta_idx ON VIDA_ESTATICA.Cuenta (num_cuenta, cod_banco);
 GO
 
 INSERT INTO VIDA_ESTATICA.Tarjeta(numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_banco, cod_cli)
@@ -455,6 +460,12 @@ GO
 IF OBJECT_ID('VIDA_ESTATICA.updateSaldoAfterRetiro') IS NOT NULL
 BEGIN
 	DROP TRIGGER VIDA_ESTATICA.updateSaldoAfterRetiro;
+END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.updateSaldoAfterTransferencia') IS NOT NULL
+BEGIN
+	DROP TRIGGER VIDA_ESTATICA.updateSaldoAfterTransferencia;
 END;
 GO
 
@@ -496,6 +507,29 @@ AS BEGIN TRANSACTION
 COMMIT;
 GO
 
+CREATE TRIGGER VIDA_ESTATICA.updateSaldoAfterTransferencia ON VIDA_ESTATICA.Transferencia
+AFTER INSERT
+AS BEGIN TRANSACTION
+
+	DECLARE @uImporte numeric(15, 2);
+	DECLARE @uCuenta numeric(16, 0);
+	DECLARE @costo int;
+	
+	-- Necesito la última fila insertada.
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino
+	FROM inserted 
+	ORDER BY id DESC;
+	
+	SELECT @costo = costo_transaccion 
+	FROM VIDA_ESTATICA.Tipo_Cuenta
+	WHERE id = (SELECT tipo_cuenta FROM VIDA_ESTATICA.Cuenta WHERE id = @uCuenta)
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo + @uImporte - @costo
+	WHERE id = @uCuenta;
+COMMIT;
+GO
+
 INSERT INTO VIDA_ESTATICA.Deposito(fecha, importe, tipo_moneda, cuenta_destino, tarjeta_id)
 SELECT DISTINCT Deposito_Fecha, Deposito_Importe, 1, c.id , t.id
 FROM gd_esquema.Maestra m
@@ -520,6 +554,19 @@ FROM gd_esquema.Maestra m
 INNER JOIN VIDA_ESTATICA.Cuenta c
 ON c.num_cuenta = m.Cuenta_Numero
 WHERE Cheque_Numero IS NOT NULL;
+GO
+
+INSERT INTO VIDA_ESTATICA.Transferencia(cuenta_origen, cuenta_destino, fecha, costo, tipo_moneda, importe)
+SELECT c1.id, c2.id, Transf_Fecha, tc.costo_transaccion, 1, Trans_Importe
+FROM gd_esquema.Maestra m
+INNER JOIN VIDA_ESTATICA.Cuenta c1
+ON m.Cuenta_Dest_Numero = c1.num_cuenta
+INNER JOIN VIDA_ESTATICA.Cuenta c2
+ON m.Cuenta_Numero = c2.num_cuenta
+INNER JOIN VIDA_ESTATICA.Tipo_Cuenta tc
+ON c2.tipo_cuenta = tc.id
+WHERE Trans_Importe IS NOT NULL;
+
 GO
 
 -- Stored Procedures

@@ -161,6 +161,7 @@
     <Compile Include="Models\BO\Moneda.cs" />
     <Compile Include="Models\BO\IBO.cs" />
     <Compile Include="Models\BO\Pais.cs" />
+    <Compile Include="Models\BO\Transferencia.cs" />
     <Compile Include="Models\DAO\DAOCheque.cs" />
     <Compile Include="Models\DAO\DAOCuenta.cs" />
     <Compile Include="Models\DAO\DAOBanco.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\DAO\DAOTarjeta.cs" />
     <Compile Include="Models\DAO\DAOTipo_Cuenta.cs" />
     <Compile Include="Models\DAO\DAOTipo_Documento.cs" />
+    <Compile Include="Models\DAO\DAOTransferencia.cs" />
     <Compile Include="Models\DataBase\DBAcess.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Utils\DB.cs" />
@@ -228,6 +230,9 @@
     <EmbeddedResource Include="Shared\BuscadorCliente.resx">
       <DependentUpon>BuscadorCliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Transferencias\FormTransferencias.resx">
+      <DependentUpon>FormTransferencias.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -261,6 +266,12 @@
       <DependentUpon>BuscadorCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Shared\UIUtils.cs" />
+    <Compile Include="Transferencias\FormTransferencias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transferencias\FormTransferencias.Designer.cs">
+      <DependentUpon>FormTransferencias.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -298,7 +309,6 @@
     <Folder Include="ABM de Usuario\" />
     <Folder Include="Facturacion\" />
     <Folder Include="Listados\" />
-    <Folder Include="Transferencias\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
