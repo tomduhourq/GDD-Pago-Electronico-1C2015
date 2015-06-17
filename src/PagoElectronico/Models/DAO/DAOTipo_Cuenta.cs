@@ -34,5 +34,10 @@ namespace PagoElectronico.Models.DAO {
             return DB.ExecuteReaderSingle<TipoCuenta>("SELECT * FROM " + tabla + " WHERE tipo = @1", _value);
 			
 		}
+
+        internal int costo_transaccion(long p)
+        {
+            return DB.ExecuteCardinal("SELECT costo_transaccion FROM +" + tabla + "t INNER JOIN VIDA_ESTATICA.Cuenta c ON c.tipo_cuenta = t.id WHERE c.id = " + p);
+        }
     }
 }

@@ -76,5 +76,10 @@ namespace PagoElectronico.Models.DAO
             return DB.ExecuteCardinal("SELECT Count(*) FROM " + tabla + " WHERE cod_banco = @1 and num_cuenta = @2", banco, numero) > 0;
         }
 
+
+        internal Cuenta retrieveBy_Banco_Numero(int banco, long numero)
+        {
+            return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM " + tabla + " WHERE cod_banco = " + banco + " AND num_cuenta= " + numero);
+        }
     }
 }

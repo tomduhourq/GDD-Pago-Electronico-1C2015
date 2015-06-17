@@ -427,6 +427,12 @@ SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe)
 			 WHERE num_cuenta = Cuenta_Numero AND Banco_Cogido = Cuenta.cod_banco )
 GO
 
+IF OBJECT_ID('VIDA_ESTATICA.cuenta_idx') IS NOT NULL
+BEGIN
+	DROP INDEX VIDA_ESTATICA.cuenta_idx;
+END;
+
+GO
 CREATE INDEX cuenta_idx ON VIDA_ESTATICA.Cuenta (num_cuenta, cod_banco);
 GO
 
@@ -513,10 +519,11 @@ AS BEGIN TRANSACTION
 
 	DECLARE @uImporte numeric(15, 2);
 	DECLARE @uCuenta numeric(16, 0);
+	DECLARE @oCuenta numeric(16, 0);
 	DECLARE @costo int;
 	
 	-- Necesito la última fila insertada.
-	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino, @oCuenta = cuenta_origen
 	FROM inserted 
 	ORDER BY id DESC;
 	
@@ -525,8 +532,12 @@ AS BEGIN TRANSACTION
 	WHERE id = (SELECT tipo_cuenta FROM VIDA_ESTATICA.Cuenta WHERE id = @uCuenta)
 	
 	UPDATE VIDA_ESTATICA.Cuenta
-	SET saldo = saldo + @uImporte - @costo
+	SET saldo = saldo + @uImporte
 	WHERE id = @uCuenta;
+	
+	UPDATE VIDA_ESTATICA.Cuenta
+	SET saldo = saldo - @uImporte - @costo
+	WHERE id = @oCuenta;
 COMMIT;
 GO
 

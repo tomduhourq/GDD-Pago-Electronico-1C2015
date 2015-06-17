@@ -63,9 +63,9 @@ namespace PagoElectronico.Retiros
         private void txtRetirar_KeyPress(object sender, KeyPressEventArgs e)
         {
             char keypress = e.KeyChar;
-            if (!Utils.isNumeric(keypress))
+            if (!Utils.isPlainNumeric(keypress))
             {
-                MessageBox.Show(" Solo puede ingresar un número o ,!");
+                MessageBox.Show("Solo puede ingresar un número!");
                 txtRetirar.Text = "";
             }
         }
