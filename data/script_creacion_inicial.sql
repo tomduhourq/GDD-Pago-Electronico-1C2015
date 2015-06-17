@@ -427,15 +427,6 @@ SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe)
 			 WHERE num_cuenta = Cuenta_Numero AND Banco_Cogido = Cuenta.cod_banco )
 GO
 
-IF OBJECT_ID('VIDA_ESTATICA.cuenta_idx') IS NOT NULL
-BEGIN
-	DROP INDEX VIDA_ESTATICA.cuenta_idx;
-END;
-
-GO
-CREATE INDEX cuenta_idx ON VIDA_ESTATICA.Cuenta (num_cuenta, cod_banco);
-GO
-
 INSERT INTO VIDA_ESTATICA.Tarjeta(numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_banco, cod_cli)
 SELECT DISTINCT Tarjeta_Numero, Tarjeta_Fecha_Emision, Tarjeta_Fecha_Vencimiento, Tarjeta_Codigo_Seg,
 e.id , ABS(Checksum(NewID()) % 3) + 10002 , NULL
