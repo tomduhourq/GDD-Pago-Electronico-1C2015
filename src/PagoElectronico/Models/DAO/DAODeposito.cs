@@ -35,5 +35,14 @@ namespace PagoElectronico.Models.DAO
                    depo.tarjeta_id.ToString() + "," +
                    depo.cuenta_destino.ToString();
         }
+
+
+        public List<Deposito> ultimosDepositosDeCuenta(Cuenta c)
+        {
+            string query = String.Format("SELECT TOP 5 * FROM {0} WHERE cuenta_destino = {1} ORDER BY id DESC", tabla, c.id);
+            return DB.ExecuteReader<Deposito>(query);
+        }
+
+        
     }
 }

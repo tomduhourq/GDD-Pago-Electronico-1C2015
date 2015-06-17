@@ -37,6 +37,7 @@
             this.btnCerrar = new System.Windows.Forms.Button();
             this.grillaCuentas = new System.Windows.Forms.DataGridView();
             this.lblCuentas = new System.Windows.Forms.Label();
+            this.btnConsultarSaldo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grillaCuentas)).BeginInit();
             this.SuspendLayout();
@@ -106,7 +107,7 @@
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(214, 348);
+            this.btnCerrar.Location = new System.Drawing.Point(416, 348);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
             this.btnCerrar.TabIndex = 23;
@@ -139,11 +140,24 @@
             this.lblCuentas.TabIndex = 24;
             this.lblCuentas.Text = "Cuentas del cliente";
             // 
+            // btnConsultarSaldo
+            // 
+            this.btnConsultarSaldo.Enabled = false;
+            this.btnConsultarSaldo.Location = new System.Drawing.Point(12, 348);
+            this.btnConsultarSaldo.Name = "btnConsultarSaldo";
+            this.btnConsultarSaldo.Size = new System.Drawing.Size(115, 23);
+            this.btnConsultarSaldo.TabIndex = 25;
+            this.btnConsultarSaldo.Text = "Consultar Saldo";
+            this.btnConsultarSaldo.UseVisualStyleBackColor = true;
+            this.btnConsultarSaldo.Visible = false;
+            this.btnConsultarSaldo.Click += new System.EventHandler(this.btnConsultarSaldo_Click);
+            // 
             // FormABMCuenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(503, 383);
+            this.Controls.Add(this.btnConsultarSaldo);
             this.Controls.Add(this.lblCuentas);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.grillaCuentas);
@@ -172,5 +186,6 @@
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.DataGridView grillaCuentas;
         private System.Windows.Forms.Label lblCuentas;
+        private System.Windows.Forms.Button btnConsultarSaldo;
     }
 }

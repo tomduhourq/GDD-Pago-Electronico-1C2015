@@ -35,5 +35,11 @@ namespace PagoElectronico.Models.DAO
                     retiro.cuenta_destino.ToString() + "," +
                     retiro.moneda.ToString();
         }
+
+        public List<Retiro> ultimosRetirosDeCuenta(Cuenta c)
+        {
+            string query = String.Format("SELECT TOP 5 * FROM {0} WHERE cuenta_destino = {1} ORDER BY id DESC", tabla, c.id);
+            return DB.ExecuteReader<Retiro>(query);
+        }
     }
 }

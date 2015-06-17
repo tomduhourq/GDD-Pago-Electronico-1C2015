@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using PagoElectronico.Models.BO;
 using PagoElectronico.Models.DAO;
 using PagoElectronico.Shared;
+using PagoElectronico.Consulta_Saldos;
 
 namespace PagoElectronico.ABM_Cuenta
 {
@@ -18,24 +19,27 @@ namespace PagoElectronico.ABM_Cuenta
         private List<Cuenta> cuentas;
         private DAOCuenta daoCuenta;
         private bool esCliente = false;
+        private bool esConsulta = false;
 
-        public FormABMCuenta()
+        public FormABMCuenta(bool esConsultaSaldos)
         {
             InitializeComponent();
             activarABM(false);
+            esConsulta = esConsultaSaldos;
             daoCuenta = new DAOCuenta();
-            
+            btnConsultarSaldo.Visible = esConsultaSaldos;
+
         }
 
-        public FormABMCuenta(Cliente _cli):this()
+        public FormABMCuenta(Cliente _cli, bool esConsultaSaldos):this(esConsultaSaldos)
         {
             cli = _cli;
             tbCliente.Text = String.Format("{0} {1}", cli.nombre, cli.apellido);
             btnBuscarCli.Visible = false;
             tbCliente.Width += 120;
             cargarGrilla(cli);
-            activarABM(true);
             esCliente = true;
+            btnConsultarSaldo.Enabled = esConsulta;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -55,8 +59,10 @@ namespace PagoElectronico.ABM_Cuenta
                 cli = buscadorCliente.getCliente();
                 tbCliente.Text = String.Format("{0} {1}", cli.nombre, cli.apellido);
                 cargarGrilla(cli);
-                activarABM(true);
+                activarABM(!esConsulta);
+                btnConsultarSaldo.Enabled = esConsulta;
             }
+
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -146,6 +152,11 @@ namespace PagoElectronico.ABM_Cuenta
             DataGridViewRow row = grillaCuentas.Rows[grillaCuentas.SelectedCells[0].RowIndex];
             long cuentaID = Convert.ToInt64(row.Cells["ID"].Value);
             return daoCuenta.retrieveBy_id(cuentaID);
+        }
+
+        private void btnConsultarSaldo_Click(object sender, EventArgs e)
+        {
+            new FormConsultaSaldo(obtenerCuentaSeleccionada()).ShowDialog();
         }
     }
 }

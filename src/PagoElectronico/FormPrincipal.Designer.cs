@@ -38,6 +38,8 @@
             this.btnCuentasCliente = new System.Windows.Forms.Button();
             this.btnRetiros = new System.Windows.Forms.Button();
             this.btnDepositos = new System.Windows.Forms.Button();
+            this.btnConSaldo = new System.Windows.Forms.Button();
+            this.btnConSaldoAdm = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.groupCliente.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +67,7 @@
             // 
             // groupAdmin
             // 
+            this.groupAdmin.Controls.Add(this.btnConSaldoAdm);
             this.groupAdmin.Controls.Add(this.btnABMCuentas);
             this.groupAdmin.Controls.Add(this.btnABMCliente);
             this.groupAdmin.Controls.Add(this.btnABMRol);
@@ -108,6 +111,7 @@
             // 
             // groupCliente
             // 
+            this.groupCliente.Controls.Add(this.btnConSaldo);
             this.groupCliente.Controls.Add(this.btnCuentasCliente);
             this.groupCliente.Controls.Add(this.btnRetiros);
             this.groupCliente.Controls.Add(this.btnDepositos);
@@ -149,6 +153,26 @@
             this.btnDepositos.UseVisualStyleBackColor = true;
             this.btnDepositos.Click += new System.EventHandler(this.btnDepositos_Click);
             // 
+            // btnConSaldo
+            // 
+            this.btnConSaldo.Location = new System.Drawing.Point(250, 20);
+            this.btnConSaldo.Name = "btnConSaldo";
+            this.btnConSaldo.Size = new System.Drawing.Size(92, 23);
+            this.btnConSaldo.TabIndex = 4;
+            this.btnConSaldo.Text = "Consulta Saldos";
+            this.btnConSaldo.UseVisualStyleBackColor = true;
+            this.btnConSaldo.Click += new System.EventHandler(this.btnConSaldo_Click);
+            // 
+            // btnConSaldoAdm
+            // 
+            this.btnConSaldoAdm.Location = new System.Drawing.Point(250, 20);
+            this.btnConSaldoAdm.Name = "btnConSaldoAdm";
+            this.btnConSaldoAdm.Size = new System.Drawing.Size(92, 23);
+            this.btnConSaldoAdm.TabIndex = 5;
+            this.btnConSaldoAdm.Text = "Consulta Saldos";
+            this.btnConSaldoAdm.UseVisualStyleBackColor = true;
+            this.btnConSaldoAdm.Click += new System.EventHandler(this.btnConSaldoAdm_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,5 +205,7 @@
         private System.Windows.Forms.Button btnDepositos;
         private System.Windows.Forms.Button btnCuentasCliente;
         private System.Windows.Forms.Button btnRetiros;
+        private System.Windows.Forms.Button btnConSaldoAdm;
+        private System.Windows.Forms.Button btnConSaldo;
     }
 }
