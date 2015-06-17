@@ -20,13 +20,40 @@ namespace PagoElectronico.Consulta_Saldos
             llenarDepositos(c);
             llenarRetiros(c);
             llenarTransferencias(c);
-            tbCuenta.Text = String.Format("ID: {0} Numero: {1} Banco: {2}", c.id,c.numCuenta,c.codBanco + " | " + new DAOBanco().retrieveBy_id(c.codBanco).nombre );
+            lblID.Text = c.id.ToString();
+            lblNum.Text = c.numCuenta.ToString();
+            lblBanc.Text = c.codBanco + " | " + new DAOBanco().retrieveBy_id(c.codBanco).nombre;
             
         }
 
         private void llenarTransferencias(Cuenta c)
         {
+            List<Transferencia> transferencias = new DAOTransferencia().ultimasTransferenciasDeCuenta(c);
 
+            DataTable table = new DataTable();
+            table.Columns.Add("Fecha");
+            table.Columns.Add("Importe");
+            table.Columns.Add("Costo");
+            table.Columns.Add("Banco");
+            table.Columns.Add("Moneda");
+
+
+            DataRow newRow;
+
+            foreach (Transferencia t in transferencias)
+            {
+                newRow = table.NewRow();
+                newRow["Fecha"] = t.fecha.ToString("yyyy-MM-dd"); ;
+                newRow["Importe"] = t.costo; //ACA VA EL IMPORTE que falta agregar a BO transferencia
+                newRow["Moneda"] = (Moneda.Monedas)t.tipo_moneda;
+                newRow["Costo"] = t.costo;
+                newRow["Banco"] = t.costo; // ACA FALTA BANCO que no esta en BO tampoco;
+
+
+                table.Rows.Add(newRow);
+            }
+
+            dgTransferencias.DataSource = table;
         }
 
         private void llenarDepositos(Cuenta c)
@@ -44,7 +71,7 @@ namespace PagoElectronico.Consulta_Saldos
             foreach (Deposito d in depositos)
             {
                 newRow = table.NewRow();
-                newRow["Fecha"] = d.fecha.Date.ToString(); ;
+                newRow["Fecha"] = d.fecha.ToString("yyyy-MM-dd"); ;
                 newRow["Importe"] = d.importe;
                 newRow["Moneda"] = (Moneda.Monedas)d.tipo_moneda;
                 newRow["Tarjeta"] = d.tarjeta_id;
@@ -69,19 +96,24 @@ namespace PagoElectronico.Consulta_Saldos
             foreach (Retiro r in retiros)
             {
                 newRow = table.NewRow();
-                newRow["Fecha"] = r.fecha.ToString(); ;
+                newRow["Fecha"] = r.fecha.ToString("yyyy-MM-dd"); ;
                 newRow["Importe"] = r.importe;
                 newRow["Moneda"] = (Moneda.Monedas)r.moneda;
 
                 table.Rows.Add(newRow);
             }
 
-            dgDepositos.DataSource = table;
+            dgRetiros.DataSource = table;
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FormConsultaSaldo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
