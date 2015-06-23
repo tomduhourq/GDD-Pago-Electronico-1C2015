@@ -126,11 +126,11 @@ namespace PagoElectronico.Models.DAO
             String base_query = String.Format("SELECT * FROM VIDA_ESTATICA.Cliente WHERE");
             if (!String.IsNullOrEmpty(first_name))
             {
-                base_query += String.Format(" nombre = {0} AND", first_name);
+                base_query += String.Format(" nombre like '{0}%' AND", first_name);
             }
             if (!String.IsNullOrEmpty(last_name))
             {
-                base_query += String.Format(" apellido = {0} AND", last_name);
+                base_query += String.Format(" apellido like '{0}%' AND", last_name);
             }
             if (!String.IsNullOrEmpty(identification_type))
             {
@@ -138,7 +138,7 @@ namespace PagoElectronico.Models.DAO
             }
             if (!String.IsNullOrEmpty(identification_number))
             {
-                base_query += String.Format(" documento ={0} AND", identification_number);
+                base_query += String.Format(" documento = '{0}' AND", identification_number);
             }
             if (!String.IsNullOrEmpty(email))
             {
