@@ -44,10 +44,8 @@ namespace PagoElectronico.ABM_Cuenta
             btnGuardar.Text = "Modificar";
             volcarDatosCliente(cuenta);
             id = cuenta.id;
-            cbBanco.Enabled = !esCliente;
             tbSaldo.Visible = true;
             lblSaldo.Visible = true;
-            
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -69,14 +67,13 @@ namespace PagoElectronico.ABM_Cuenta
             c.fechaCreacion = dtFechaApertura.Value.Date;
             c.estado = ((EstadoCuenta)cbEstado.SelectedItem).id;
             c.codigoCliente = codCli;
-            c.codBanco = ((Banco)cbBanco.SelectedItem).cod;
 
             Cuenta result = null;
 
             try
             {
                 result = new DAOCuenta().create(c);
-                MessageBox.Show(String.Format("Cuenta Numero:{0} Banco:{1} Tipo:{2}", result.numCuenta, result.codBanco, result.tipoCuenta), "Operacion Exitosa", MessageBoxButtons.OK);
+                MessageBox.Show(String.Format("Cuenta Numero:{0} Tipo:{1}", result.numCuenta, result.tipoCuenta), "Operacion Exitosa", MessageBoxButtons.OK);
             }
             catch (MyException exc)
             {
@@ -98,18 +95,17 @@ namespace PagoElectronico.ABM_Cuenta
             cbTipoCuenta.Items.AddRange(cuentas.ToArray());
             cbMoneda.Items.AddRange(monedas.ToArray());
             cbEstado.Items.AddRange(estados.ToArray());
-            cbBanco.Items.AddRange(bancos.ToArray());
         }
 
         private void volcarDatosCliente(Cuenta cuenta){
             
             tbNroCuenta.Text = cuenta.numCuenta.ToString();
             dtFechaApertura.Value = (DateTime)cuenta.fechaCreacion;
-            cbBanco.SelectedItem = bancos.Find(b => b.cod == cuenta.codBanco);
             cbEstado.SelectedItem = estados.Find(e => e.id == cuenta.estado);
             cbPais.SelectedItem = paises.Find(p => p.id == cuenta.pais);
             cbMoneda.SelectedItem = monedas.Find(m => m.id == cuenta.tipoMoneda);
             cbTipoCuenta.SelectedItem = cuentas.Find(c => c.id == cuenta.tipoCuenta);
+            tbSaldo.Text = cuenta.saldo.ToString();
         }
 
         private bool sonDatosValidos()
@@ -126,11 +122,6 @@ namespace PagoElectronico.ABM_Cuenta
             {
                 MessageBox.Show("no hay un tipo de cuenta seleccionado"); return false;
             }
-            if (cbBanco.SelectedIndex < 0)
-            {
-                MessageBox.Show("no hay un banco seleccionado"); return false;
-            }
-
             return true;
         }
     }

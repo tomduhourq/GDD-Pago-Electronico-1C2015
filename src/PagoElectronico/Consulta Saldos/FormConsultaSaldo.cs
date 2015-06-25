@@ -22,7 +22,6 @@ namespace PagoElectronico.Consulta_Saldos
             llenarTransferencias(c);
             lblID.Text = c.id.ToString();
             lblNum.Text = c.numCuenta.ToString();
-            lblBanc.Text = c.codBanco + " | " + new DAOBanco().retrieveBy_id(c.codBanco).nombre;
             
         }
 

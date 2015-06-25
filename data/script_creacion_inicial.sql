@@ -239,7 +239,6 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 CREATE TABLE VIDA_ESTATICA.Cuenta(
 	id numeric(16,0) NOT NULL IDENTITY,
 	num_cuenta numeric(16,0),
-	cod_banco numeric(18,0),
 	fecha_creacion DATETIME,
 	estado numeric(4,0),
 	pais numeric(18,0),
@@ -250,7 +249,6 @@ CREATE TABLE VIDA_ESTATICA.Cuenta(
 	cod_cli numeric(18,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (pais) REFERENCES VIDA_ESTATICA.Pais(id),
-	FOREIGN KEY (cod_banco) REFERENCES VIDA_ESTATICA.Banco(cod),
 	FOREIGN KEY (estado) REFERENCES VIDA_ESTATICA.Estado_Cuenta(id),
 	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(id),
 	FOREIGN KEY (tipo_cuenta) REFERENCES VIDA_ESTATICA.Tipo_Cuenta(id),	
@@ -412,8 +410,8 @@ SET usuario = 'admin'
 WHERE id = 1;
 GO
 
-INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta, cod_banco, fecha_creacion, estado, pais, fecha_cierre, tipo_cuenta, tipo_moneda, cod_cli)
-SELECT DISTINCT Cuenta_Numero,Banco_Cogido,Cuenta_Fecha_Creacion,4,
+INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta, fecha_creacion, estado, pais, fecha_cierre, tipo_cuenta, tipo_moneda, cod_cli)
+SELECT DISTINCT Cuenta_Numero,Cuenta_Fecha_Creacion,4,
 Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
 FROM gd_esquema.Maestra 
 JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
@@ -424,7 +422,7 @@ GO
 UPDATE VIDA_ESTATICA.Cuenta
 SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe), 0) + ISNULL(SUM(Trans_Importe), 0)
 			 FROM gd_esquema.Maestra
-			 WHERE num_cuenta = Cuenta_Numero AND Banco_Cogido = Cuenta.cod_banco )
+			 WHERE num_cuenta = Cuenta_Numero)
 GO
 
 INSERT INTO VIDA_ESTATICA.Tarjeta(numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_banco, cod_cli)

@@ -27,15 +27,15 @@ namespace PagoElectronico.Models.DAO
         {
             if (c.id == null || !c.id.HasValue)
             {
-                if (existeNumeroBanco(c.numCuenta, c.codBanco))
+                if (existeNumeroBanco(c.numCuenta))
                 {
                     throw new MyException("ya existe una cuenta con ese numero y banco");
                 }
 
-                string comando = "INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta,cod_banco,fecha_creacion,estado,pais,fecha_cierre,tipo_moneda,tipo_cuenta,cod_cli)"
-                                    + "VALUES ({0}, {1},{2},{3},{4},{5},{6},{7},{8});"
+                string comando = "INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta,fecha_creacion,estado,pais,fecha_cierre,tipo_moneda,tipo_cuenta,cod_cli)"
+                                    + "VALUES ({0},{1},{2},{3},{4},{5},{6},{7});"
                                     + "SELECT SCOPE_IDENTITY();";
-                comando = String.Format(comando,c.numCuenta,c.codBanco,fechaQuereable(c.fechaCreacion), c.estado, c.pais, "NULL", c.tipoMoneda,c.tipoCuenta,c.codigoCliente);
+                comando = String.Format(comando,c.numCuenta,fechaQuereable(c.fechaCreacion), c.estado, c.pais, "NULL", c.tipoMoneda,c.tipoCuenta,c.codigoCliente);
                 int insertado = DB.ExecuteCardinal(comando);
                 return retrieveBy_id(insertado);
             }
@@ -71,9 +71,9 @@ namespace PagoElectronico.Models.DAO
             return DB.ExecuteBigCardinal("SELECT MAX(num_cuenta) FROM "+ tabla) + 1;
         }
 
-        public bool existeNumeroBanco(object numero, object banco)
+        public bool existeNumeroBanco(object numero)
         {
-            return DB.ExecuteCardinal("SELECT Count(*) FROM " + tabla + " WHERE cod_banco = @1 and num_cuenta = @2", banco, numero) > 0;
+            return DB.ExecuteCardinal("SELECT Count(*) FROM " + tabla + " WHERE num_cuenta = @1", numero) > 0;
         }
 
 

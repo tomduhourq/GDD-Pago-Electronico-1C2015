@@ -44,8 +44,6 @@
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.cbEstado = new System.Windows.Forms.ComboBox();
-            this.cbBanco = new System.Windows.Forms.ComboBox();
-            this.lblBanco = new System.Windows.Forms.Label();
             this.tbSaldo = new System.Windows.Forms.TextBox();
             this.lblSaldo = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -195,38 +193,21 @@
             this.cbEstado.Size = new System.Drawing.Size(144, 21);
             this.cbEstado.TabIndex = 1;
             // 
-            // cbBanco
-            // 
-            this.cbBanco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBanco.FormattingEnabled = true;
-            this.cbBanco.Location = new System.Drawing.Point(71, 165);
-            this.cbBanco.Name = "cbBanco";
-            this.cbBanco.Size = new System.Drawing.Size(146, 21);
-            this.cbBanco.TabIndex = 4;
-            // 
-            // lblBanco
-            // 
-            this.lblBanco.AutoSize = true;
-            this.lblBanco.Location = new System.Drawing.Point(19, 168);
-            this.lblBanco.Name = "lblBanco";
-            this.lblBanco.Size = new System.Drawing.Size(38, 13);
-            this.lblBanco.TabIndex = 31;
-            this.lblBanco.Text = "Banco";
-            // 
             // tbSaldo
             // 
             this.tbSaldo.BackColor = System.Drawing.Color.White;
             this.tbSaldo.Enabled = false;
-            this.tbSaldo.Location = new System.Drawing.Point(104, 208);
+            this.tbSaldo.Location = new System.Drawing.Point(102, 166);
             this.tbSaldo.Name = "tbSaldo";
-            this.tbSaldo.Size = new System.Drawing.Size(113, 20);
+            this.tbSaldo.Size = new System.Drawing.Size(115, 20);
             this.tbSaldo.TabIndex = 32;
+            this.tbSaldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSaldo
             // 
             this.lblSaldo.AutoSize = true;
             this.lblSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaldo.Location = new System.Drawing.Point(19, 211);
+            this.lblSaldo.Location = new System.Drawing.Point(17, 168);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Size = new System.Drawing.Size(79, 13);
             this.lblSaldo.TabIndex = 33;
@@ -239,8 +220,6 @@
             this.ClientSize = new System.Drawing.Size(505, 245);
             this.Controls.Add(this.lblSaldo);
             this.Controls.Add(this.tbSaldo);
-            this.Controls.Add(this.lblBanco);
-            this.Controls.Add(this.cbBanco);
             this.Controls.Add(this.cbEstado);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnCerrar);
@@ -284,8 +263,6 @@
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.ComboBox cbEstado;
-        private System.Windows.Forms.ComboBox cbBanco;
-        private System.Windows.Forms.Label lblBanco;
         private System.Windows.Forms.TextBox tbSaldo;
         private System.Windows.Forms.Label lblSaldo;
     }

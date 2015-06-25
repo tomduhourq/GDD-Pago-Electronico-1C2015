@@ -39,8 +39,6 @@
             this.lblID = new System.Windows.Forms.Label();
             this.lblNum = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.lblBanc = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgRetiros)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgDepositos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgTransferencias)).BeginInit();
@@ -128,7 +126,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(13, 16);
+            this.label4.Location = new System.Drawing.Point(67, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(68, 13);
             this.label4.TabIndex = 6;
@@ -147,7 +145,7 @@
             // lblID
             // 
             this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(83, 16);
+            this.lblID.Location = new System.Drawing.Point(137, 16);
             this.lblID.Name = "lblID";
             this.lblID.Size = new System.Drawing.Size(18, 13);
             this.lblID.TabIndex = 9;
@@ -156,7 +154,7 @@
             // lblNum
             // 
             this.lblNum.AutoSize = true;
-            this.lblNum.Location = new System.Drawing.Point(156, 16);
+            this.lblNum.Location = new System.Drawing.Point(246, 16);
             this.lblNum.Name = "lblNum";
             this.lblNum.Size = new System.Drawing.Size(114, 13);
             this.lblNum.TabIndex = 11;
@@ -166,38 +164,17 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(106, 16);
+            this.label6.Location = new System.Drawing.Point(196, 16);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 10;
             this.label6.Text = "Numero:";
-            // 
-            // lblBanc
-            // 
-            this.lblBanc.AutoSize = true;
-            this.lblBanc.Location = new System.Drawing.Point(303, 16);
-            this.lblBanc.Name = "lblBanc";
-            this.lblBanc.Size = new System.Drawing.Size(66, 13);
-            this.lblBanc.TabIndex = 13;
-            this.lblBanc.Text = "BancoXXXX";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(258, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Banco:";
             // 
             // FormConsultaSaldo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(431, 622);
-            this.Controls.Add(this.lblBanc);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.lblNum);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.lblID);
@@ -235,7 +212,5 @@
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Label lblNum;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lblBanc;
-        private System.Windows.Forms.Label label7;
     }
 }

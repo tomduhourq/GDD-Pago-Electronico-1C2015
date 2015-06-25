@@ -21,7 +21,6 @@ namespace PagoElectronico.Models.BO
         
         public long? id { get; set; }
         public long? numCuenta { get; set; }
-        public int? codBanco { get; set; }
         public DateTime? fechaCreacion { get; set; }
         public int? estado { get; set; }
         public int? pais { get; set; }
@@ -46,8 +45,6 @@ namespace PagoElectronico.Models.BO
                 id = (dr["id"] == DBNull.Value) ? null : (long?)Convert.ToInt64(dr["id"]);
             if (dcc.Contains("num_cuenta"))
                 numCuenta = (dr["num_cuenta"] == DBNull.Value) ? null : (long?)Convert.ToInt64(dr["num_cuenta"]);
-            if (dcc.Contains("cod_banco"))
-                codBanco = (dr["cod_banco"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cod_banco"]);
             if (dcc.Contains("fecha_creacion"))
                 fechaCreacion = (dr["fecha_creacion"] == DBNull.Value) ? (DateTime?)null : Convert.ToDateTime(dr["fecha_creacion"]);
             if (dcc.Contains("estado"))
@@ -68,7 +65,6 @@ namespace PagoElectronico.Models.BO
             DAOPais daoPais = new DAOPais();
             DAOBanco daoBanco = new DAOBanco();
             cPais = daoPais.retrieveBy_id(pais);
-            banco = daoBanco.retrieveBy_id(codBanco);
             return this;
         }
 

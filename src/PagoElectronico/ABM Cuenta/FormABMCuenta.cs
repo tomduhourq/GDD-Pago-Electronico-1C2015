@@ -118,7 +118,6 @@ namespace PagoElectronico.ABM_Cuenta
             table.Columns.Add("Numero");
             table.Columns.Add("Tipo");
             table.Columns.Add("Estado");
-            table.Columns.Add("Banco");
             table.Columns.Add("Moneda");
 
             DataRow newRow;
@@ -130,12 +129,6 @@ namespace PagoElectronico.ABM_Cuenta
                 newRow["Numero"] = cuenta.numCuenta;
                 newRow["Tipo"] = (TipoCuenta.TiposCuenta)cuenta.tipoCuenta;
                 newRow["Estado"] = (EstadoCuenta.EstadosCuenta)cuenta.estado;
-
-                if (cuenta.codBanco != null)
-                {
-                    newRow["Banco"] = cuenta.codBanco;
-                }
-
                 newRow["Moneda"] = (Moneda.Monedas)cuenta.tipoMoneda;
 
                 table.Rows.Add(newRow);
