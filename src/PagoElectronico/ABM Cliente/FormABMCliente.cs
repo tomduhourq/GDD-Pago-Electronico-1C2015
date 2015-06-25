@@ -30,10 +30,10 @@ namespace PagoElectronico.ABM_Cliente
             if (lstTipos.Count > 0)
             {
                 cmbTipoID.Visible = true;
-
                 cmbTipoID.DataSource = lstTipos;
                 cmbTipoID.DisplayMember = "descripcion";
                 cmbTipoID.ValueMember = "id";
+                cmbTipoID.SelectedIndex = -1;
                 Console.ReadLine();
             } else {
 
@@ -61,7 +61,7 @@ namespace PagoElectronico.ABM_Cliente
 
         private void btnAlta_Click(object sender, EventArgs e)
         {
-            FormAltaCliente ac = new FormAltaCliente(new Cliente());
+            FormAltaCliente ac = new FormAltaCliente();
             ac.Show();
         }
 

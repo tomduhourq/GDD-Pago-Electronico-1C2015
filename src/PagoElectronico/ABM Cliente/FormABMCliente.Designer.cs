@@ -76,14 +76,14 @@
             this.txtEmail.Location = new System.Drawing.Point(140, 118);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(121, 20);
-            this.txtEmail.TabIndex = 9;
+            this.txtEmail.TabIndex = 4;
             // 
             // txtNumID
             // 
             this.txtNumID.Location = new System.Drawing.Point(140, 92);
             this.txtNumID.Name = "txtNumID";
             this.txtNumID.Size = new System.Drawing.Size(120, 20);
-            this.txtNumID.TabIndex = 8;
+            this.txtNumID.TabIndex = 3;
             this.txtNumID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumID_KeyPress);
             // 
             // btnEliminar
@@ -91,7 +91,7 @@
             this.btnEliminar.Location = new System.Drawing.Point(180, 154);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(88, 23);
-            this.btnEliminar.TabIndex = 3;
+            this.btnEliminar.TabIndex = 7;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
             // 
@@ -101,7 +101,7 @@
             this.cmbTipoID.Location = new System.Drawing.Point(140, 67);
             this.cmbTipoID.Name = "cmbTipoID";
             this.cmbTipoID.Size = new System.Drawing.Size(120, 21);
-            this.cmbTipoID.TabIndex = 7;
+            this.cmbTipoID.TabIndex = 2;
             this.cmbTipoID.SelectedIndexChanged += new System.EventHandler(this.cmbTipoID_SelectedIndexChanged);
             // 
             // btnModificar
@@ -109,7 +109,7 @@
             this.btnModificar.Location = new System.Drawing.Point(90, 154);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(84, 23);
-            this.btnModificar.TabIndex = 2;
+            this.btnModificar.TabIndex = 6;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
@@ -119,14 +119,14 @@
             this.txtApellido.Location = new System.Drawing.Point(140, 43);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(121, 20);
-            this.txtApellido.TabIndex = 6;
+            this.txtApellido.TabIndex = 1;
             // 
             // btnAlta
             // 
             this.btnAlta.Location = new System.Drawing.Point(6, 154);
             this.btnAlta.Name = "btnAlta";
             this.btnAlta.Size = new System.Drawing.Size(78, 23);
-            this.btnAlta.TabIndex = 1;
+            this.btnAlta.TabIndex = 5;
             this.btnAlta.Text = "Alta";
             this.btnAlta.UseVisualStyleBackColor = true;
             this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
@@ -136,7 +136,7 @@
             this.txtNombre.Location = new System.Drawing.Point(140, 20);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(121, 20);
-            this.txtNombre.TabIndex = 5;
+            this.txtNombre.TabIndex = 0;
             // 
             // label5
             // 
@@ -188,7 +188,7 @@
             this.btnLimpiar.Location = new System.Drawing.Point(19, 212);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(78, 23);
-            this.btnLimpiar.TabIndex = 4;
+            this.btnLimpiar.TabIndex = 0;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
@@ -198,7 +198,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(199, 212);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(94, 23);
-            this.btnBuscar.TabIndex = 5;
+            this.btnBuscar.TabIndex = 1;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
@@ -210,7 +210,6 @@
             this.dtgCliente.Name = "dtgCliente";
             this.dtgCliente.Size = new System.Drawing.Size(274, 121);
             this.dtgCliente.TabIndex = 6;
-            //this.dtgCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgCliente_CellContentClick);
             // 
             // FormABMCliente
             // 

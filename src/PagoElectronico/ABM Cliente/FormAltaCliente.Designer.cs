@@ -44,7 +44,6 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.txtMail = new System.Windows.Forms.TextBox();
-            this.txtNacionalidad = new System.Windows.Forms.TextBox();
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.txtPiso = new System.Windows.Forms.TextBox();
@@ -55,6 +54,7 @@
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbNacionalidad = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,7 +66,6 @@
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -76,7 +75,6 @@
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Apellido";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -86,7 +84,6 @@
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Numero ID";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
@@ -96,7 +93,6 @@
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Tipo ID";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
@@ -106,7 +102,6 @@
             this.label5.Size = new System.Drawing.Size(26, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Mail";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -116,7 +111,6 @@
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Numero";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label7
             // 
@@ -126,7 +120,6 @@
             this.label7.Size = new System.Drawing.Size(27, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Piso";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
@@ -136,7 +129,6 @@
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 7;
             this.label8.Text = "Calle";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 
@@ -146,7 +138,6 @@
             this.label9.Size = new System.Drawing.Size(36, 13);
             this.label9.TabIndex = 8;
             this.label9.Text = "Depto";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
@@ -156,7 +147,6 @@
             this.label10.Size = new System.Drawing.Size(43, 13);
             this.label10.TabIndex = 9;
             this.label10.Text = "Usuario";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // label11
             // 
@@ -166,7 +156,6 @@
             this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 10;
             this.label11.Text = "Nacionalidad";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // label12
             // 
@@ -176,55 +165,41 @@
             this.label12.Size = new System.Drawing.Size(108, 13);
             this.label12.TabIndex = 11;
             this.label12.Text = "Fecha de Nacimiento";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // dateNacimiento
             // 
             this.dateNacimiento.Location = new System.Drawing.Point(127, 119);
             this.dateNacimiento.Name = "dateNacimiento";
             this.dateNacimiento.Size = new System.Drawing.Size(208, 20);
-            this.dateNacimiento.TabIndex = 12;
-            this.dateNacimiento.ValueChanged += new System.EventHandler(this.dateNacimiento_ValueChanged);
+            this.dateNacimiento.TabIndex = 4;
             // 
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(127, 41);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(207, 20);
-            this.txtNombre.TabIndex = 13;
-            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
+            this.txtNombre.TabIndex = 1;
             // 
             // txtApellido
             // 
             this.txtApellido.Location = new System.Drawing.Point(127, 67);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(207, 20);
-            this.txtApellido.TabIndex = 14;
-            this.txtApellido.TextChanged += new System.EventHandler(this.txtApellido_TextChanged);
+            this.txtApellido.TabIndex = 2;
             // 
             // txtMail
             // 
             this.txtMail.Location = new System.Drawing.Point(127, 93);
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(207, 20);
-            this.txtMail.TabIndex = 15;
-            this.txtMail.TextChanged += new System.EventHandler(this.txtMail_TextChanged);
-            // 
-            // txtNacionalidad
-            // 
-            this.txtNacionalidad.Location = new System.Drawing.Point(127, 146);
-            this.txtNacionalidad.Name = "txtNacionalidad";
-            this.txtNacionalidad.Size = new System.Drawing.Size(208, 20);
-            this.txtNacionalidad.TabIndex = 16;
-            this.txtNacionalidad.TextChanged += new System.EventHandler(this.txtNacionalidad_TextChanged);
+            this.txtMail.TabIndex = 3;
             // 
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(59, 45);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(84, 20);
-            this.txtNumero.TabIndex = 17;
-            this.txtNumero.TextChanged += new System.EventHandler(this.txtNumero_TextChanged);
+            this.txtNumero.TabIndex = 1;
             this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // txtUsuario
@@ -232,16 +207,14 @@
             this.txtUsuario.Location = new System.Drawing.Point(127, 15);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(207, 20);
-            this.txtUsuario.TabIndex = 18;
-            this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
+            this.txtUsuario.TabIndex = 0;
             // 
             // txtPiso
             // 
             this.txtPiso.Location = new System.Drawing.Point(178, 45);
             this.txtPiso.Name = "txtPiso";
             this.txtPiso.Size = new System.Drawing.Size(41, 20);
-            this.txtPiso.TabIndex = 19;
-            this.txtPiso.TextChanged += new System.EventHandler(this.txtPiso_TextChanged);
+            this.txtPiso.TabIndex = 2;
             this.txtPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // txtCalle
@@ -249,32 +222,28 @@
             this.txtCalle.Location = new System.Drawing.Point(59, 19);
             this.txtCalle.Name = "txtCalle";
             this.txtCalle.Size = new System.Drawing.Size(270, 20);
-            this.txtCalle.TabIndex = 20;
-            this.txtCalle.TextChanged += new System.EventHandler(this.txtCalle_TextChanged);
+            this.txtCalle.TabIndex = 0;
             // 
             // txtDepto
             // 
             this.txtDepto.Location = new System.Drawing.Point(267, 45);
             this.txtDepto.Name = "txtDepto";
             this.txtDepto.Size = new System.Drawing.Size(62, 20);
-            this.txtDepto.TabIndex = 21;
-            this.txtDepto.TextChanged += new System.EventHandler(this.txtDepto_TextChanged);
+            this.txtDepto.TabIndex = 3;
             // 
             // txtTipoID
             // 
             this.txtTipoID.Location = new System.Drawing.Point(399, 15);
             this.txtTipoID.Name = "txtTipoID";
             this.txtTipoID.Size = new System.Drawing.Size(105, 20);
-            this.txtTipoID.TabIndex = 22;
-            this.txtTipoID.TextChanged += new System.EventHandler(this.txtTipoID_TextChanged);
+            this.txtTipoID.TabIndex = 6;
             // 
             // txtNumID
             // 
             this.txtNumID.Location = new System.Drawing.Point(574, 15);
             this.txtNumID.Name = "txtNumID";
             this.txtNumID.Size = new System.Drawing.Size(97, 20);
-            this.txtNumID.TabIndex = 23;
-            this.txtNumID.TextChanged += new System.EventHandler(this.txtNumID_TextChanged);
+            this.txtNumID.TabIndex = 7;
             this.txtNumID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNum_KeyPress);
             // 
             // btnCrear
@@ -282,7 +251,7 @@
             this.btnCrear.Location = new System.Drawing.Point(618, 149);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
-            this.btnCrear.TabIndex = 24;
+            this.btnCrear.TabIndex = 8;
             this.btnCrear.Text = "Crear";
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click_1);
@@ -292,7 +261,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(537, 149);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 25;
+            this.btnCancelar.TabIndex = 9;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
@@ -313,20 +282,28 @@
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Domicilio";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // cbNacionalidad
+            // 
+            this.cbNacionalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbNacionalidad.FormattingEnabled = true;
+            this.cbNacionalidad.Location = new System.Drawing.Point(127, 146);
+            this.cbNacionalidad.Name = "cbNacionalidad";
+            this.cbNacionalidad.Size = new System.Drawing.Size(207, 21);
+            this.cbNacionalidad.TabIndex = 5;
             // 
             // FormAltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 183);
+            this.Controls.Add(this.cbNacionalidad);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.txtNumID);
             this.Controls.Add(this.txtTipoID);
             this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.txtNacionalidad);
             this.Controls.Add(this.txtMail);
             this.Controls.Add(this.txtApellido);
             this.Controls.Add(this.txtNombre);
@@ -341,7 +318,6 @@
             this.Controls.Add(this.label1);
             this.Name = "FormAltaCliente";
             this.Text = "FormAltaCliente";
-            this.Load += new System.EventHandler(this.FormAltaCliente_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -367,7 +343,6 @@
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.TextBox txtMail;
-        private System.Windows.Forms.TextBox txtNacionalidad;
         private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtPiso;
@@ -378,5 +353,6 @@
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox cbNacionalidad;
     }
 }

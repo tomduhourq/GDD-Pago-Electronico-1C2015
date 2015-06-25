@@ -34,16 +34,20 @@ namespace PagoElectronico.Login
                         byte[] bytesDeHasheo = hasher.ComputeHash(encoderHash.GetBytes(txtPassword.Text));
                         string pass = bytesDeHasheoToString(bytesDeHasheo);
 
-                        if (!user.Password.Equals(pass)){
+                        if (!user.Password.Equals(pass))
+                        {
                             // llamar a VIDA_ESTATICA.updateIntentos
-                            user.ActualizarFallidos(); 
+                            user.ActualizarFallidos();
                             MessageBox.Show("Usuario y contraseña no validos", "Error!", MessageBoxButtons.OK);
+                            txtPassword.Text = "";
                         }
-                        else {
+                        else
+                        {
                             // Está activo?
                             if (!user.Activo)
                                 MessageBox.Show("Usuario inactivo para acceder al sistema", "Error!", MessageBoxButtons.OK);
-                            else {
+                            else
+                            {
                                 user.ReiniciarFallidos();
 
                                 // Paso al form Principal (requiere user siempre)
@@ -53,11 +57,17 @@ namespace PagoElectronico.Login
                             }
                         }
                     }
-                    else MessageBox.Show("Usuario y contraseña no validos", "Error!", MessageBoxButtons.OK);
+                    else
+                    {
+                        MessageBox.Show("Usuario y contraseña no validos", "Error!", MessageBoxButtons.OK);
+                        txtPassword.Text = "";
+                    }
+
                 }
                 else MessageBox.Show("Complete todos los campos", "Error!", MessageBoxButtons.OK);
             } catch { 
                 MessageBox.Show("Usuario y contraseña no validos", "Error!", MessageBoxButtons.OK);
+                txtPassword.Text = "";
             }
         }
 

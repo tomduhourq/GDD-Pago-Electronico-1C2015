@@ -14,12 +14,6 @@ namespace PagoElectronico.ABM_Cuenta
 {
     public partial class FormAltaCuenta : Form
     {
-        List<Pais> paises;
-        List<EstadoCuenta> estados;
-        List<Moneda> monedas;
-        List<TipoCuenta> cuentas;
-        List<Banco> bancos;
-
         long? id = null;
         int? codCli;
 
@@ -84,27 +78,20 @@ namespace PagoElectronico.ABM_Cuenta
         }
 
         private void cargarCombos(){
-
-            estados = new DAOEstadoCuenta().retrieveBase();
-            cuentas = new DAOTipoCuenta().retrieveBase();
-            paises = new DAOPais().retrieveBase();
-            monedas = new DAOMoneda().retrieveBase();
-            bancos = new DAOBanco().retrieveBase();
-
-            cbPais.Items.AddRange(paises.ToArray());
-            cbTipoCuenta.Items.AddRange(cuentas.ToArray());
-            cbMoneda.Items.AddRange(monedas.ToArray());
-            cbEstado.Items.AddRange(estados.ToArray());
+            cbPais.Items.AddRange(new DAOPais().retrieveBase().ToArray());
+            cbTipoCuenta.Items.AddRange(new DAOTipoCuenta().retrieveBase().ToArray());
+            cbMoneda.Items.AddRange(new DAOMoneda().retrieveBase().ToArray());
+            cbEstado.Items.AddRange(new DAOEstadoCuenta().retrieveBase().ToArray());
         }
 
         private void volcarDatosCliente(Cuenta cuenta){
             
             tbNroCuenta.Text = cuenta.numCuenta.ToString();
             dtFechaApertura.Value = (DateTime)cuenta.fechaCreacion;
-            cbEstado.SelectedItem = estados.Find(e => e.id == cuenta.estado);
-            cbPais.SelectedItem = paises.Find(p => p.id == cuenta.pais);
-            cbMoneda.SelectedItem = monedas.Find(m => m.id == cuenta.tipoMoneda);
-            cbTipoCuenta.SelectedItem = cuentas.Find(c => c.id == cuenta.tipoCuenta);
+            cbEstado.SelectedItem = new DAOEstadoCuenta().retrieveBase().Find(e => e.id == cuenta.estado);
+            cbPais.SelectedItem = new DAOPais().retrieveBase().Find(p => p.id == cuenta.pais);
+            cbMoneda.SelectedItem = new DAOMoneda().retrieveBase().Find(m => m.id == cuenta.tipoMoneda);
+            cbTipoCuenta.SelectedItem = new DAOTipoCuenta().retrieveBase().Find(c => c.id == cuenta.tipoCuenta);
             tbSaldo.Text = cuenta.saldo.ToString();
         }
 
