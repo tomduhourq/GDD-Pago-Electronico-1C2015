@@ -557,7 +557,7 @@ WHERE Cheque_Numero IS NOT NULL;
 GO
 
 INSERT INTO VIDA_ESTATICA.Transferencia(cuenta_origen, cuenta_destino, fecha, costo, tipo_moneda, importe)
-SELECT c1.id, c2.id, Transf_Fecha, tc.costo_transaccion, 1, Trans_Importe
+SELECT DISTINCT c1.id, c2.id, Transf_Fecha, tc.costo_transaccion, 1, Trans_Importe
 FROM gd_esquema.Maestra m
 INNER JOIN VIDA_ESTATICA.Cuenta c1
 ON m.Cuenta_Dest_Numero = c1.num_cuenta
