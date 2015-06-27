@@ -27,9 +27,9 @@ namespace PagoElectronico.Models.DAO
                 ListaParametros.Add(new SqlParameter("@apellidoCliente", _Cliente.apellido));
                 ListaParametros.Add(new SqlParameter("@documentoCliente", _Cliente.documento));
                 ListaParametros.Add(new SqlParameter("@domCalleCliente", _Cliente.dom_calle));
-                ListaParametros.Add(new SqlParameter("@domDptoCliente", _Cliente.dom_dpto));
-                ListaParametros.Add(new SqlParameter("@domNroCliente", _Cliente.dom_nro));
+                ListaParametros.Add(new SqlParameter("@domNroCliente", _Cliente.dom_nro));                                
                 ListaParametros.Add(new SqlParameter("@domPisoCliente", _Cliente.dom_piso));
+                ListaParametros.Add(new SqlParameter("@domDptoCliente", _Cliente.dom_dpto[0]));
                 ListaParametros.Add(new SqlParameter("@fecNacCliente", _Cliente.fecha_nac));
                 ListaParametros.Add(new SqlParameter("@mailCliente", _Cliente.mail));
                 ListaParametros.Add(new SqlParameter("@nacionalidadCliente", _Cliente.nacionalidad));
@@ -148,6 +148,42 @@ namespace PagoElectronico.Models.DAO
             base_query = base_query.Substring(0, base_query.Length - 3);
 
             return DB.ExecuteReader<Cliente>(base_query);
+        }
+
+        public List<Cliente> retrieveAll()
+        {
+            List<Cliente> l = new List<Cliente>();
+            SqlDataReader lector = DBAcess.GetDataReader("SELECT * from VIDA_ESTATICA.Cliente", "T", new List<SqlParameter>());
+
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    Cliente unCliente = new Cliente();
+                    unCliente.nombre = (string)lector["nombre"];
+                    unCliente.id = (int)(decimal)lector["id"];
+                    unCliente.apellido = (string)lector["apellido"];
+                    unCliente.documento = (int)(decimal)lector["documento"];
+                    unCliente.dom_calle = (string)lector["dom_calle"];
+                    unCliente.dom_dpto = (string)lector["dom_dpto"];
+                    unCliente.dom_nro = (int)(decimal)lector["dom_nro"];
+                    unCliente.dom_piso = (int)(decimal)lector["dom_piso"];
+                    unCliente.mail = (string)lector["mail"];
+                    unCliente.nacionalidad = (int)(decimal)lector["nacionalidad"];
+                    unCliente.fecha_nac = (DateTime?)lector["fecha_nac"];
+                    try
+                    {
+                        unCliente.usuario = (string)lector["usuario"];
+                    }
+                    catch
+                    {
+                        unCliente.usuario = "";
+                    }
+                    unCliente.tipo_documento = (int)(decimal)lector["tipo_documento"];
+                    l.Add(unCliente);
+                }
+            }
+            return l;
         }
     }
 }

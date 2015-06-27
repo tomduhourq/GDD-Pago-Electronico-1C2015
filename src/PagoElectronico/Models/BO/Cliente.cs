@@ -22,12 +22,12 @@ namespace PagoElectronico.Models.BO
         public int? id { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
-        public DateTime fecha_nac { get; set; }
+        public DateTime? fecha_nac { get; set; }
         public int? documento { get; set; }
         public int? tipo_documento { get; set; }
         public string dom_calle { get; set; }
         public int? dom_piso { get; set; }
-        public char? dom_dpto { get; set; }
+        public string dom_dpto { get; set; }
         public int? dom_nro { get; set; }
         public string mail { get; set; }
         public int? nacionalidad { get; set; }
@@ -54,14 +54,16 @@ namespace PagoElectronico.Models.BO
                 dom_calle = (dr["dom_calle"] == DBNull.Value) ? null : dr["dom_calle"].ToString();
             if (dcc.Contains("dom_piso"))
                 dom_piso = (dr["dom_piso"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["dom_piso"]);
-            if (dcc.Contains("dom_calle"))
-                dom_calle = (dr["dom_calle"] == DBNull.Value) ? null : dr["dom_calle"].ToString();
+            if (dcc.Contains("dom_dpto"))
+                dom_dpto = (dr["dom_dpto"] == DBNull.Value) ? null :  dr["dom_dpto"].ToString();
             if (dcc.Contains("dom_nro"))
                 dom_nro = (dr["dom_nro"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["dom_nro"]);
             if (dcc.Contains("mail"))
                 mail = (dr["mail"] == DBNull.Value) ? null : dr["mail"].ToString();
             if (dcc.Contains("nacionalidad"))
                 nacionalidad = (dr["nacionalidad"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["nacionalidad"]);
+            if (dcc.Contains("fecha_nac"))
+                fecha_nac = (dr["fecha_nac"] == DBNull.Value) ? null : (DateTime?)Convert.ToDateTime(dr["fecha_nac"]);
             if (dcc.Contains("usuario"))
                 usuario = (dr["usuario"] == DBNull.Value) ? null : dr["usuario"].ToString();
 
