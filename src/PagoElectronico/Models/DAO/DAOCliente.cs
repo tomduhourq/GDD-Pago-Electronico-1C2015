@@ -66,7 +66,8 @@ namespace PagoElectronico.Models.DAO
 
         public void delete(int Cliente_id)
         {
-            DB.ExecuteNonQuery("DELETE FROM" + tabla + " WHERE id = @1", Cliente_id);
+            DB.ExecuteNonQuery("DELETE FROM VIDA_ESTATICA.Cuenta WHERE cod_cli = @1", Cliente_id);
+            DB.ExecuteNonQuery("DELETE FROM " + tabla + " WHERE id = @1", Cliente_id);
         }
 
         public Cliente retrieveBy_id(object _value)

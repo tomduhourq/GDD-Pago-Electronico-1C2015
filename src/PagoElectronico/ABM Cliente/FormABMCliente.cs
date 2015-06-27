@@ -56,6 +56,7 @@ namespace PagoElectronico.ABM_Cliente
             txtApellido.Text = "";
             txtNumID.Text = "";
             txtEmail.Text = "";
+            actualizarGrilla();
         }
 
         private void txtNumID_KeyPress(object sender, KeyPressEventArgs e)
@@ -83,6 +84,13 @@ namespace PagoElectronico.ABM_Cliente
         {
             try { actualizarGrilla(); }
             catch { MessageBox.Show("No existe cliente con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Cliente delete = (Cliente)dtgCliente.CurrentRow.DataBoundItem;
+            dao.delete((int)(decimal)delete.id);
+            actualizarGrilla(); 
         }
 
         private void cargarGrilla()
