@@ -95,13 +95,13 @@ namespace PagoElectronico.Models.DAO
             }
             if (!String.IsNullOrEmpty(nombre))
             {
-                baseQuery += String.Format(" nombre LIKE '%{0}%' AND", nombre);
+                baseQuery += String.Format(" nombre LIKE '{0}%' AND", nombre);
             }
             if (!String.IsNullOrEmpty(apellido))
             {
-                baseQuery += String.Format(" apellido LIKE '%{0}%' AND", apellido);
+                baseQuery += String.Format(" apellido LIKE '{0}%'", apellido);
             }
-            
+
             baseQuery = baseQuery.Substring(0, baseQuery.Length - 3);
             
             return DB.ExecuteReader<Cliente>(baseQuery);
@@ -142,7 +142,7 @@ namespace PagoElectronico.Models.DAO
             }
             if (!String.IsNullOrEmpty(email))
             {
-                base_query += String.Format(" apellido LIKE '%{0}%' AND", email);
+                base_query += String.Format(" mail LIKE '{0}%' AND", email);
             }
 
             base_query = base_query.Substring(0, base_query.Length - 3);
