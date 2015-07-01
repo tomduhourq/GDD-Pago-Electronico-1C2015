@@ -32,6 +32,7 @@ namespace PagoElectronico.Models.BO
         public string mail { get; set; }
         public int? nacionalidad { get; set; }
         public string usuario { get; set; }
+        public bool? activo { get; set; }
         
 
         public Cliente initialize(DataRow _dr)
@@ -64,6 +65,8 @@ namespace PagoElectronico.Models.BO
                 nacionalidad = (dr["nacionalidad"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["nacionalidad"]);
             if (dcc.Contains("fecha_nac"))
                 fecha_nac = (dr["fecha_nac"] == DBNull.Value) ? null : (DateTime?)Convert.ToDateTime(dr["fecha_nac"]);
+            if (dcc.Contains("activo"))
+                activo = (dr["activo"] == DBNull.Value) ? null : (bool?)dr["activo"];
             if (dcc.Contains("usuario"))
                 usuario = (dr["usuario"] == DBNull.Value) ? null : dr["usuario"].ToString();
 

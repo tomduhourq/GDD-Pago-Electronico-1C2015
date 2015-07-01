@@ -30,7 +30,7 @@ namespace PagoElectronico.Models.DAO
                 ListaParametros.Add(new SqlParameter("@domNroCliente", _Cliente.dom_nro));                                
                 ListaParametros.Add(new SqlParameter("@domPisoCliente", _Cliente.dom_piso));
                 ListaParametros.Add(new SqlParameter("@domDptoCliente", _Cliente.dom_dpto[0]));
-                ListaParametros.Add(new SqlParameter("@fecNacCliente", _Cliente.fecha_nac));
+                ListaParametros.Add(new SqlParameter("@fecNacCliente", fechaQuereable(_Cliente.fecha_nac)));
                 ListaParametros.Add(new SqlParameter("@mailCliente", _Cliente.mail));
                 ListaParametros.Add(new SqlParameter("@nacionalidadCliente", _Cliente.nacionalidad));
                 ListaParametros.Add(new SqlParameter("@tipoDocCliente", _Cliente.tipo_documento));
@@ -41,8 +41,11 @@ namespace PagoElectronico.Models.DAO
 
                 // insert cliente
                 int ret = (int)DBAcess.ExecStoredProcedure("VIDA_ESTATICA.agregarCliente", ListaParametros);
-
-                return true;
+                if (ret != -1)
+                {
+                    return true;
+                }
+                else { return false; }
             }
             catch { return false; } 
 
@@ -66,8 +69,8 @@ namespace PagoElectronico.Models.DAO
 
         public void delete(int Cliente_id)
         {
-            DB.ExecuteNonQuery("DELETE FROM VIDA_ESTATICA.Cuenta WHERE cod_cli = @1", Cliente_id);
-            DB.ExecuteNonQuery("DELETE FROM " + tabla + " WHERE id = @1", Cliente_id);
+            string update = String.Format("UPDATE " + tabla + " SET activo = 0 WHERE id = {0}", Cliente_id);
+            DB.ExecuteNonQuery(update);
         }
 
         public Cliente retrieveBy_id(object _value)
@@ -172,6 +175,7 @@ namespace PagoElectronico.Models.DAO
                     unCliente.mail = (string)lector["mail"];
                     unCliente.nacionalidad = (int)(decimal)lector["nacionalidad"];
                     unCliente.fecha_nac = (DateTime?)lector["fecha_nac"];
+                    unCliente.activo = (bool?)lector["activo"];
                     try
                     {
                         unCliente.usuario = (string)lector["usuario"];

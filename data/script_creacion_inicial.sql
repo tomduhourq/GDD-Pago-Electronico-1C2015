@@ -230,6 +230,8 @@ CREATE TABLE VIDA_ESTATICA.Cliente (
 	nacionalidad numeric(18,0),
 	tipo_documento numeric(18,0),
 	usuario varchar(25),
+	activo bit NOT NULL
+		CONSTRAINT "cliente_activo" DEFAULT 1,
 	PRIMARY KEY (id),
 	FOREIGN KEY (nacionalidad) REFERENCES VIDA_ESTATICA.Pais(id),
 	FOREIGN KEY (tipo_documento) REFERENCES VIDA_ESTATICA.Tipo_Documento(id),
@@ -401,7 +403,7 @@ INSERT INTO VIDA_ESTATICA.Tipo_Cuenta(descripcion,valor,duracion, costo_transacc
 
 INSERT INTO VIDA_ESTATICA.Cliente
 SELECT DISTINCT Cli_Nombre, Cli_Apellido, Cli_Nro_Doc, Cli_Dom_Calle,Cli_Dom_Nro,Cli_Dom_Piso,
-Cli_Dom_Depto,Cli_Fecha_Nac,Cli_Mail,Cli_Pais_Codigo, Cli_Tipo_Doc_Cod, NULL
+Cli_Dom_Depto,Cli_Fecha_Nac,Cli_Mail,Cli_Pais_Codigo, Cli_Tipo_Doc_Cod, NULL, 1
 FROM [GD1C2015].[gd_esquema].[Maestra]
 
 GO

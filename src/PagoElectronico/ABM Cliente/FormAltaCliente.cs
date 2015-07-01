@@ -20,6 +20,8 @@ namespace PagoElectronico.ABM_Cliente
 
         public FormAltaCliente()
         {
+            cliente = new Cliente();
+            
             InitializeComponent();
             cargarCombos();
         }
