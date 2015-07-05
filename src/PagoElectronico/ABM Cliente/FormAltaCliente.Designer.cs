@@ -318,6 +318,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormAltaCliente";
             this.Text = "FormAltaCliente";
+            this.Load += new System.EventHandler(this.FormAltaCliente_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

@@ -69,7 +69,7 @@ namespace PagoElectronico.ABM_Cliente
 
         private void btnAlta_Click(object sender, EventArgs e)
         {
-            FormAltaCliente ac = new FormAltaCliente();
+            FormAltaCliente ac = new FormAltaCliente(new Cliente());
             ac.Show();
         }
 

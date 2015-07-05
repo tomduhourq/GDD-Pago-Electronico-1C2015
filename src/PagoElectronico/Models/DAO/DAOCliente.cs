@@ -23,46 +23,56 @@ namespace PagoElectronico.Models.DAO
             try
             {
                 List<SqlParameter> ListaParametros = new List<SqlParameter>();
-                ListaParametros.Add(new SqlParameter("@nombreCliente", _Cliente.nombre));
-                ListaParametros.Add(new SqlParameter("@apellidoCliente", _Cliente.apellido));
-                ListaParametros.Add(new SqlParameter("@documentoCliente", _Cliente.documento));
-                ListaParametros.Add(new SqlParameter("@domCalleCliente", _Cliente.dom_calle));
-                ListaParametros.Add(new SqlParameter("@domNroCliente", _Cliente.dom_nro));                                
-                ListaParametros.Add(new SqlParameter("@domPisoCliente", _Cliente.dom_piso));
-                ListaParametros.Add(new SqlParameter("@domDptoCliente", _Cliente.dom_dpto[0]));
-                ListaParametros.Add(new SqlParameter("@fecNacCliente", fechaQuereable(_Cliente.fecha_nac)));
-                ListaParametros.Add(new SqlParameter("@mailCliente", _Cliente.mail));
-                ListaParametros.Add(new SqlParameter("@nacionalidadCliente", _Cliente.nacionalidad));
-                ListaParametros.Add(new SqlParameter("@tipoDocCliente", _Cliente.tipo_documento));
-                ListaParametros.Add(new SqlParameter("@usuarioCliente", _Cliente.usuario));
-                SqlParameter paramRet = new SqlParameter("@ret", System.Data.SqlDbType.Decimal);
-                paramRet.Direction = System.Data.ParameterDirection.Output;
-                ListaParametros.Add(paramRet);
-
-                // insert cliente
-                int ret = (int)DBAcess.ExecStoredProcedure("VIDA_ESTATICA.agregarCliente", ListaParametros);
-                if (ret != -1)
+                ListaParametros.Add(new SqlParameter("@nombre", _Cliente.nombre));
+                ListaParametros.Add(new SqlParameter("@apellido", _Cliente.apellido));
+                ListaParametros.Add(new SqlParameter("@documento", _Cliente.documento));
+                ListaParametros.Add(new SqlParameter("@dom_calle", _Cliente.dom_calle));
+                ListaParametros.Add(new SqlParameter("@dom_nro", _Cliente.dom_nro));
+                ListaParametros.Add(new SqlParameter("@dom_piso", _Cliente.dom_piso));
+                ListaParametros.Add(new SqlParameter("@dom_dpto", _Cliente.dom_dpto[0]));
+                ListaParametros.Add(new SqlParameter("@fecha_nac", _Cliente.fecha_nac));
+                ListaParametros.Add(new SqlParameter("@mail", _Cliente.mail));
+                ListaParametros.Add(new SqlParameter("@nacionalidad", _Cliente.nacionalidad));
+                ListaParametros.Add(new SqlParameter("@tipo_documento", _Cliente.tipo_documento));
+                if (_Cliente.usuario != null)
                 {
-                    return true;
+                    ListaParametros.Add(new SqlParameter("@usuario", _Cliente.usuario));
                 }
-                else { return false; }
+                else
+                {
+                    ListaParametros.Add(new SqlParameter("@usuario", ""));
+                }
+
+                return DBAcess.WriteInBase("INSERT INTO VIDA_ESTATICA.Cliente VALUES (@nombre,@apellido,@documento," +
+                    "@dom_calle,@dom_nro,@dom_piso,@dom_dpto,@fecha_nac," +
+                    "@mail,@nacionalidad,@tipo_documento,@usuario,1)", "T", ListaParametros);
             }
-            catch { return false; } 
+            catch { return false; }
 
         }
 
         public bool update(Cliente cliente)
         {
             try
-            {
-                List<SqlParameter> lp = new List<SqlParameter>();
-                lp.Add(new SqlParameter("@cliente", (int)cliente.id));
-                bool del = DBAcess.WriteInBase("DELETE FROM VIDA_ESTATICA.Cliente WHERE id =@cliente", "T", lp);
-                
+            {                
                 List<SqlParameter> ListaParametros = new List<SqlParameter>();
                 ListaParametros.Add(new SqlParameter("@id", (int)cliente.id));
                 ListaParametros.Add(new SqlParameter("@nombre", cliente.nombre));
-                return DBAcess.WriteInBase("update VIDA_ESTATICA.Cliente set nombre =@nombre where id=@id", "T", ListaParametros);
+                ListaParametros.Add(new SqlParameter("@apellido", cliente.apellido));                
+                ListaParametros.Add(new SqlParameter("@documento", cliente.documento));
+                ListaParametros.Add(new SqlParameter("@dom_calle", cliente.dom_calle));                
+                ListaParametros.Add(new SqlParameter("@dom_nro", cliente.dom_nro));
+                ListaParametros.Add(new SqlParameter("@dom_piso", cliente.dom_piso));
+                ListaParametros.Add(new SqlParameter("@dom_dpto", cliente.dom_dpto));
+                ListaParametros.Add(new SqlParameter("@fecha_nac", cliente.fecha_nac));
+                ListaParametros.Add(new SqlParameter("@mail", cliente.mail));
+                ListaParametros.Add(new SqlParameter("@nacionalidad", cliente.nacionalidad));
+                ListaParametros.Add(new SqlParameter("@tipo_documento", cliente.tipo_documento));
+              
+                
+                return DBAcess.WriteInBase("update VIDA_ESTATICA.Cliente set nombre =@nombre, apellido=@apellido, documento=@documento," +
+                    "dom_calle=@dom_calle,dom_nro=@dom_nro,dom_piso=@dom_piso,dom_dpto=@dom_dpto,fecha_nac=@fecha_nac," +
+                    "mail=@mail, nacionalidad=@nacionalidad where id=@id", "T", ListaParametros);
             }
             catch { return false; }
         }
