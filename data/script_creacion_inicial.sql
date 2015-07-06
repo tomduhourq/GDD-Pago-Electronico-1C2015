@@ -720,14 +720,14 @@ CREATE PROCEDURE VIDA_ESTATICA.agregarCliente(@nombreCliente varchar(255), @apel
 												@domDptoCliente varchar(1), @fecNacCliente Datetime, 
 												@mailCliente varchar(50), @nacionalidadCliente numeric(18, 0),
 												@tipoDocCliente numeric(18, 0), @usuarioCliente varchar(25),
-												@ret numeric(18,0) output)
+												@activo bit, @ret numeric(18,0) output)
 AS BEGIN
 	INSERT INTO VIDA_ESTATICA.Cliente (nombre, apellido, documento, dom_calle, dom_nro, 
 									   dom_piso, dom_dpto, fecha_nac, mail, nacionalidad, 
-									   tipo_documento, usuario) VALUES (@nombreCliente, @apellidoCliente, @documentoCliente,
+									   tipo_documento, usuario, activo) VALUES (@nombreCliente, @apellidoCliente, @documentoCliente,
 																		@domCalleCliente, @domNroCliente, @domPisoCliente,
 																		@domDptoCliente, @fecNacCliente, @mailCliente,
-																		@nacionalidadCliente, @tipoDocCliente, @usuarioCliente)
+																		@nacionalidadCliente, @tipoDocCliente, @usuarioCliente, @activo)
 	SET @ret = SCOPE_IDENTITY()
 END
 GO

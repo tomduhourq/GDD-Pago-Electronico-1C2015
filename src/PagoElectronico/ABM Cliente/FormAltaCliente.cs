@@ -40,7 +40,9 @@ namespace PagoElectronico.ABM_Cliente
                 txtNumID.Text = cliente.documento.ToString();
                 txtTipoID.Text = cliente.tipo_documento.ToString();
                 dateNacimiento.Value = (DateTime)cliente.fecha_nac;
-                cbNacionalidad.SelectedIndex = (int)cliente.nacionalidad;
+                string pa = (string)cliente.get_pais().Substring(1);            
+                cbNacionalidad.SelectedIndex = cbNacionalidad.FindStringExact(pa); 
+                checkActivo.Checked = (bool)cliente.activo;
         }
 
 
@@ -65,6 +67,7 @@ namespace PagoElectronico.ABM_Cliente
                 cliente.tipo_documento = Convert.ToInt32(txtTipoID.Text);
                 cliente.documento = Convert.ToInt32(txtNumID.Text);
                 cliente.nacionalidad = ((Pais)cbNacionalidad.SelectedItem).id;
+                cliente.activo = (bool)checkActivo.Checked;
                 if (update)
                 {
                     if (daoCliente.update(cliente))
@@ -86,10 +89,7 @@ namespace PagoElectronico.ABM_Cliente
                         this.Close();
                         return;
                     }
-                    else
-                    {
-                        throw new Exception("Datos no se cargaron correctamente");
-                    }
+
                 }
              
         }

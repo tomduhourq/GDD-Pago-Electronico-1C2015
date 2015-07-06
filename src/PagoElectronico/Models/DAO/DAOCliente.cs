@@ -22,6 +22,7 @@ namespace PagoElectronico.Models.DAO
         {
             try
             {
+                //FIXME: por algun motivo no inserta
                 List<SqlParameter> ListaParametros = new List<SqlParameter>();
                 ListaParametros.Add(new SqlParameter("@nombre", _Cliente.nombre));
                 ListaParametros.Add(new SqlParameter("@apellido", _Cliente.apellido));
@@ -33,7 +34,7 @@ namespace PagoElectronico.Models.DAO
                 ListaParametros.Add(new SqlParameter("@fecha_nac", _Cliente.fecha_nac));
                 ListaParametros.Add(new SqlParameter("@mail", _Cliente.mail));
                 ListaParametros.Add(new SqlParameter("@nacionalidad", _Cliente.nacionalidad));
-                ListaParametros.Add(new SqlParameter("@tipo_documento", _Cliente.tipo_documento));
+                ListaParametros.Add(new SqlParameter("@tipo_documento", _Cliente.tipo_documento));                
                 if (_Cliente.usuario != null)
                 {
                     ListaParametros.Add(new SqlParameter("@usuario", _Cliente.usuario));
@@ -42,10 +43,22 @@ namespace PagoElectronico.Models.DAO
                 {
                     ListaParametros.Add(new SqlParameter("@usuario", ""));
                 }
+                ListaParametros.Add(new SqlParameter("@activo", _Cliente.activo));
+                SqlParameter paramRet = new SqlParameter("@ret", System.Data.SqlDbType.Decimal);
+                paramRet.Direction = System.Data.ParameterDirection.Output;
+                ListaParametros.Add(paramRet);
+                
+                //Insert cliente mediante storedprocedure
+                int ret = (int)DBAcess.ExecStoredProcedure("VIDA_ESTATICA.agregarCliente", ListaParametros);
 
-                return DBAcess.WriteInBase("INSERT INTO VIDA_ESTATICA.Cliente VALUES (@nombre,@apellido,@documento," +
+                if (ret == -1) return false;
+
+                return true;
+                //Insert cliente mediante sentencia INSERT INTO
+                /*return DBAcess.WriteInBase("INSERT INTO VIDA_ESTATICA.Cliente (nombre, apellido, documento, dom_calle, dom_nro," +
+                    "dom_piso, dom_dpto, fecha_nac, mail, nacionalidad, tipo_documento, usuario, activo) VALUES (@nombre,@apellido,@documento," +
                     "@dom_calle,@dom_nro,@dom_piso,@dom_dpto,@fecha_nac," +
-                    "@mail,@nacionalidad,@tipo_documento,@usuario,1)", "T", ListaParametros);
+                    "@mail,@nacionalidad,@tipo_documento,@usuario,1)", "T", ListaParametros);*/
             }
             catch { return false; }
 
@@ -68,11 +81,12 @@ namespace PagoElectronico.Models.DAO
                 ListaParametros.Add(new SqlParameter("@mail", cliente.mail));
                 ListaParametros.Add(new SqlParameter("@nacionalidad", cliente.nacionalidad));
                 ListaParametros.Add(new SqlParameter("@tipo_documento", cliente.tipo_documento));
+                ListaParametros.Add(new SqlParameter("@activo", cliente.activo));
               
                 
                 return DBAcess.WriteInBase("update VIDA_ESTATICA.Cliente set nombre =@nombre, apellido=@apellido, documento=@documento," +
                     "dom_calle=@dom_calle,dom_nro=@dom_nro,dom_piso=@dom_piso,dom_dpto=@dom_dpto,fecha_nac=@fecha_nac," +
-                    "mail=@mail, nacionalidad=@nacionalidad where id=@id", "T", ListaParametros);
+                    "mail=@mail, nacionalidad=@nacionalidad, activo=@activo where id=@id", "T", ListaParametros);
             }
             catch { return false; }
         }

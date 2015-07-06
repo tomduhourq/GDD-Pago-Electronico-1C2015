@@ -83,6 +83,13 @@ namespace PagoElectronico.Models.BO
             return this;
         }
 
+        public string get_pais()
+        {
+            DAOPais dao = new DAOPais();
+            Pais pais = dao.retrieveBy_id(this.nacionalidad);
+            return pais.descripcion;
+        }
+
         public void setById(object _id)
         {
             initialize(new DAOCliente().retrieveBy_id(_id).dr);

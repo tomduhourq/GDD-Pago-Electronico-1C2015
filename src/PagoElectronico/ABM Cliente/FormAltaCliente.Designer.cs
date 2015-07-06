@@ -55,6 +55,7 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbNacionalidad = new System.Windows.Forms.ComboBox();
+            this.checkActivo = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -292,11 +293,24 @@
             this.cbNacionalidad.Size = new System.Drawing.Size(207, 21);
             this.cbNacionalidad.TabIndex = 5;
             // 
+            // checkActivo
+            // 
+            this.checkActivo.AutoSize = true;
+            this.checkActivo.Checked = true;
+            this.checkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkActivo.Location = new System.Drawing.Point(366, 148);
+            this.checkActivo.Name = "checkActivo";
+            this.checkActivo.Size = new System.Drawing.Size(56, 17);
+            this.checkActivo.TabIndex = 27;
+            this.checkActivo.Text = "Activo";
+            this.checkActivo.UseVisualStyleBackColor = true;
+            // 
             // FormAltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 183);
+            this.Controls.Add(this.checkActivo);
             this.Controls.Add(this.cbNacionalidad);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
@@ -355,5 +369,6 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cbNacionalidad;
+        private System.Windows.Forms.CheckBox checkActivo;
     }
 }
