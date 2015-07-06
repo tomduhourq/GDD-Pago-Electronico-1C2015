@@ -264,18 +264,15 @@ CREATE TABLE VIDA_ESTATICA.Emisor(
 )
 
 CREATE TABLE VIDA_ESTATICA.Tarjeta(
-	id numeric(18,0) IDENTITY NOT NULL,
 	numero numeric(18,0) NOT NULL,
 	fecha_emision DATETIME,
 	fecha_vencimiento DATETIME,
 	cod_seguridad numeric(18,0),
 	emisor numeric(4,0),
-	cod_banco numeric(18,0),
 	cod_cli numeric(18, 0)
-	PRIMARY KEY (id),
+	PRIMARY KEY (numero),
 	FOREIGN KEY (emisor) REFERENCES VIDA_ESTATICA.Emisor(id),
-	FOREIGN KEY (cod_cli) REFERENCES VIDA_ESTATICA.Cliente(id),
-	FOREIGN KEY (cod_banco) REFERENCES VIDA_ESTATICA.Banco(cod)
+	FOREIGN KEY (cod_cli) REFERENCES VIDA_ESTATICA.Cliente(id)
 )
 
 CREATE TABLE VIDA_ESTATICA.Deposito(
@@ -283,12 +280,14 @@ CREATE TABLE VIDA_ESTATICA.Deposito(
 	fecha DATETIME,
 	importe numeric(15,2) NOT NULL,
 	tipo_moneda numeric(4,0),
-	tarjeta_id numeric(18,0),
+	tarjeta numeric(18,0),
 	cuenta_destino numeric(16,0),
+	emisor numeric(4,0),
 	PRIMARY KEY (id),
 	FOREIGN KEY (tipo_moneda) REFERENCES VIDA_ESTATICA.Moneda(id),
-	FOREIGN KEY (tarjeta_id) REFERENCES VIDA_ESTATICA.Tarjeta(id),
-	FOREIGN KEY (cuenta_destino) REFERENCES VIDA_ESTATICA.Cuenta(id)
+	FOREIGN KEY (tarjeta) REFERENCES VIDA_ESTATICA.Tarjeta(numero),
+	FOREIGN KEY (cuenta_destino) REFERENCES VIDA_ESTATICA.Cuenta(id),
+	FOREIGN KEY (emisor) REFERENCES VIDA_ESTATICA.Emisor(id)
 )
 
 CREATE TABLE VIDA_ESTATICA.Transferencia(
@@ -329,6 +328,30 @@ CREATE TABLE VIDA_ESTATICA.Retiro (
 	FOREIGN KEY(moneda) REFERENCES VIDA_ESTATICA.Moneda(id)
 )
 
+CREATE TABLE VIDA_ESTATICA.Factura(
+id_factura NUMERIC(18,0) NOT NULL IDENTITY (1,1),
+id_cliente NUMERIC(18,0) NOT NULL,
+fecha DATETIME, 
+PRIMARY KEY(id_factura),
+FOREIGN KEY(id_cliente) references VIDA_ESTATICA.Cliente);
+
+CREATE TABLE VIDA_ESTATICA.Items(
+id_item NUMERIC(18,0) NOT NULL IDENTITY(1,1),
+descripcion VARCHAR(255),
+PRIMARY KEY(id_item));
+
+CREATE TABLE VIDA_ESTATICA.Item_Factura (
+id_item_factura NUMERIC(18,0) NOT NULL IDENTITY(1,1),
+id_item NUMERIC(18,0) NOT NULL,
+num_cuenta NUMERIC(16,0) NOT NULL,
+monto NUMERIC(18,2),
+facturado BIT, 
+id_factura NUMERIC(18,0),
+fecha DATETIME,
+PRIMARY KEY(id_item_factura),
+FOREIGN KEY (id_factura) references VIDA_ESTATICA.Factura,
+FOREIGN KEY(id_item) references VIDA_ESTATICA.Items,
+FOREIGN KEY (num_cuenta) references VIDA_ESTATICA.Cuenta);
 
 --
 -- DATA INSERT
@@ -378,6 +401,7 @@ SET IDENTITY_INSERT VIDA_ESTATICA.Tipo_Documento ON
 INSERT INTO VIDA_ESTATICA.Tipo_Documento(id, descripcion)
 SELECT DISTINCT Cli_Tipo_Doc_Cod, Cli_Tipo_Doc_Desc
 FROM gd_esquema.Maestra;
+SET IDENTITY_INSERT VIDA_ESTATICA.Tipo_Documento OFF
 
 INSERT INTO VIDA_ESTATICA.Banco
 SELECT DISTINCT Banco_Cogido,Banco_Nombre,Banco_Direccion FROM gd_esquema.Maestra
@@ -413,12 +437,16 @@ WHERE id = 1;
 GO
 
 INSERT INTO VIDA_ESTATICA.Cuenta(num_cuenta, fecha_creacion, estado, pais, fecha_cierre, tipo_cuenta, tipo_moneda, cod_cli)
-SELECT DISTINCT Cuenta_Numero,Cuenta_Fecha_Creacion,4,
-Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre,1,1,Cliente.id
+SELECT DISTINCT 
+Cuenta_Numero
+,Cuenta_Fecha_Creacion
+,4, -- Habilitada
+Cuenta_Pais_Codigo,Cuenta_Fecha_Cierre
+,1 -- Gratuita
+,1, -- Dolares
+(SELECT id FROM VIDA_ESTATICA.Cliente WHERE nombre=Cli_Nombre and apellido=Cli_Apellido)
 FROM gd_esquema.Maestra 
-JOIN VIDA_ESTATICA.Cliente AS Cliente ON documento = Cli_Nro_Doc
-WHERE Banco_Cogido IS NOT NULL;
-GO
+GO 
 
 -- Calculo antes de migrar los depósitos, retiros y transferencias el saldo inicial de las cuentas
 UPDATE VIDA_ESTATICA.Cuenta
@@ -427,19 +455,53 @@ SET saldo = (SELECT ISNULL(SUM(Deposito_Importe),0) - ISNULL(SUM(Retiro_Importe)
 			 WHERE num_cuenta = Cuenta_Numero)
 GO
 
-INSERT INTO VIDA_ESTATICA.Tarjeta(numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_banco, cod_cli)
-SELECT DISTINCT Tarjeta_Numero, Tarjeta_Fecha_Emision, Tarjeta_Fecha_Vencimiento, Tarjeta_Codigo_Seg,
-e.id , ABS(Checksum(NewID()) % 3) + 10002 , NULL
+INSERT INTO VIDA_ESTATICA.Tarjeta (numero, fecha_emision, fecha_vencimiento, cod_seguridad, emisor, cod_cli)
+SELECT DISTINCT 
+Tarjeta_Numero, 
+Tarjeta_Fecha_Emision, 
+Tarjeta_Fecha_Vencimiento, 
+Tarjeta_Codigo_Seg,
+(SELECT DISTINCT id FROM VIDA_ESTATICA.Emisor WHERE nombre = m.[Tarjeta_Emisor_Descripcion]) 'emisor' , 
+(SELECT id FROM VIDA_ESTATICA.Cliente WHERE nombre=Cli_Nombre and apellido=Cli_Apellido) 'cod_cli'
 FROM gd_esquema.Maestra m
-INNER JOIN VIDA_ESTATICA.Emisor e
-ON m.Tarjeta_Emisor_Descripcion = e.nombre 
 WHERE Tarjeta_Emisor_Descripcion IS NOT NULL;
 
 GO
+
 -- Extra update para Tarjeta
-UPDATE VIDA_ESTATICA.Tarjeta
+/*UPDATE VIDA_ESTATICA.Tarjeta
 SET cod_cli = 1
-WHERE id in (1,2,3,4,5,6);
+WHERE id in (1,2,3,4,5,6);*/
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT VIDA_ESTATICA.Factura ON;
+	INSERT INTO VIDA_ESTATICA.Factura (id_factura, fecha, id_cliente)
+		SELECT DISTINCT 
+		[Factura_Numero], 
+		CONVERT(DATETIME, [Factura_Fecha], 103), 
+		(SELECT id FROM VIDA_ESTATICA.Cliente WHERE nombre=Cli_Nombre and apellido=Cli_Apellido)
+		FROM [GD1C2015].[gd_esquema].[Maestra] WHERE [Factura_Numero] IS NOT NULL
+SET IDENTITY_INSERT VIDA_ESTATICA.Factura OFF;
+COMMIT;
+
+BEGIN TRANSACTION
+	INSERT INTO VIDA_ESTATICA.Items(descripcion)
+		SELECT DISTINCT [Item_Factura_Descr]
+		FROM [GD1C2015].[gd_esquema].[Maestra] WHERE [Item_Factura_Descr] IS NOT NULL
+COMMIT;		
+
+BEGIN TRANSACTION
+	INSERT INTO VIDA_ESTATICA.Item_Factura (id_factura, id_item, num_cuenta, monto,facturado, fecha)
+	SELECT 
+	[Factura_Numero],
+	(SELECT id_item FROM VIDA_ESTATICA.Items WHERE descripcion = [Item_Factura_Descr]) 'id_item',
+	(SELECT id FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = [Cuenta_Numero]), 
+	[Item_Factura_Importe], 
+	1 'facturado', 
+	CONVERT(DATETIME, [Transf_Fecha], 103)
+	FROM [GD1C2015].gd_esquema.Maestra WHERE Item_Factura_Descr IS NOT NULL
+COMMIT;
+GO
 
 GO
 
@@ -532,22 +594,27 @@ AS BEGIN TRANSACTION
 COMMIT;
 GO
 
-INSERT INTO VIDA_ESTATICA.Deposito(fecha, importe, tipo_moneda, cuenta_destino, tarjeta_id)
-SELECT DISTINCT Deposito_Fecha, Deposito_Importe, 1, c.id , t.id
-FROM gd_esquema.Maestra m
-INNER JOIN VIDA_ESTATICA.Cuenta c
-ON c.num_cuenta = m.Cuenta_Numero
-INNER JOIN VIDA_ESTATICA.Tarjeta t
-ON t.numero = m.Tarjeta_Numero
-WHERE Deposito_Codigo is not null;
+BEGIN TRANSACTION
+SET IDENTITY_INSERT VIDA_ESTATICA.Deposito ON;
+INSERT INTO VIDA_ESTATICA.Deposito (id, cuenta_destino, importe, tipo_moneda, tarjeta, fecha, emisor)
+		SELECT [Deposito_Codigo],(SELECT id FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = [Cuenta_Numero]),[Deposito_Importe], 1, [Tarjeta_Numero],[Deposito_Fecha], 1
+	    FROM [GD1C2015].[gd_esquema].[Maestra] WHERE Deposito_Codigo IS NOT NULL
+SET IDENTITY_INSERT VIDA_ESTATICA.Deposito OFF;
 GO
 
-INSERT INTO VIDA_ESTATICA.Retiro(fecha, importe, moneda, cuenta_destino)
-SELECT DISTINCT Retiro_Fecha, Retiro_Importe, 1, c.id 
-FROM gd_esquema.Maestra m
-INNER JOIN VIDA_ESTATICA.Cuenta c
-ON c.num_cuenta = m.Cuenta_Numero
+BEGIN TRANSACTION
+SET IDENTITY_INSERT VIDA_ESTATICA.Retiro ON;
+INSERT INTO VIDA_ESTATICA.Retiro(id , fecha, importe, moneda, cuenta_destino)
+SELECT
+[Retiro_Codigo],
+Retiro_Fecha, 
+Retiro_Importe, 
+1, 
+(SELECT id FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = [Cuenta_Numero])
+FROM gd_esquema.Maestra
 WHERE Retiro_Codigo IS NOT NULL;
+SET IDENTITY_INSERT VIDA_ESTATICA.Retiro OFF;
+COMMIT;
 GO
 
 INSERT INTO VIDA_ESTATICA.Cheque(id_egreso, cod_banco, cuenta_destino, fecha, importe, tipo_moneda)
@@ -559,15 +626,15 @@ WHERE Cheque_Numero IS NOT NULL;
 GO
 
 INSERT INTO VIDA_ESTATICA.Transferencia(cuenta_origen, cuenta_destino, fecha, costo, tipo_moneda, importe)
-SELECT DISTINCT c1.id, c2.id, Transf_Fecha, tc.costo_transaccion, 1, Trans_Importe
-FROM gd_esquema.Maestra m
-INNER JOIN VIDA_ESTATICA.Cuenta c1
-ON m.Cuenta_Dest_Numero = c1.num_cuenta
-INNER JOIN VIDA_ESTATICA.Cuenta c2
-ON m.Cuenta_Numero = c2.num_cuenta
-INNER JOIN VIDA_ESTATICA.Tipo_Cuenta tc
-ON c2.tipo_cuenta = tc.id
-WHERE Trans_Importe IS NOT NULL;
+SELECT DISTINCT
+(SELECT id FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = [Cuenta_Numero]),
+(SELECT id FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = [Cuenta_Dest_Numero]), 
+ Transf_Fecha, 
+[Trans_Costo_Trans],
+1,
+Trans_Importe
+FROM gd_esquema.Maestra
+WHERE Transf_Fecha IS NOT NULL;
 
 GO
 
