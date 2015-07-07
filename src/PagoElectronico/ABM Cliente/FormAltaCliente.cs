@@ -16,15 +16,18 @@ namespace PagoElectronico.ABM_Cliente
     {
         private Cliente cliente { get; set; }       
         private DAOCliente daoCliente = new DAOCliente();
+        private DAOTarjeta daoTarjeta = new DAOTarjeta();
         private DAOPais daoPais = new DAOPais();
+        private List<Tarjeta> lstTarjetas { get; set; }
         private bool update;
 
 
-        // ESTE ES EL CONSTRUCTOR PARA MODIFICAR CLIENTES
         public FormAltaCliente(Cliente cli)
         {
             cliente = cli;
             InitializeComponent();
+            lstTarjetas = new List<Tarjeta>();
+            
         }
 
         private void cargarDatosClientes()
@@ -89,13 +92,59 @@ namespace PagoElectronico.ABM_Cliente
                         this.Close();
                         return;
                     }
-
+                    else
+                    {
+                        throw new Exception("Datos no se cargaron correctamente");
+                    }
                 }
              
         }
-           
+
+        private void cargarGrilla()
+        {
+
+            DataGridViewTextBoxColumn colNumero = new DataGridViewTextBoxColumn();
+            colNumero.DataPropertyName = "numero";
+            colNumero.HeaderText = "Numero";
+            colNumero.Width = 120;
+            DataGridViewTextBoxColumn colEmision = new DataGridViewTextBoxColumn();
+            colEmision.DataPropertyName = "fecha_emision";
+            colEmision.HeaderText = "Fecha Emision";
+            colEmision.Width = 120;
+            DataGridViewTextBoxColumn colVencimiento = new DataGridViewTextBoxColumn();
+            colVencimiento.DataPropertyName = "fecha_vencimiento";
+            colVencimiento.HeaderText = "Fecha de Vencimiento";
+            colVencimiento.Width = 120;
+            DataGridViewTextBoxColumn colSeguridad = new DataGridViewTextBoxColumn();
+            colSeguridad.DataPropertyName = "cod_seguridad";
+            colSeguridad.HeaderText = "Codigo de Seguridad";
+            colSeguridad.Width = 120;
+
+            dtgTarjetas.Columns.Add(colNumero);
+            dtgTarjetas.Columns.Add(colEmision);
+            dtgTarjetas.Columns.Add(colVencimiento);
+            dtgTarjetas.Columns.Add(colSeguridad);
+        }
+
+        public void actualizarGrilla()
+        {
+            if (txtNombre.Text != "")
+                lstTarjetas = cliente.get_tarjetas();
+            if (lstTarjetas.Count == 0)
+            {
+            }
+            else {
+                Tarjeta tarjeta = new Tarjeta();
+                tarjeta = lstTarjetas[0];
+            }
             
-        
+            dtgTarjetas.DataSource = lstTarjetas;
+        }
+
+        private void btnActualizar_Click_1(object sender, EventArgs e)
+        {
+            actualizarGrilla();
+        }
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
@@ -114,8 +163,26 @@ namespace PagoElectronico.ABM_Cliente
             {
                 txtUsuario.Enabled = false;
                 update = true;
-                cargarDatosClientes(); 
+                cargarDatosClientes();
+                dtgTarjetas.AutoGenerateColumns = false;
+                dtgTarjetas.MultiSelect = false;
+                cargarGrilla();
+                actualizarGrilla();    
             }
+        }
+
+        private void btnDesvinc_Click(object sender, EventArgs e)
+        {
+            Tarjeta delete = (Tarjeta)dtgTarjetas.CurrentRow.DataBoundItem;
+            daoTarjeta.delete((long)(decimal)delete.numero);
+            actualizarGrilla();
+        }
+
+        private void btnMod_Click(object sender, EventArgs e)
+        {
+            Tarjeta tarjeta = (Tarjeta)dtgTarjetas.CurrentRow.DataBoundItem;
+            FormModifTarjet fmt = new FormModifTarjet(tarjeta);
+            fmt.Show();
         }
 
     }

@@ -90,6 +90,13 @@ namespace PagoElectronico.Models.BO
             return pais.descripcion;
         }
 
+        public List<Tarjeta> get_tarjetas()
+        {
+            DAOTarjeta dao = new DAOTarjeta();
+            List<Tarjeta> tarjetas = dao.retrieveByClientId(this.id);
+            return tarjetas;
+        }
+
         public void setById(object _id)
         {
             initialize(new DAOCliente().retrieveBy_id(_id).dr);

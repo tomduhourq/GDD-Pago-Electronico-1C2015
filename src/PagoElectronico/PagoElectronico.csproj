@@ -91,11 +91,11 @@
     <Compile Include="ABM Cliente\FormAltaCliente.Designer.cs">
       <DependentUpon>FormAltaCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Cliente\FormModifCliente.cs">
+    <Compile Include="ABM Cliente\FormModifTarjet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Cliente\FormModifCliente.Designer.cs">
-      <DependentUpon>FormModifCliente.cs</DependentUpon>
+    <Compile Include="ABM Cliente\FormModifTarjet.Designer.cs">
+      <DependentUpon>FormModifTarjet.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Cuenta\FormABMCuenta.cs">
       <SubType>Form</SubType>
@@ -191,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Cliente\FormAltaCliente.resx">
       <DependentUpon>FormAltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Cliente\FormModifTarjet.resx">
+      <DependentUpon>FormModifTarjet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Cuenta\FormABMCuenta.resx">
       <DependentUpon>FormABMCuenta.cs</DependentUpon>

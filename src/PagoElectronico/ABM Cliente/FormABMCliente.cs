@@ -20,7 +20,7 @@ namespace PagoElectronico.ABM_Cliente
             lstClientes = new List<Cliente>();
             dao = new DAOCliente();
             lstTipos = new List<TipoDocumento>();
-            cargarGrilla();
+            
         }
 
         private DAOCliente dao;

@@ -24,6 +24,7 @@ namespace PagoElectronico.Models.BO
 
         // Data de visualización
         public string Visualize { get { return ShowLastFourDigits() + " - " + tEmisor.nombre; } }
+        public string numberVisualize { get { return ShowLastFourDigits(); } }
 
         private string ShowLastFourDigits()
         {

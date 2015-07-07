@@ -56,7 +56,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbNacionalidad = new System.Windows.Forms.ComboBox();
             this.checkActivo = new System.Windows.Forms.CheckBox();
+            this.dtgTarjetas = new System.Windows.Forms.DataGridView();
+            this.btnMod = new System.Windows.Forms.Button();
+            this.btnDesvinc = new System.Windows.Forms.Button();
+            this.btnActualizar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgTarjetas)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -80,7 +85,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(510, 18);
+            this.label3.Location = new System.Drawing.Point(178, 181);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 2;
@@ -89,7 +94,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(351, 18);
+            this.label4.Location = new System.Drawing.Point(19, 181);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 3;
@@ -234,14 +239,14 @@
             // 
             // txtTipoID
             // 
-            this.txtTipoID.Location = new System.Drawing.Point(399, 15);
+            this.txtTipoID.Location = new System.Drawing.Point(67, 178);
             this.txtTipoID.Name = "txtTipoID";
             this.txtTipoID.Size = new System.Drawing.Size(105, 20);
             this.txtTipoID.TabIndex = 6;
             // 
             // txtNumID
             // 
-            this.txtNumID.Location = new System.Drawing.Point(574, 15);
+            this.txtNumID.Location = new System.Drawing.Point(242, 178);
             this.txtNumID.Name = "txtNumID";
             this.txtNumID.Size = new System.Drawing.Size(97, 20);
             this.txtNumID.TabIndex = 7;
@@ -249,7 +254,7 @@
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(618, 149);
+            this.btnCrear.Location = new System.Drawing.Point(623, 250);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
             this.btnCrear.TabIndex = 8;
@@ -259,7 +264,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(537, 149);
+            this.btnCancelar.Location = new System.Drawing.Point(542, 250);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 9;
@@ -277,7 +282,7 @@
             this.groupBox1.Controls.Add(this.txtDepto);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Location = new System.Drawing.Point(354, 44);
+            this.groupBox1.Location = new System.Drawing.Point(22, 207);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(339, 80);
             this.groupBox1.TabIndex = 26;
@@ -298,18 +303,60 @@
             this.checkActivo.AutoSize = true;
             this.checkActivo.Checked = true;
             this.checkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkActivo.Location = new System.Drawing.Point(366, 148);
+            this.checkActivo.Location = new System.Drawing.Point(403, 254);
             this.checkActivo.Name = "checkActivo";
             this.checkActivo.Size = new System.Drawing.Size(56, 17);
             this.checkActivo.TabIndex = 27;
             this.checkActivo.Text = "Activo";
             this.checkActivo.UseVisualStyleBackColor = true;
             // 
+            // dtgTarjetas
+            // 
+            this.dtgTarjetas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgTarjetas.Location = new System.Drawing.Point(409, 15);
+            this.dtgTarjetas.Name = "dtgTarjetas";
+            this.dtgTarjetas.Size = new System.Drawing.Size(288, 165);
+            this.dtgTarjetas.TabIndex = 28;
+            // 
+            // btnMod
+            // 
+            this.btnMod.Location = new System.Drawing.Point(542, 195);
+            this.btnMod.Name = "btnMod";
+            this.btnMod.Size = new System.Drawing.Size(75, 23);
+            this.btnMod.TabIndex = 29;
+            this.btnMod.Text = "Modificar";
+            this.btnMod.UseVisualStyleBackColor = true;
+            this.btnMod.Click += new System.EventHandler(this.btnMod_Click);
+            // 
+            // btnDesvinc
+            // 
+            this.btnDesvinc.Location = new System.Drawing.Point(623, 195);
+            this.btnDesvinc.Name = "btnDesvinc";
+            this.btnDesvinc.Size = new System.Drawing.Size(75, 23);
+            this.btnDesvinc.TabIndex = 30;
+            this.btnDesvinc.Text = "Desvincular";
+            this.btnDesvinc.UseVisualStyleBackColor = true;
+            this.btnDesvinc.Click += new System.EventHandler(this.btnDesvinc_Click);
+            // 
+            // btnActualizar
+            // 
+            this.btnActualizar.Location = new System.Drawing.Point(461, 195);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(75, 23);
+            this.btnActualizar.TabIndex = 31;
+            this.btnActualizar.Text = "Actualizar";
+            this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click_1);
+            // 
             // FormAltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 183);
+            this.ClientSize = new System.Drawing.Size(710, 293);
+            this.Controls.Add(this.btnActualizar);
+            this.Controls.Add(this.btnDesvinc);
+            this.Controls.Add(this.btnMod);
+            this.Controls.Add(this.dtgTarjetas);
             this.Controls.Add(this.checkActivo);
             this.Controls.Add(this.cbNacionalidad);
             this.Controls.Add(this.groupBox1);
@@ -335,6 +382,7 @@
             this.Load += new System.EventHandler(this.FormAltaCliente_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgTarjetas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,5 +418,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cbNacionalidad;
         private System.Windows.Forms.CheckBox checkActivo;
+        private System.Windows.Forms.DataGridView dtgTarjetas;
+        private System.Windows.Forms.Button btnMod;
+        private System.Windows.Forms.Button btnDesvinc;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }
