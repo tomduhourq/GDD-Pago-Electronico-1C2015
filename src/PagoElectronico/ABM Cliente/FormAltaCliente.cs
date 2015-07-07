@@ -73,6 +73,7 @@ namespace PagoElectronico.ABM_Cliente
                 cliente.tipo_documento = Convert.ToInt32(txtTipoID.Text);
                 cliente.documento = Convert.ToInt32(txtNumID.Text);
                 cliente.nacionalidad = ((Pais)cbNacionalidad.SelectedItem).id;
+                cliente.usuario = txtUsuario.Text;
                 cliente.activo = (bool)checkActivo.Checked;
                 if (update)
                 {

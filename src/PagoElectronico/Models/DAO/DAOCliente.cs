@@ -30,6 +30,11 @@ namespace PagoElectronico.Models.DAO
                 {
                     _Cliente.usuario = "NULL";
                 }
+                else
+                {
+                    _Cliente.usuario = "'" + _Cliente.usuario + "'";
+                }
+
                 if (_Cliente.activo == true)
                 {
                     bit = 1;
