@@ -137,8 +137,17 @@ namespace PagoElectronico.ABM_Cliente
                 Tarjeta tarjeta = new Tarjeta();
                 tarjeta = lstTarjetas[0];
             }
-            
+
             dtgTarjetas.DataSource = lstTarjetas;
+            foreach (DataGridViewRow row in dtgTarjetas.Rows)
+            {
+
+                long aux = Convert.ToInt64((row.Cells[0]).Value);
+                string cuatroNumeros = aux.ToString().Substring(12);
+                aux = Convert.ToInt64(cuatroNumeros);
+                (row.Cells[0]).Value = aux;
+
+            }
         }
 
         private void btnActualizar_Click_1(object sender, EventArgs e)
