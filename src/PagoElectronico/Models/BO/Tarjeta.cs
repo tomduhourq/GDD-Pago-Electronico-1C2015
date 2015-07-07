@@ -14,6 +14,7 @@ namespace PagoElectronico.Models.BO
         public Tarjeta(DataRow dr) { initialize(dr); }
 
         public long? numero { get; set; }
+        public string numeroMostrable { get; set; }
         public DateTime? fecha_emision { get; set; }
         public DateTime? fecha_vencimiento { get; set; }
         public int? cod_seguridad { get; set; }
@@ -51,6 +52,8 @@ namespace PagoElectronico.Models.BO
                 emisor = (dr["emisor"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["emisor"]);
             if (dcc.Contains("cli_cod"))
                 cli_cod = (dr["cli_cod"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cli_cod"]);
+
+            numeroMostrable = this.numberVisualize;
 
             DAOEmisor daoEmisor = new DAOEmisor();
             tEmisor = daoEmisor.retrieveBy_id(emisor);

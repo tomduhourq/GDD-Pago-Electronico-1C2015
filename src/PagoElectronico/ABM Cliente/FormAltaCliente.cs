@@ -104,7 +104,7 @@ namespace PagoElectronico.ABM_Cliente
         {
 
             DataGridViewTextBoxColumn colNumero = new DataGridViewTextBoxColumn();
-            colNumero.DataPropertyName = "numero";
+            colNumero.DataPropertyName = "numeroMostrable";
             colNumero.HeaderText = "Numero";
             colNumero.Width = 120;
             DataGridViewTextBoxColumn colEmision = new DataGridViewTextBoxColumn();
@@ -139,15 +139,7 @@ namespace PagoElectronico.ABM_Cliente
             }
 
             dtgTarjetas.DataSource = lstTarjetas;
-            foreach (DataGridViewRow row in dtgTarjetas.Rows)
-            {
 
-                long aux = Convert.ToInt64((row.Cells[0]).Value);
-                string cuatroNumeros = aux.ToString().Substring(12);
-                aux = Convert.ToInt64(cuatroNumeros);
-                (row.Cells[0]).Value = aux;
-
-            }
         }
 
         private void btnActualizar_Click_1(object sender, EventArgs e)
