@@ -22,43 +22,22 @@ namespace PagoElectronico.Models.DAO
         {
             try
             {
-                //FIXME: por algun motivo no inserta
-                List<SqlParameter> ListaParametros = new List<SqlParameter>();
-                ListaParametros.Add(new SqlParameter("@nombre", _Cliente.nombre));
-                ListaParametros.Add(new SqlParameter("@apellido", _Cliente.apellido));
-                ListaParametros.Add(new SqlParameter("@documento", _Cliente.documento));
-                ListaParametros.Add(new SqlParameter("@dom_calle", _Cliente.dom_calle));
-                ListaParametros.Add(new SqlParameter("@dom_nro", _Cliente.dom_nro));
-                ListaParametros.Add(new SqlParameter("@dom_piso", _Cliente.dom_piso));
-                ListaParametros.Add(new SqlParameter("@dom_dpto", _Cliente.dom_dpto[0]));
-                ListaParametros.Add(new SqlParameter("@fecha_nac", _Cliente.fecha_nac));
-                ListaParametros.Add(new SqlParameter("@mail", _Cliente.mail));
-                ListaParametros.Add(new SqlParameter("@nacionalidad", _Cliente.nacionalidad));
-                ListaParametros.Add(new SqlParameter("@tipo_documento", _Cliente.tipo_documento));                
-                if (_Cliente.usuario != null)
+                int bit = 0;
+                string comando = "INSERT INTO VIDA_ESTATICA.Cliente(nombre, apellido, documento, dom_calle, dom_nro, dom_piso, dom_dpto, fecha_nac, mail, nacionalidad, tipo_documento, usuario, activo)"
+                                    + "VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12});"
+                                    + "SELECT SCOPE_IDENTITY();";
+                if (_Cliente.usuario == null)
                 {
-                    ListaParametros.Add(new SqlParameter("@usuario", _Cliente.usuario));
+                    _Cliente.usuario = "NULL";
                 }
-                else
+                if (_Cliente.activo == true)
                 {
-                    ListaParametros.Add(new SqlParameter("@usuario", ""));
+                    bit = 1;
                 }
-                ListaParametros.Add(new SqlParameter("@activo", _Cliente.activo));
-                SqlParameter paramRet = new SqlParameter("@ret", System.Data.SqlDbType.Decimal);
-                paramRet.Direction = System.Data.ParameterDirection.Output;
-                ListaParametros.Add(paramRet);
-                
-                //Insert cliente mediante storedprocedure
-                int ret = (int)DBAcess.ExecStoredProcedure("VIDA_ESTATICA.agregarCliente", ListaParametros);
-
-                if (ret == -1) return false;
-
+                comando = String.Format(comando, "'" + _Cliente.nombre + "'", "'" + _Cliente.apellido + "'", _Cliente.documento, "'" + _Cliente.dom_calle + "'", _Cliente.dom_nro, _Cliente.dom_piso, "'" + _Cliente.dom_dpto + "'", fechaQuereable(_Cliente.fecha_nac), "'"+_Cliente.mail+"'", _Cliente.nacionalidad, _Cliente.tipo_documento, _Cliente.usuario, bit);
+                int insertado = DB.ExecuteCardinal(comando);
                 return true;
-                //Insert cliente mediante sentencia INSERT INTO
-                /*return DBAcess.WriteInBase("INSERT INTO VIDA_ESTATICA.Cliente (nombre, apellido, documento, dom_calle, dom_nro," +
-                    "dom_piso, dom_dpto, fecha_nac, mail, nacionalidad, tipo_documento, usuario, activo) VALUES (@nombre,@apellido,@documento," +
-                    "@dom_calle,@dom_nro,@dom_piso,@dom_dpto,@fecha_nac," +
-                    "@mail,@nacionalidad,@tipo_documento,@usuario,1)", "T", ListaParametros);*/
+
             }
             catch { return false; }
 

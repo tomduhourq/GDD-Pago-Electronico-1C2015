@@ -27,7 +27,10 @@ namespace PagoElectronico.ABM_Cliente
             cliente = cli;
             InitializeComponent();
             lstTarjetas = new List<Tarjeta>();
-            
+            if (cliente.nombre != null)
+            {
+                btnCrear.Text = "Modificar";
+            }
         }
 
         private void cargarDatosClientes()
