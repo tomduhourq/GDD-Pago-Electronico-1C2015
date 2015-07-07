@@ -20,9 +20,9 @@ namespace PagoElectronico.Models.DAO
              return DB.ExecuteCardinal("SELECT ISNULL(MAX(id_egreso), 0) + 20 FROM VIDA_ESTATICA.Cheque;");
          }
 
-         public Cheque create(Cheque cheque) {
-             string values = CreateValues(cheque);
-             int id = DB.ExecuteCastable<int>("INSERT INTO " + tabla + " (" + columns + ") values (" + values + "); SELECT SCOPE_IDENTITY();"); //FIXIT
+         public Cheque create(Cheque cheque)
+         {
+             long id = DB.ExecuteCastable<long>("INSERT INTO " + tabla + " (" + columns + ") values (" + CreateValues(cheque) + "); SELECT SCOPE_IDENTITY();"); //FIXIT
              return DB.ExecuteReaderSingle<Cheque>("SELECT * FROM " + tabla + " WHERE id = @1", id);
          }
 
@@ -31,7 +31,7 @@ namespace PagoElectronico.Models.DAO
              // Adapt to sql server
              string[] imp = cheque.importe.ToString().Split(',');
              string sqlDouble = "";
-             if(imp.Length == 2) sqlDouble = imp[0] + "." + imp[1];
+             if (imp.Length == 2) sqlDouble = imp[0] + "." + imp[1];
              else sqlDouble = imp[0];
              return cheque.id_egreso.ToString() + "," +
                     cheque.retiro_fecha.ToString("dd/MM/yyyy") + "," +

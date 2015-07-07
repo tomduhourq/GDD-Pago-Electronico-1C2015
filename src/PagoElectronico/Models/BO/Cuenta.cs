@@ -31,7 +31,7 @@ namespace PagoElectronico.Models.BO
         public int? codigoCliente { get; set; }
 
         // Atributos extra que se necesitan para presentar
-        public string Visualize { get { return numCuenta + " - " + banco.nombre + " - " + cPais.descripcion; } }
+        public string Visualize { get { return numCuenta + " - "  + cPais.descripcion; } }
         public Banco banco { get; set; }
         public Pais cPais { get; set; }
 
@@ -63,7 +63,6 @@ namespace PagoElectronico.Models.BO
                 codigoCliente = (dr["cod_cli"] == DBNull.Value) ? null : (int?)Convert.ToInt32(dr["cod_cli"]);
             // Buscar y componer banco y país para tenerlos a mano
             DAOPais daoPais = new DAOPais();
-            DAOBanco daoBanco = new DAOBanco();
             cPais = daoPais.retrieveBy_id(pais);
             return this;
         }

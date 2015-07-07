@@ -114,6 +114,21 @@ BEGIN
 	DROP TABLE VIDA_ESTATICA.Pais;
 END;
 
+IF OBJECT_ID('VIDA_ESTATICA.Item_Factura') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Item_Factura;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Items') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Items;
+END;
+
+IF OBJECT_ID('VIDA_ESTATICA.Factura') IS NOT NULL
+BEGIN
+	DROP TABLE VIDA_ESTATICA.Factura;
+END;
+
 --
 -- CREATE TABLES
 --
@@ -600,6 +615,7 @@ INSERT INTO VIDA_ESTATICA.Deposito (id, cuenta_destino, importe, tipo_moneda, ta
 		SELECT [Deposito_Codigo],(SELECT id FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = [Cuenta_Numero]),[Deposito_Importe], 1, [Tarjeta_Numero],[Deposito_Fecha], 1
 	    FROM [GD1C2015].[gd_esquema].[Maestra] WHERE Deposito_Codigo IS NOT NULL
 SET IDENTITY_INSERT VIDA_ESTATICA.Deposito OFF;
+COMMIT;
 GO
 
 BEGIN TRANSACTION
@@ -615,7 +631,6 @@ FROM gd_esquema.Maestra
 WHERE Retiro_Codigo IS NOT NULL;
 SET IDENTITY_INSERT VIDA_ESTATICA.Retiro OFF;
 COMMIT;
-GO
 
 INSERT INTO VIDA_ESTATICA.Cheque(id_egreso, cod_banco, cuenta_destino, fecha, importe, tipo_moneda)
 SELECT DISTINCT Cheque_Numero, Banco_Cogido, c.id, Cheque_Fecha, Cheque_Importe, 1

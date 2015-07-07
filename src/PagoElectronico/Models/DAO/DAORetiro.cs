@@ -18,8 +18,7 @@ namespace PagoElectronico.Models.DAO
 
           internal Retiro create(Retiro retiro)
           {
-              string values = CreateValues(retiro);
-              int id = DB.ExecuteCastable<int>("INSERT INTO " + tabla + " (" + columns + ") values (" + values + "); SELECT SCOPE_IDENTITY();"); //FIXIT
+              long id = DB.ExecuteCastable<long>("INSERT INTO " + tabla + " (" + columns + ") values (" + CreateValues(retiro) + "); SELECT SCOPE_IDENTITY();"); //FIXIT
               return DB.ExecuteReaderSingle<Retiro>("SELECT * FROM " + tabla + " WHERE id = @1", id);
           }
 

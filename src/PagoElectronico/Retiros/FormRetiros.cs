@@ -100,12 +100,12 @@ namespace PagoElectronico.Retiros
         {
             Cuenta cuentaSeleccionada = ((Cuenta)cmbCuenta.SelectedItem);
             Cheque cheque = new Cheque();
-            cheque.cod_banco = cuentaSeleccionada.banco.cod;
             cheque.cuenta_destino = cuentaSeleccionada.id;
             cheque.importe = Convert.ToDouble(txtRetirar.Text);
             cheque.retiro_fecha = Utils.fechaSistema;
             cheque.id_egreso = daoCheque.generarEgreso();
             cheque.tipo_moneda = cuentaSeleccionada.tipoMoneda;
+            cheque.cod_banco = DAOBanco.generarBanco();
             return cheque;
         }
 

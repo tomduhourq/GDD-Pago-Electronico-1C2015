@@ -15,8 +15,8 @@ namespace PagoElectronico.Models.Utils{
         static private string database { get; set; }
         static private string username { get; set; }
         static private string password { get; set; }
- 
-        static private string strCon = "Data Source=" + "localhost\\SQLSERVER2008" + ";Persist Security Info=True;User ID=gd;Password=gd2015";
+
+        static private string strCon = @System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
 
         static private SqlConnection sqlCon = new SqlConnection(strCon);
         static public Exception exception;

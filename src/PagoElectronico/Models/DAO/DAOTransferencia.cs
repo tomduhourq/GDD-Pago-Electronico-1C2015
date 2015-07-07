@@ -28,8 +28,7 @@ namespace PagoElectronico.Models.DAO
 
          internal Transferencia create(Transferencia transferencia)
          {
-             string values = CreateValues(transferencia);
-             int id = DB.ExecuteCastable<int>("INSERT INTO " + tabla + " (" + columns + ") values (" + values + "); SELECT SCOPE_IDENTITY();"); //FIXIT
+             long id = DB.ExecuteCastable<long>("INSERT INTO " + tabla + " (" + columns + ") values (" + CreateValues(transferencia) + "); SELECT SCOPE_IDENTITY();"); //FIXIT
              return DB.ExecuteReaderSingle<Transferencia>("SELECT * FROM " + tabla + " WHERE id = @1", id);
          }
 

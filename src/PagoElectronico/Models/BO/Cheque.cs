@@ -11,23 +11,24 @@ namespace PagoElectronico.Models.BO
         public Cheque() { }
 
         private DataRow dr;
-      
-        public long id {get; set;}
-        public long id_egreso {get; set;}
-        public DateTime retiro_fecha {get; set;}
-        public double importe {get; set;}
-        public long? cuenta_destino {get; set;}
-        public int? tipo_moneda {get; set;}
-        public int? cod_banco {get; set;}
 
-        public Cheque initialize(DataRow _dr) {
+        public long id { get; set; }
+        public long id_egreso { get; set; }
+        public DateTime retiro_fecha { get; set; }
+        public double importe { get; set; }
+        public long? cuenta_destino { get; set; }
+        public int? tipo_moneda { get; set; }
+        public int? cod_banco { get; set; }
+
+        public Cheque initialize(DataRow _dr)
+        {
             dr = _dr;
             DataColumnCollection dcc = dr.Table.Columns;
             if (dcc.Contains("id"))
                 id = Convert.ToInt64(dr["id"]);
             if (dcc.Contains("id_egreso"))
                 id_egreso = Convert.ToInt64(dr["id_egreso"]);
-            if(dcc.Contains("fecha"))
+            if (dcc.Contains("fecha"))
                 retiro_fecha = Convert.ToDateTime(dr["fecha"]);
             if (dcc.Contains("importe"))
                 importe = Convert.ToDouble(dr["importe"]);

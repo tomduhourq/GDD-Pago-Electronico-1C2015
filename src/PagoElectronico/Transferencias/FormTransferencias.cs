@@ -44,10 +44,6 @@ namespace PagoElectronico.Transferencias
             cmbMoneda.DisplayMember = "descripcion";
             cmbMoneda.ValueMember = "id";
 
-            cmbBancoDestino.DataSource = daoBanco.retrieveAll();
-            cmbBancoDestino.ValueMember = "cod";
-            cmbBancoDestino.DisplayMember = "nombre";
-
             if (cuentas.Count() == 0)
             {
                 MessageBox.Show("No posee cuentas habilitadas o con saldo disponible. Esta ventana se cerrará.");
@@ -99,11 +95,10 @@ namespace PagoElectronico.Transferencias
                 }
                 else {
                    Cuenta destino = daoCuenta
-                   .retrieveBy_Banco_Numero(
-                   Convert.ToInt32(cmbBancoDestino.SelectedValue),
+                   .retrieveBy_Numero(
                    Convert.ToInt64(txtCuentaDestino.Text));
                    if (daoTransferencia.create(CreateTransferencia(destino)).importe == aRetirar) {
-                       MessageBox.Show("Transferencia exitosa!");
+                       MessageBox.Show("Transferencia exitosa! Consulte su saldo para ver los cambios");
                    } 
                 }
             }

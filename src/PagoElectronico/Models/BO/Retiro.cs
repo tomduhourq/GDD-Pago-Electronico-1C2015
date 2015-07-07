@@ -11,11 +11,11 @@ namespace PagoElectronico.Models.BO
         public Retiro() { }
         private DataRow dr;
 
-        public long id {get; set;}
-        public DateTime fecha {get; set;}
-        public double importe {get; set;}
-        public long cuenta_destino {get; set;}
-        public int moneda {get; set;}
+        public long id { get; set; }
+        public DateTime fecha { get; set; }
+        public double importe { get; set; }
+        public long cuenta_destino { get; set; }
+        public int moneda { get; set; }
 
         public Retiro initialize(DataRow _dr)
         {

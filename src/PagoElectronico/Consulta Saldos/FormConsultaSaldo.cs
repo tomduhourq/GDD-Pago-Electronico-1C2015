@@ -73,7 +73,7 @@ namespace PagoElectronico.Consulta_Saldos
                 newRow["Fecha"] = d.fecha.ToString("yyyy-MM-dd"); ;
                 newRow["Importe"] = d.importe;
                 newRow["Moneda"] = (Moneda.Monedas)d.tipo_moneda;
-                newRow["Tarjeta"] = d.tarjeta_id;
+                newRow["Tarjeta"] = d.tarjeta_numero;
 
                 table.Rows.Add(newRow);
             }

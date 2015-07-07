@@ -14,12 +14,11 @@ namespace PagoElectronico.Models.DAO
         {
         }
 
-        private static string columns = "fecha,importe,tipo_moneda,tarjeta_id,cuenta_destino";
+        private static string columns = "fecha,importe,tipo_moneda,tarjeta_id,cuenta_destino,emisor";
 
         public Deposito create(Deposito depo)
         {
-            string values = CreateValues(depo);
-            int id = DB.ExecuteCastable<int>("INSERT INTO "+ tabla +" ("+columns+") values ("+values+"); SELECT SCOPE_IDENTITY();"); //FIXIT
+            long id = DB.ExecuteCastable<long>("INSERT INTO " + tabla + " (" + columns + ") values (" + CreateValues(depo) + "); SELECT SCOPE_IDENTITY();"); //FIXIT
             return DB.ExecuteReaderSingle<Deposito>("SELECT * FROM "+ tabla +" WHERE id = @1", id);
         }
 
@@ -32,8 +31,9 @@ namespace PagoElectronico.Models.DAO
             return depo.fecha.ToString("dd/MM/yyyy") + "," +
                    sqlDouble + "," +
                    depo.tipo_moneda.ToString() + "," +
-                   depo.tarjeta_id.ToString() + "," +
-                   depo.cuenta_destino.ToString();
+                   depo.tarjeta_numero.ToString() + "," +
+                   depo.cuenta_destino.ToString() + "," + 
+                   depo.emisor.ToString();
         }
 
 

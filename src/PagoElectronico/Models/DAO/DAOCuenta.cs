@@ -81,5 +81,10 @@ namespace PagoElectronico.Models.DAO
         {
             return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM " + tabla + " WHERE cod_banco = " + banco + " AND num_cuenta= " + numero);
         }
+
+        internal Cuenta retrieveBy_Numero(long numero)
+        {
+            return DB.ExecuteReaderSingle<Cuenta>("SELECT * FROM " + tabla + " WHERE num_cuenta= " + numero);
+        }
     }
 }

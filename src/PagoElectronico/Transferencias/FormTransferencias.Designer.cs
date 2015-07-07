@@ -34,8 +34,6 @@
             this.lblSaldo = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCuentaDestino = new System.Windows.Forms.TextBox();
-            this.cmbBancoDestino = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtImporte = new System.Windows.Forms.TextBox();
             this.btnTransferir = new System.Windows.Forms.Button();
@@ -96,27 +94,10 @@
             this.txtCuentaDestino.TabIndex = 5;
             this.txtCuentaDestino.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCuentaDestino_KeyPress);
             // 
-            // cmbBancoDestino
-            // 
-            this.cmbBancoDestino.FormattingEnabled = true;
-            this.cmbBancoDestino.Location = new System.Drawing.Point(139, 128);
-            this.cmbBancoDestino.Name = "cmbBancoDestino";
-            this.cmbBancoDestino.Size = new System.Drawing.Size(148, 21);
-            this.cmbBancoDestino.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 131);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(114, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Banco Cuenta Destino";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 177);
+            this.label5.Location = new System.Drawing.Point(20, 131);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 8;
@@ -124,7 +105,7 @@
             // 
             // txtImporte
             // 
-            this.txtImporte.Location = new System.Drawing.Point(83, 174);
+            this.txtImporte.Location = new System.Drawing.Point(83, 128);
             this.txtImporte.Name = "txtImporte";
             this.txtImporte.Size = new System.Drawing.Size(204, 20);
             this.txtImporte.TabIndex = 9;
@@ -132,7 +113,7 @@
             // 
             // btnTransferir
             // 
-            this.btnTransferir.Location = new System.Drawing.Point(182, 256);
+            this.btnTransferir.Location = new System.Drawing.Point(180, 189);
             this.btnTransferir.Name = "btnTransferir";
             this.btnTransferir.Size = new System.Drawing.Size(75, 23);
             this.btnTransferir.TabIndex = 10;
@@ -142,7 +123,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(263, 256);
+            this.btnCancelar.Location = new System.Drawing.Point(263, 189);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 11;
@@ -153,7 +134,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 222);
+            this.label6.Location = new System.Drawing.Point(20, 165);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
             this.label6.TabIndex = 12;
@@ -162,7 +143,7 @@
             // cmbMoneda
             // 
             this.cmbMoneda.FormattingEnabled = true;
-            this.cmbMoneda.Location = new System.Drawing.Point(83, 219);
+            this.cmbMoneda.Location = new System.Drawing.Point(83, 162);
             this.cmbMoneda.Name = "cmbMoneda";
             this.cmbMoneda.Size = new System.Drawing.Size(204, 21);
             this.cmbMoneda.TabIndex = 13;
@@ -171,15 +152,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 291);
+            this.ClientSize = new System.Drawing.Size(350, 222);
             this.Controls.Add(this.cmbMoneda);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnTransferir);
             this.Controls.Add(this.txtImporte);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.cmbBancoDestino);
             this.Controls.Add(this.txtCuentaDestino);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblSaldo);
@@ -203,8 +182,6 @@
         private System.Windows.Forms.Label lblSaldo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCuentaDestino;
-        private System.Windows.Forms.ComboBox cmbBancoDestino;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtImporte;
         private System.Windows.Forms.Button btnTransferir;

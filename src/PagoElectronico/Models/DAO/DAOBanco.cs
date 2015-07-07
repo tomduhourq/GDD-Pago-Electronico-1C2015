@@ -47,5 +47,13 @@ namespace PagoElectronico.Models.DAO
         {
             return DB.ExecuteReader<Banco>("SELECT * FROM " + tabla);
         }
+
+        internal static int? generarBanco()
+        {
+            int min = DB.ExecuteCastable<int>("SELECT MIN(cod) FROM VIDA_ESTATICA.Banco");
+            int max = DB.ExecuteCastable<int>("SELECT MAX(cod) FROM VIDA_ESTATICA.Banco");
+
+            return new Random().Next(min, max + 1);
+        }
     }
 }

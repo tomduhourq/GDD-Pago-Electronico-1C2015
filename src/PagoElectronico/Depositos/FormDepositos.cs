@@ -53,7 +53,7 @@ namespace PagoElectronico.Depositos
             {
                 cmbTarjeta.DataSource = tarjetas;
                 cmbTarjeta.DisplayMember = "Visualize";
-                cmbTarjeta.ValueMember = "id";
+                cmbTarjeta.ValueMember = "numero";
             }
             if (cuentas.Count() == 0)
             {
@@ -110,9 +110,10 @@ namespace PagoElectronico.Depositos
             Deposito depo = new Deposito();
             depo.fecha = Utils.fechaSistema;
             depo.importe = importe;
-            depo.tarjeta_id = Convert.ToInt32(cmbTarjeta.SelectedValue);
+            depo.tarjeta_numero = Convert.ToInt64(cmbTarjeta.SelectedValue);
             depo.tipo_moneda = Convert.ToInt32(cmbMoneda.SelectedValue);
             depo.cuenta_destino = Convert.ToInt64(cmbCuenta.SelectedValue);
+            depo.emisor = ((Tarjeta)cmbTarjeta.SelectedItem).emisor;
             return depo;
         }
 
