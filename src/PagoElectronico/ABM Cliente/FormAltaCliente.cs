@@ -27,10 +27,6 @@ namespace PagoElectronico.ABM_Cliente
             cliente = cli;
             InitializeComponent();
             lstTarjetas = new List<Tarjeta>();
-            if (cliente.nombre != null)
-            {
-                btnCrear.Text = "Modificar";
-            }
         }
 
         private void cargarDatosClientes()
@@ -68,7 +64,7 @@ namespace PagoElectronico.ABM_Cliente
                 cliente.fecha_nac = dateNacimiento.Value.Date;
                 cliente.dom_calle = txtCalle.Text;
                 cliente.dom_nro = (int?)Convert.ToInt32(txtNumero.Text);
-                cliente.dom_piso = Convert.ToInt32(txtPiso.Text);
+                cliente.dom_piso = (int?)Convert.ToInt32(txtPiso.Text);
                 cliente.dom_dpto = txtDepto.Text;
                 cliente.tipo_documento = Convert.ToInt32(txtTipoID.Text);
                 cliente.documento = Convert.ToInt32(txtNumID.Text);
@@ -98,7 +94,8 @@ namespace PagoElectronico.ABM_Cliente
                     }
                     else
                     {
-                        throw new Exception("Datos no se cargaron correctamente");
+                        MessageBox.Show("Datos no se cargaron correctamente");
+                        return;
                     }
                 }
              
@@ -172,7 +169,9 @@ namespace PagoElectronico.ABM_Cliente
                 dtgTarjetas.AutoGenerateColumns = false;
                 dtgTarjetas.MultiSelect = false;
                 cargarGrilla();
-                actualizarGrilla();    
+                actualizarGrilla();
+                btnCrear.Text = "Modificar";
+                this.Text = "FormModifCliente";
             }
         }
 

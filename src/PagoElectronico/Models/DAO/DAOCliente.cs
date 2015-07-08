@@ -18,6 +18,11 @@ namespace PagoElectronico.Models.DAO
         {
         }
 
+        private string stringQuereable(string cadena)
+        {
+            return "'" + cadena + "'";
+        }
+
         public bool create(Cliente _Cliente)
         {
             try
@@ -26,20 +31,21 @@ namespace PagoElectronico.Models.DAO
                 string comando = "INSERT INTO VIDA_ESTATICA.Cliente(nombre, apellido, documento, dom_calle, dom_nro, dom_piso, dom_dpto, fecha_nac, mail, nacionalidad, tipo_documento, usuario, activo)"
                                     + "VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12});"
                                     + "SELECT SCOPE_IDENTITY();";
-                if (_Cliente.usuario == null)
+                if (_Cliente.usuario == null || _Cliente.usuario == "")
                 {
                     _Cliente.usuario = "NULL";
                 }
                 else
-                {
-                    _Cliente.usuario = "'" + _Cliente.usuario + "'";
+                {                                       
+                    if (!existsUser(_Cliente.usuario)) return false;
+                    _Cliente.usuario = stringQuereable(_Cliente.usuario);
                 }
 
                 if (_Cliente.activo == true)
                 {
                     bit = 1;
                 }
-                comando = String.Format(comando, "'" + _Cliente.nombre + "'", "'" + _Cliente.apellido + "'", _Cliente.documento, "'" + _Cliente.dom_calle + "'", _Cliente.dom_nro, _Cliente.dom_piso, "'" + _Cliente.dom_dpto + "'", fechaQuereable(_Cliente.fecha_nac), "'"+_Cliente.mail+"'", _Cliente.nacionalidad, _Cliente.tipo_documento, _Cliente.usuario, bit);
+                comando = String.Format(comando, stringQuereable(_Cliente.nombre), stringQuereable(_Cliente.apellido), _Cliente.documento, stringQuereable(_Cliente.dom_calle), _Cliente.dom_nro, _Cliente.dom_piso, stringQuereable(_Cliente.dom_dpto), fechaQuereable(_Cliente.fecha_nac), stringQuereable(_Cliente.mail), _Cliente.nacionalidad, _Cliente.tipo_documento, _Cliente.usuario, bit);
                 int insertado = DB.ExecuteCardinal(comando);
                 return true;
 
@@ -123,6 +129,24 @@ namespace PagoElectronico.Models.DAO
         public Cliente retrieveBy_user(string userId)
         {
             return DB.ExecuteReaderSingle<Cliente>("SELECT * FROM " + tabla + " WHERE usuario = @1", userId);
+        }
+
+        public bool existsUser(string userId)
+        {
+            List<Cliente> cl = DB.ExecuteReader<Cliente>("SELECT DISTINCT usuario FROM " + tabla);
+            List<string> users = new List<string>();
+            foreach (Cliente c in cl)
+            {
+                users.Add(c.usuario);
+            }
+            if (users.Contains(userId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<Cliente> search(string first_name, string last_name, string identification_type, string identification_number, string email) { 
