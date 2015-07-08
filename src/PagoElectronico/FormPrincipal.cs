@@ -16,6 +16,7 @@ using PagoElectronico.Models.DAO;
 using PagoElectronico.Depositos;
 using PagoElectronico.Retiros;
 using PagoElectronico.Transferencias;
+using PagoElectronico.Listados;
 
 namespace PagoElectronico
 {
@@ -115,6 +116,11 @@ namespace PagoElectronico
         {
             FormTransferencias frmTrans = new FormTransferencias(dao.retrieveBy_user(user.Name));
             frmTrans.Show();
+        }
+
+        private void btnListados_Click(object sender, EventArgs e)
+        {
+            new FormListados().ShowDialog();
         }
 
    
