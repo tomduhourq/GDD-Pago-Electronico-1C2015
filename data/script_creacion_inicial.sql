@@ -5,7 +5,7 @@ FROM    information_schema.schemata
 WHERE   schema_name = 'VIDA_ESTATICA' ) 
 
 BEGIN
-EXEC sp_executesql N'CREATE SCHEMA VIDA_ESTATICA AUTHORIZATION gd'
+EXEC sp_executesql N'CREATE SCHEMA VIDA_ESTATICA'
 END
 
 --
@@ -503,6 +503,7 @@ BEGIN TRANSACTION
 	INSERT INTO VIDA_ESTATICA.Items(descripcion)
 		SELECT DISTINCT [Item_Factura_Descr]
 		FROM [GD1C2015].[gd_esquema].[Maestra] WHERE [Item_Factura_Descr] IS NOT NULL
+		INSERT INTO VIDA_ESTATICA.Items(descripcion) VALUES ('Alta de cuenta'), ('Modificación de tipo de cuenta')
 COMMIT;		
 
 BEGIN TRANSACTION
@@ -540,6 +541,26 @@ GO
 IF OBJECT_ID('VIDA_ESTATICA.updateSaldoAfterTransferencia') IS NOT NULL
 BEGIN
 	DROP TRIGGER VIDA_ESTATICA.updateSaldoAfterTransferencia;
+END;
+GO
+
+IF OBJECT_ID('VIDA_ESTATICA.checkEstadoCuenta') IS NOT NULL
+BEGIN
+	DROP TRIGGER VIDA_ESTATICA.checkEstadoCuenta;
+END;
+GO
+
+
+IF OBJECT_ID('VIDA_ESTATICA.altaCuenta') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.altaCuenta;
+END;
+GO
+
+
+IF OBJECT_ID('VIDA_ESTATICA.modificarTipoCuenta') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.modificarTipoCuenta;
 END;
 GO
 
@@ -589,9 +610,10 @@ AS BEGIN TRANSACTION
 	DECLARE @uCuenta numeric(16, 0);
 	DECLARE @oCuenta numeric(16, 0);
 	DECLARE @costo int;
+	DECLARE @fecha DATETIME
 	
 	-- Necesito la última fila insertada.
-	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino, @oCuenta = cuenta_origen
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino, @oCuenta = cuenta_origen, @fecha = fecha
 	FROM inserted 
 	ORDER BY id DESC;
 	
@@ -604,8 +626,45 @@ AS BEGIN TRANSACTION
 	WHERE id = @uCuenta;
 	
 	UPDATE VIDA_ESTATICA.Cuenta
-	SET saldo = saldo - @uImporte - @costo
+	SET saldo = saldo - @uImporte
 	WHERE id = @oCuenta;
+	
+	DECLARE @cliente numeric(18, 0) = (SELECT cod_cli FROM VIDA_ESTATICA.Cuenta WHERE id = @oCuenta)
+	IF NOT EXISTS(SELECT 1 FROM VIDA_ESTATICA.Factura WHERE id_cliente = @cliente AND fecha = @fecha)
+	BEGIN
+		-- CREAR FACTURA y agregar el item
+		INSERT INTO VIDA_ESTATICA.Factura(fecha, id_cliente) VALUES (@fecha, @cliente)
+	END
+	DECLARE @factID numeric(18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE fecha = @fecha AND id_cliente = @cliente)
+	INSERT INTO VIDA_ESTATICA.Item_Factura(facturado, fecha, id_factura, id_item, monto, num_cuenta) VALUES
+	(0, @fecha, @factID, 1, 
+	(SELECT costo_transaccion 
+	FROM VIDA_ESTATICA.Tipo_Cuenta tc 
+	JOIN VIDA_ESTATICA.Cuenta c 
+	ON c.tipo_cuenta = tc.id
+	WHERE c.id = @oCuenta), (SELECT num_cuenta FROM VIDA_ESTATICA.Cuenta WHERE id = @oCuenta)) -- Comisión por transferencia = 1
+	
+	IF (SELECT COUNT(*) FROM VIDA_ESTATICA.Item_Factura WHERE id_factura = @factID) > 5
+	BEGIN
+		-- Deshabilitar Cuenta
+		UPDATE VIDA_ESTATICA.Cuenta
+		SET estado = (SELECT id FROM VIDA_ESTATICA.Estado_Cuenta WHERE descripcion = 'Inhabilitada')
+		WHERE id = @oCuenta
+	END
+COMMIT;
+GO
+
+CREATE TRIGGER VIDA_ESTATICA.checkEstadoCuenta ON VIDA_ESTATICA.Item_Factura FOR INSERT
+AS BEGIN TRANSACTION
+	DECLARE @factID numeric(18, 0) = (SELECT id_factura FROM inserted)
+	
+	IF (SELECT COUNT(*) FROM VIDA_ESTATICA.Item_Factura WHERE id_factura = @factID) > 5
+	BEGIN
+		DECLARE @numCuenta numeric(18,0) = (SELECT num_cuenta FROM inserted)
+		UPDATE VIDA_ESTATICA.Cuenta
+		SET estado = (SELECT id FROM VIDA_ESTATICA.Estado_Cuenta WHERE descripcion = 'Inhabilitada')
+		WHERE num_cuenta = @numCuenta
+	END
 COMMIT;
 GO
 
@@ -685,6 +744,12 @@ BEGIN
 END;
 GO
 
+IF OBJECT_ID('VIDA_ESTATICA.PRC_facturar_item_factura') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.PRC_facturar_item_factura;
+END;
+GO
+
 CREATE PROCEDURE VIDA_ESTATICA.addFuncionalidad(@rol varchar(255), @func varchar(255)) AS
 BEGIN
 	INSERT INTO VIDA_ESTATICA.Funcionalidad_Rol (rol, funcionalidad)
@@ -744,6 +809,29 @@ AS BEGIN
 																		@domDptoCliente, @fecNacCliente, @mailCliente,
 																		@nacionalidadCliente, @tipoDocCliente, @usuarioCliente, @activo)
 	SET @ret = SCOPE_IDENTITY()
+END
+GO
+
+CREATE PROCEDURE VIDA_ESTATICA.altaCuenta (@fecha DATETIME, @idCliente numeric(18, 0), @numCuenta numeric(18, 0))
+as
+	DECLARE @factID numeric (18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE id_cliente = @idCliente AND fecha = @fecha)
+	INSERT INTO Item_Factura (facturado, fecha, id_factura, id_item_factura, monto, num_cuenta) VALUES
+	(0, @fecha, @factID, 2, 100,@numCuenta) -- COmisión por alta de cuenta = 2
+GO
+	
+CREATE PROCEDURE VIDA_ESTATICA.modificarTipoCuenta (@fecha DATETIME, @idCliente numeric(18, 0), @numCuenta numeric(18, 0))
+as
+	DECLARE @factID numeric (18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE id_cliente = @idCliente AND fecha = @fecha)
+	INSERT INTO Item_Factura (facturado, fecha, id_factura, id_item_factura, monto, num_cuenta) VALUES
+	(0, @fecha, @factID, 3, 50, @numCuenta) -- COmisión por modificacion de tipo de cuenta = 3
+GO
+
+CREATE PROCEDURE VIDA_ESTATICA.PRC_facturar_item_factura
+@id_item_factura NUMERIC(18,0),
+@id_factura NUMERIC(18,0)
+AS
+BEGIN
+	UPDATE VIDA_ESTATICA.Item_Factura SET facturado = 1, id_factura = @id_factura WHERE id_item_factura = @id_item_factura
 END
 GO
 

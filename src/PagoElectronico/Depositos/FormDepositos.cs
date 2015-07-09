@@ -131,5 +131,10 @@ namespace PagoElectronico.Depositos
                 return false;
             }
         }
+
+        private void cmbCuenta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

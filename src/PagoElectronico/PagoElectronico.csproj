@@ -133,6 +133,18 @@
     <Compile Include="Depositos\FormDepositos.Designer.cs">
       <DependentUpon>FormDepositos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\FormBusqueda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturacion\FormBusqueda.Designer.cs">
+      <DependentUpon>FormBusqueda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\FormFacturacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturacion\FormFacturacion.Designer.cs">
+      <DependentUpon>FormFacturacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +224,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Depositos\FormDepositos.resx">
       <DependentUpon>FormDepositos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\FormBusqueda.resx">
+      <DependentUpon>FormBusqueda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\FormFacturacion.resx">
+      <DependentUpon>FormFacturacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
@@ -310,7 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ABM de Usuario\" />
-    <Folder Include="Facturacion\" />
     <Folder Include="Listados\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

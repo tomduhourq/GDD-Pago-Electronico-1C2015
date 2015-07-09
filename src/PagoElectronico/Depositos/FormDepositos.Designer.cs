@@ -57,6 +57,7 @@
             this.cmbCuenta.Name = "cmbCuenta";
             this.cmbCuenta.Size = new System.Drawing.Size(277, 21);
             this.cmbCuenta.TabIndex = 1;
+            this.cmbCuenta.SelectedIndexChanged += new System.EventHandler(this.cmbCuenta_SelectedIndexChanged);
             // 
             // label2
             // 

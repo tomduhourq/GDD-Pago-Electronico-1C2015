@@ -31,6 +31,7 @@
             this.lblSeleccionRol = new System.Windows.Forms.Label();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.groupAdmin = new System.Windows.Forms.GroupBox();
+            this.btnBuscarFacturas = new System.Windows.Forms.Button();
             this.btnConSaldoAdm = new System.Windows.Forms.Button();
             this.btnABMCuentas = new System.Windows.Forms.Button();
             this.btnABMCliente = new System.Windows.Forms.Button();
@@ -68,6 +69,7 @@
             // 
             // groupAdmin
             // 
+            this.groupAdmin.Controls.Add(this.btnBuscarFacturas);
             this.groupAdmin.Controls.Add(this.btnConSaldoAdm);
             this.groupAdmin.Controls.Add(this.btnABMCuentas);
             this.groupAdmin.Controls.Add(this.btnABMCliente);
@@ -79,6 +81,16 @@
             this.groupAdmin.TabStop = false;
             this.groupAdmin.Text = "Funciones Administrador";
             this.groupAdmin.Visible = false;
+            // 
+            // btnBuscarFacturas
+            // 
+            this.btnBuscarFacturas.Location = new System.Drawing.Point(348, 19);
+            this.btnBuscarFacturas.Name = "btnBuscarFacturas";
+            this.btnBuscarFacturas.Size = new System.Drawing.Size(92, 23);
+            this.btnBuscarFacturas.TabIndex = 6;
+            this.btnBuscarFacturas.Text = "Facturar";
+            this.btnBuscarFacturas.UseVisualStyleBackColor = true;
+            this.btnBuscarFacturas.Click += new System.EventHandler(this.btnBuscarFacturas_Click_1);
             // 
             // btnConSaldoAdm
             // 
@@ -220,5 +232,6 @@
         private System.Windows.Forms.Button btnConSaldoAdm;
         private System.Windows.Forms.Button btnConSaldo;
         private System.Windows.Forms.Button btnTransferencias;
+        private System.Windows.Forms.Button btnBuscarFacturas;
     }
 }

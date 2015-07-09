@@ -16,6 +16,8 @@ using PagoElectronico.Models.DAO;
 using PagoElectronico.Depositos;
 using PagoElectronico.Retiros;
 using PagoElectronico.Transferencias;
+using PagoElectronico.Facturacion;
+
 
 namespace PagoElectronico
 {
@@ -82,6 +84,12 @@ namespace PagoElectronico
             frmCuentas.Show();
         }
 
+        private void btnBuscarFacturas_Click(object sender, EventArgs e)
+        {
+            FormBusqueda frmBuscarFacturas = new FormBusqueda(user.Name);
+            frmBuscarFacturas.ShowDialog();
+        }
+
         private void btnDepositos_Click(object sender, EventArgs e)
         {
             FormDepositos frmDepo = new FormDepositos(dao.retrieveBy_user(user.Name));
@@ -115,6 +123,12 @@ namespace PagoElectronico
         {
             FormTransferencias frmTrans = new FormTransferencias(dao.retrieveBy_user(user.Name));
             frmTrans.Show();
+        }
+
+        private void btnBuscarFacturas_Click_1(object sender, EventArgs e)
+        {
+            FormBusqueda frmBuscarFacturas = new FormBusqueda(user.Name);
+            frmBuscarFacturas.ShowDialog();
         }
 
    
