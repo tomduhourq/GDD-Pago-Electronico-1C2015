@@ -610,10 +610,10 @@ AS BEGIN TRANSACTION
 	DECLARE @uCuenta numeric(16, 0);
 	DECLARE @oCuenta numeric(16, 0);
 	DECLARE @costo int;
-	DECLARE @fecha DATETIME
+	DECLARE @fecha DATE
 	
 	-- Necesito la última fila insertada.
-	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino, @oCuenta = cuenta_origen, @fecha = fecha
+	SELECT TOP 1 @uImporte = importe, @uCuenta = cuenta_destino, @oCuenta = cuenta_origen, @fecha = CAST(fecha AS DATE)
 	FROM inserted 
 	ORDER BY id DESC;
 	
@@ -630,12 +630,12 @@ AS BEGIN TRANSACTION
 	WHERE id = @oCuenta;
 	
 	DECLARE @cliente numeric(18, 0) = (SELECT cod_cli FROM VIDA_ESTATICA.Cuenta WHERE id = @oCuenta)
-	IF NOT EXISTS(SELECT 1 FROM VIDA_ESTATICA.Factura WHERE id_cliente = @cliente AND fecha = @fecha)
+	IF NOT EXISTS(SELECT 1 FROM VIDA_ESTATICA.Factura WHERE id_cliente = @cliente AND CAST(fecha AS DATE) = @fecha)
 	BEGIN
 		-- CREAR FACTURA y agregar el item
 		INSERT INTO VIDA_ESTATICA.Factura(fecha, id_cliente) VALUES (@fecha, @cliente)
 	END
-	DECLARE @factID numeric(18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE fecha = @fecha AND id_cliente = @cliente)
+	DECLARE @factID numeric(18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE CAST(fecha AS DATE) = @fecha AND id_cliente = @cliente)
 	INSERT INTO VIDA_ESTATICA.Item_Factura(facturado, fecha, id_factura, id_item, monto, num_cuenta) VALUES
 	(0, @fecha, @factID, 1, 
 	(SELECT costo_transaccion 
@@ -643,7 +643,7 @@ AS BEGIN TRANSACTION
 	JOIN VIDA_ESTATICA.Cuenta c 
 	ON c.tipo_cuenta = tc.id
 	WHERE c.id = @oCuenta), @oCuenta) -- Comisión por transferencia = 1
-	
+
 	IF (SELECT COUNT(*) FROM VIDA_ESTATICA.Item_Factura WHERE id_factura = @factID) > 5
 	BEGIN
 		-- Deshabilitar Cuenta
@@ -654,7 +654,7 @@ AS BEGIN TRANSACTION
 COMMIT;
 GO
 
-CREATE TRIGGER VIDA_ESTATICA.checkEstadoCuenta ON VIDA_ESTATICA.Item_Factura FOR INSERT
+CREATE TRIGGER VIDA_ESTATICA.checkEstadoCuenta ON VIDA_ESTATICA.Item_Factura AFTER INSERT
 AS BEGIN TRANSACTION
 	DECLARE @factID numeric(18, 0) = (SELECT id_factura FROM inserted)
 	
@@ -663,7 +663,7 @@ AS BEGIN TRANSACTION
 		DECLARE @numCuenta numeric(18,0) = (SELECT num_cuenta FROM inserted)
 		UPDATE VIDA_ESTATICA.Cuenta
 		SET estado = (SELECT id FROM VIDA_ESTATICA.Estado_Cuenta WHERE descripcion = 'Inhabilitada')
-		WHERE num_cuenta = @numCuenta
+		WHERE id = @numCuenta
 	END
 COMMIT;
 GO
