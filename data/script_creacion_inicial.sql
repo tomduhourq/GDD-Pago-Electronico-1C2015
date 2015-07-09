@@ -642,7 +642,7 @@ AS BEGIN TRANSACTION
 	FROM VIDA_ESTATICA.Tipo_Cuenta tc 
 	JOIN VIDA_ESTATICA.Cuenta c 
 	ON c.tipo_cuenta = tc.id
-	WHERE c.id = @oCuenta), (SELECT num_cuenta FROM VIDA_ESTATICA.Cuenta WHERE id = @oCuenta)) -- Comisión por transferencia = 1
+	WHERE c.id = @oCuenta), @oCuenta) -- Comisión por transferencia = 1
 	
 	IF (SELECT COUNT(*) FROM VIDA_ESTATICA.Item_Factura WHERE id_factura = @factID) > 5
 	BEGIN

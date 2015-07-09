@@ -151,6 +151,12 @@
     <Compile Include="FormPrincipal.Designer.cs">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Listados\FormListados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listados\FormListados.Designer.cs">
+      <DependentUpon>FormListados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listados\FormListados.resx">
+      <DependentUpon>FormListados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
@@ -329,6 +338,7 @@
   <ItemGroup>
     <Folder Include="ABM de Usuario\" />
     <Folder Include="Listados\" />
+    <Folder Include="Facturacion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,7 +17,7 @@ using PagoElectronico.Depositos;
 using PagoElectronico.Retiros;
 using PagoElectronico.Transferencias;
 using PagoElectronico.Facturacion;
-
+using PagoElectronico.Listados;
 
 namespace PagoElectronico
 {
@@ -125,10 +125,16 @@ namespace PagoElectronico
             frmTrans.Show();
         }
 
+
         private void btnBuscarFacturas_Click_1(object sender, EventArgs e)
         {
             FormBusqueda frmBuscarFacturas = new FormBusqueda(user.Name);
             frmBuscarFacturas.ShowDialog();
+
+        private void btnListados_Click(object sender, EventArgs e)
+        {
+            new FormListados().ShowDialog();
+
         }
 
    
