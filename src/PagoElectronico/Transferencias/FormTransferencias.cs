@@ -104,7 +104,7 @@ namespace PagoElectronico.Transferencias
             }
             catch
             {
-                MessageBox.Show("No ingresó correctamente importe!");
+                MessageBox.Show("La cuenta destino no existe!");
             }
         }
 

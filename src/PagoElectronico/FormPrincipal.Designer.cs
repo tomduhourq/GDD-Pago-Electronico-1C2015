@@ -32,6 +32,7 @@
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.groupAdmin = new System.Windows.Forms.GroupBox();
             this.btnBuscarFacturas = new System.Windows.Forms.Button();
+            this.btnListados = new System.Windows.Forms.Button();
             this.btnConSaldoAdm = new System.Windows.Forms.Button();
             this.btnABMCuentas = new System.Windows.Forms.Button();
             this.btnABMCliente = new System.Windows.Forms.Button();
@@ -42,7 +43,6 @@
             this.btnCuentasCliente = new System.Windows.Forms.Button();
             this.btnRetiros = new System.Windows.Forms.Button();
             this.btnDepositos = new System.Windows.Forms.Button();
-            this.btnListados = new System.Windows.Forms.Button();
             this.groupAdmin.SuspendLayout();
             this.groupCliente.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +70,6 @@
             // 
             // groupAdmin
             // 
-
             this.groupAdmin.Controls.Add(this.btnBuscarFacturas);
             this.groupAdmin.Controls.Add(this.btnListados);
             this.groupAdmin.Controls.Add(this.btnConSaldoAdm);
@@ -94,6 +93,16 @@
             this.btnBuscarFacturas.Text = "Facturar";
             this.btnBuscarFacturas.UseVisualStyleBackColor = true;
             this.btnBuscarFacturas.Click += new System.EventHandler(this.btnBuscarFacturas_Click_1);
+            // 
+            // btnListados
+            // 
+            this.btnListados.Location = new System.Drawing.Point(324, 49);
+            this.btnListados.Name = "btnListados";
+            this.btnListados.Size = new System.Drawing.Size(116, 23);
+            this.btnListados.TabIndex = 6;
+            this.btnListados.Text = "Listados Estadisticos";
+            this.btnListados.UseVisualStyleBackColor = true;
+            this.btnListados.Click += new System.EventHandler(this.btnListados_Click);
             // 
             // btnConSaldoAdm
             // 
@@ -199,16 +208,6 @@
             this.btnDepositos.Text = "Depósitos";
             this.btnDepositos.UseVisualStyleBackColor = true;
             this.btnDepositos.Click += new System.EventHandler(this.btnDepositos_Click);
-            // 
-            // btnListados
-            // 
-            this.btnListados.Location = new System.Drawing.Point(348, 19);
-            this.btnListados.Name = "btnListados";
-            this.btnListados.Size = new System.Drawing.Size(116, 23);
-            this.btnListados.TabIndex = 6;
-            this.btnListados.Text = "Listados Estadisticos";
-            this.btnListados.UseVisualStyleBackColor = true;
-            this.btnListados.Click += new System.EventHandler(this.btnListados_Click);
             // 
             // FormPrincipal
             // 

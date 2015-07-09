@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace PagoElectronico.Listados
 {
@@ -14,6 +15,10 @@ namespace PagoElectronico.Listados
         public FormListados()
         {
             InitializeComponent();
+
+            dgResult.AllowUserToAddRows = false;
+            dgResult.AllowUserToDeleteRows = false;
+            dgResult.ReadOnly = true;
         }
 
         private void FormListados_Load(object sender, EventArgs e)
@@ -80,7 +85,8 @@ namespace PagoElectronico.Listados
         }
 
         public void clientesConCuentasSinPagar(int ano, int trimestre) 
-        { 
+        {
+           
         }
 
         public void clientesConMasComisionesEntreCuentas(int ano, int trimestre)

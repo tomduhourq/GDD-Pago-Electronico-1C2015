@@ -130,6 +130,7 @@ namespace PagoElectronico
         {
             FormBusqueda frmBuscarFacturas = new FormBusqueda(user.Name);
             frmBuscarFacturas.ShowDialog();
+        }
 
         private void btnListados_Click(object sender, EventArgs e)
         {

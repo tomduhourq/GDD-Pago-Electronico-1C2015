@@ -71,9 +71,9 @@ namespace PagoElectronico.Facturacion
                 {
                     string query = "SELECT i.id_item_factura, i.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
-                                + " JOIN VIDA_ESTATICA.Cuenta c ON c.num_cuenta = i.num_cuenta "
-                                + " JOIN VIDA_ESTATICA.Cliente cl ON cl.id_cliente = c.id_cliente"
-                                + " WHERE cl.username = '" + usuario + "' AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
+                                + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta "
+                                + " JOIN VIDA_ESTATICA.Cliente cl ON cl.id = c.cod_cli"
+                                + " WHERE cl.usuario = '" + usuario + "' AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
                     dtDatos = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
                     da.Fill(dtDatos);
@@ -84,9 +84,9 @@ namespace PagoElectronico.Facturacion
 
                     string query = "SELECT i.id_item_factura, i.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
-                                +" JOIN VIDA_ESTATICA.Cuenta c ON c.num_cuenta = i.num_cuenta "
-                                +" JOIN VIDA_ESTATICA.Cliente cl ON cl.id_cliente = c.id_cliente"
-                                + " WHERE i.id_item = " + id_item + " AND cl.username = '"+usuario+"' AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
+                                + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta "
+                                + " JOIN VIDA_ESTATICA.Cliente cl ON cl.id = c.cod_cli"
+                                + " WHERE i.id_item = " + id_item + " AND cl.usuario = '"+usuario+"' AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
 
                     dtDatos = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
@@ -138,7 +138,7 @@ namespace PagoElectronico.Facturacion
             SqlConnection con = DBAcess.GetConnection();
             //OBTENGO ID DE CLIENTE
              
-            string query = "SELECT R.nombre FROM VIDA_ESTATICA.Rol_Usuario U JOIN VIDA_ESTATICA.Rol R ON R.id_rol=U.rol WHERE U.usuario = '" + usuario + "'";
+            string query = "SELECT R.nombre FROM VIDA_ESTATICA.Rol_Usuario U JOIN VIDA_ESTATICA.Rol R ON R.id=U.rol WHERE U.usuario = '" + usuario + "'";
             SqlCommand command = new SqlCommand(query, con);
             SqlDataReader lector = command.ExecuteReader();
             lector.Read();

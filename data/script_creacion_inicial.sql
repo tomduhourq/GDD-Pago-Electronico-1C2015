@@ -811,18 +811,19 @@ AS BEGIN
 	SET @ret = SCOPE_IDENTITY()
 END
 GO
-
+-- DROP PROCEDURE VIDA_ESTATICA.altaCuenta
 CREATE PROCEDURE VIDA_ESTATICA.altaCuenta (@fecha DATETIME, @idCliente numeric(18, 0), @numCuenta numeric(18, 0))
 as
 	DECLARE @factID numeric (18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE id_cliente = @idCliente AND fecha = @fecha)
-	INSERT INTO Item_Factura (facturado, fecha, id_factura, id_item_factura, monto, num_cuenta) VALUES
+	INSERT INTO Item_Factura (facturado, fecha, id_factura, id_item, monto, num_cuenta ) VALUES
 	(0, @fecha, @factID, 2, 100,@numCuenta) -- COmisión por alta de cuenta = 2
+
 GO
 	
 CREATE PROCEDURE VIDA_ESTATICA.modificarTipoCuenta (@fecha DATETIME, @idCliente numeric(18, 0), @numCuenta numeric(18, 0))
 as
 	DECLARE @factID numeric (18, 0) = (SELECT id_factura FROM VIDA_ESTATICA.Factura WHERE id_cliente = @idCliente AND fecha = @fecha)
-	INSERT INTO Item_Factura (facturado, fecha, id_factura, id_item_factura, monto, num_cuenta) VALUES
+	INSERT INTO Item_Factura (facturado, fecha, id_factura, id_item, monto, num_cuenta) VALUES
 	(0, @fecha, @factID, 3, 50, @numCuenta) -- COmisión por modificacion de tipo de cuenta = 3
 GO
 
