@@ -49,5 +49,30 @@ namespace PagoElectronico.Models.DAO {
             }
             return id;
         }
+
+        public List<Pais> topMovimientos(int anio, int min, int max)
+        {
+            string comando = "SELECT TOP 5 "
+                                + "p.descripcion, "
+                                + "COUNT(d.id) + COUNT(r.id) AS MOVIMIENTOS "
+                                + "FROM VIDA_ESTATICA.Pais p "
+                                + "INNER JOIN VIDA_ESTATICA.Cliente cli "
+                                + "ON p.id = cli.nacionalidad "
+                                + "INNER JOIN VIDA_ESTATICA.Cuenta cue "
+                                + "ON cue.cod_cli = cli.id "
+                                + "INNER JOIN VIDA_ESTATICA.Deposito d "
+                                + "ON cue.id = d.cuenta_destino "
+                                + "INNER JOIN VIDA_ESTATICA.Retiro r "
+                                + "ON cue.id = r.cuenta_destino "
+                                + "AND (YEAR(r.fecha) = " + anio + " "
+                                + "AND MONTH(r.fecha) IN (" + min + "," + max + ")) "
+                                + "AND (YEAR(d.fecha) = " + anio + " "
+                                + "AND MONTH(d.fecha) IN (" + min + "," + max + ")) "
+                                + "GROUP BY p.descripcion "
+                                + "ORDER BY MOVIMIENTOS DESC ";
+            List<Pais> cp = DB.ExecuteReader<Pais>(comando);
+
+            return cp;
+        }
     }
 }

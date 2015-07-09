@@ -16,15 +16,13 @@ namespace PagoElectronico.Listados
     public partial class FormListados : Form
     {
         DAOCliente daoCl = new DAOCliente();
-        List<Cliente> listaClientes;
-        List<Pais> listaPaises;
+        DAOPais daoP = new DAOPais();
+        List<Cliente> listaClientes = new List<Cliente>();
+        List<Pais> listaPaises = new List<Pais>();
 
         public FormListados()
         {
             InitializeComponent();
-
-            listaClientes = new List<Cliente>();
-            listaPaises = new List<Pais>();
 
             dgResult.AllowUserToAddRows = false;
             dgResult.AllowUserToDeleteRows = false;
@@ -102,7 +100,6 @@ namespace PagoElectronico.Listados
         private void limpiarGrilla()
         {
             dgResult.Columns.Clear();
-            listaClientes = null;
             dgResult.DataSource = null;
         }
 
@@ -165,35 +162,67 @@ namespace PagoElectronico.Listados
             dgResult.Columns.Add(colDescripcion);
         }
 
-        public void clientesConCuentasSinPagar(int ano, int trimestre) 
+        public void asociarCamposCompletosCliente()
         {
-            cargarGrillaFormatoCliente();
-            try { listaClientes = daoCl.topInhabilitados(ano, minimoMesTrimestre(trimestre), maximoMesTrimestre(trimestre)); }
-            catch { MessageBox.Show("No existe cliente con esas caracteristicas", "Error!", MessageBoxButtons.OK); }            
             Cliente client = new Cliente();
+            List<Cliente> lstC = new List<Cliente>();
             if (listaClientes.Count != 0)
             {
+                foreach (Cliente c in listaClientes)
+                {
+                    lstC.Add(daoCl.retrieveBy_id(c.id));
+                }
+                listaClientes = lstC;
                 client = listaClientes[0];
             }
             else
             {
                 return;
             }
+        }
+
+
+        public void clientesConCuentasSinPagar(int ano, int trimestre) 
+        {
+            cargarGrillaFormatoCliente();
+            try { listaClientes = daoCl.topInhabilitados(ano, minimoMesTrimestre(trimestre), maximoMesTrimestre(trimestre)); }
+            catch { MessageBox.Show("No existe cliente con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
+            
+            asociarCamposCompletosCliente();
             
             dgResult.DataSource = listaClientes;
         }
 
         public void clientesConMasComisionesEntreCuentas(int ano, int trimestre)
-        { 
+        {
+            cargarGrillaFormatoCliente();
+            try { listaClientes = daoCl.topFacturadores(ano, minimoMesTrimestre(trimestre), maximoMesTrimestre(trimestre)); }
+            catch { MessageBox.Show("No existe cliente con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
+
+            asociarCamposCompletosCliente();
+
+            dgResult.DataSource = listaClientes;
         }
 
         public void clientesConMasTransaccionesEntreSusCuentas(int ano, int trimestre)
-        { 
+        {
+            cargarGrillaFormatoCliente();
+            try { listaClientes = daoCl.topTransaccionales(ano, minimoMesTrimestre(trimestre), maximoMesTrimestre(trimestre)); }
+            catch { MessageBox.Show("No existe cliente con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
+
+            asociarCamposCompletosCliente();
+
+            dgResult.DataSource = listaClientes;
         }
 
         public void PaisesConMasMovimientos(int ano, int trimestre)
         {
             cargarGrillaFormatoPais();
+
+            try { listaPaises = daoP.topMovimientos(ano, minimoMesTrimestre(trimestre), maximoMesTrimestre(trimestre)); }
+            catch { MessageBox.Show("No existe pais con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
+
+            dgResult.DataSource = listaPaises;
         }
 
         public void TotalFacturadoTiposDeCuentas(int ano, int trimestre)

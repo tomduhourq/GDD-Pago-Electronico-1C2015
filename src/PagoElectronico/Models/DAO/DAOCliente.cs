@@ -225,9 +225,49 @@ namespace PagoElectronico.Models.DAO
 
         public List<Cliente> topInhabilitados(int anio, int min, int max)
         {
+            string comando = "SELECT TOP 5 c.id "
+                                + "FROM VIDA_ESTATICA.Cliente c "
+                                + "INNER JOIN VIDA_ESTATICA.Cuenta cue "
+                                + "ON c.id = cue.cod_cli "
+                                + "JOIN VIDA_ESTATICA.Item_Factura i_f "
+                                + "ON cue.id = i_f.num_cuenta "
+                                + "WHERE YEAR(i_f.fecha) = "+ anio + " "
+                                + "AND MONTH(i_f.fecha) IN (" + min + "," + max + ") "
+                                + "GROUP BY c.id, i_f.id_factura "
+                                + "HAVING COUNT(*) > 5 "
+                                + "ORDER BY COUNT(*) DESC ";
+            List<Cliente> cl = DB.ExecuteReader<Cliente>(comando);   
             
-            List<Cliente> cl = DB.ExecuteReader<Cliente>("SELECT TOP 5 * FROM VIDA_ESTATICA.Cuenta cu, VIDA_ESTATICA.Cliente cl WHERE cu.estado = 3 AND cu.cod_cli = cl.id AND "+anio+" = YEAR(cu.fecha_creacion) AND MONTH(cu.fecha_creacion) IN ("+min+","+max+")");   
-            
+            return cl;
+        }
+
+        public List<Cliente> topFacturadores(int anio, int min, int max)
+        {
+            string comando = "SELECT TOP 5 c.id FROM VIDA_ESTATICA.Cliente c "
+                                +"INNER JOIN VIDA_ESTATICA.Cuenta cue ON cue.cod_cli = c.id "
+                                +"INNER JOIN VIDA_ESTATICA.Item_Factura i_f ON cue.id = i_f.num_cuenta "
+                                +"WHERE i_f.facturado = 1 "
+                                +"AND YEAR(i_f.fecha) = " + anio + " "
+                                +"AND MONTH(i_f.fecha) IN (" + min + "," + max + ") "
+                                +"GROUP BY c.id "
+                                +"ORDER BY COUNT(*) DESC ";
+            List<Cliente> cl = DB.ExecuteReader<Cliente>(comando);
+
+            return cl;
+        }
+
+        public List<Cliente> topTransaccionales(int anio, int min, int max)
+        {
+            string comando = "SELECT TOP 5 c.id FROM VIDA_ESTATICA.Cliente c "
+                                + "INNER JOIN VIDA_ESTATICA.Cuenta cue ON cue.cod_cli = c.id "
+                                + "INNER JOIN VIDA_ESTATICA.Transferencia t ON cue.id = t.cuenta_origen "
+                                + "WHERE t.cuenta_destino IN (SELECT cuenta.id FROM VIDA_ESTATICA.Cuenta cuenta WHERE cuenta.cod_cli = c.id) "
+                                + "AND YEAR(t.fecha) = " + anio + " "
+                                + "AND MONTH(t.fecha) IN (" + min + "," + max + ") "
+                                + "GROUP BY c.id "
+                                + "ORDER BY COUNT(*) DESC ";
+            List<Cliente> cl = DB.ExecuteReader<Cliente>(comando);
+
             return cl;
         }
     }
