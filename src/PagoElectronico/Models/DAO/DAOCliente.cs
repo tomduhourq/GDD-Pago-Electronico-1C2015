@@ -222,5 +222,13 @@ namespace PagoElectronico.Models.DAO
             }
             return l;
         }
+
+        public List<Cliente> topInhabilitados(int anio, int min, int max)
+        {
+            
+            List<Cliente> cl = DB.ExecuteReader<Cliente>("SELECT TOP 5 * FROM VIDA_ESTATICA.Cuenta cu, VIDA_ESTATICA.Cliente cl WHERE cu.estado = 3 AND cu.cod_cli = cl.id AND "+anio+" = YEAR(cu.fecha_creacion) AND MONTH(cu.fecha_creacion) IN ("+min+","+max+")");   
+            
+            return cl;
+        }
     }
 }
