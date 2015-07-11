@@ -58,8 +58,21 @@ namespace PagoElectronico.ABM_Cliente
             }
         }
 
+        private bool validateCamps()
+        {
+            if (txtNombre.Text == "" || txtApellido.Text == "" || txtCalle.Text == "" || txtDepto.Text == "" || txtMail.Text == ""
+                || txtNumero.Text == "" || txtPiso.Text == "")
+            {
+                MessageBox.Show("Hay campos vacios");
+                return false;
+            }
+            return true;
+        }
+
         private void btnCrear_Click_1(object sender, EventArgs e)
         {
+            if (validateCamps())
+            {
                 cliente.nombre = txtNombre.Text;
                 cliente.apellido = txtApellido.Text;
                 cliente.mail = txtMail.Text;
@@ -101,6 +114,7 @@ namespace PagoElectronico.ABM_Cliente
                         return;
                     }
                 }
+            }
              
         }
 
