@@ -45,7 +45,7 @@ namespace PagoElectronico.Listados
             cbListado.Items.Add("Clientes con cuentas inhabilitadas por no pago");
             cbListado.Items.Add("Cliente con mayor cantidad de comisiones facturadas en sus cuentas");
             cbListado.Items.Add("Clientes con mayor cantidad de transacciones entre sus cuentas");
-            cbListado.Items.Add("Países con mayor cantidad de movimientos");
+            cbListado.Items.Add("Paises con mayor cantidad de movimientos");
             cbListado.Items.Add("Total facturado para los distintos tipos de cuentas");
 
             dgResult.AutoGenerateColumns = false;
