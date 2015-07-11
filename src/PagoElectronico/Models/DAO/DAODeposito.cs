@@ -14,7 +14,7 @@ namespace PagoElectronico.Models.DAO
         {
         }
 
-        private static string columns = "fecha,importe,tipo_moneda,tarjeta_id,cuenta_destino,emisor";
+        private static string columns = "fecha,importe,tipo_moneda,tarjeta,cuenta_destino,emisor";
 
         public Deposito create(Deposito depo)
         {
