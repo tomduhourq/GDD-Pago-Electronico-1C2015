@@ -64,13 +64,37 @@ namespace PagoElectronico.Models.DAO {
                                 + "ON cue.id = d.cuenta_destino "
                                 + "INNER JOIN VIDA_ESTATICA.Retiro r "
                                 + "ON cue.id = r.cuenta_destino "
-                                + "AND (YEAR(r.fecha) = " + anio + " "
+                                + "WHERE (YEAR(r.fecha) = " + anio + " "
                                 + "AND MONTH(r.fecha) IN (" + min + "," + max + ")) "
                                 + "AND (YEAR(d.fecha) = " + anio + " "
                                 + "AND MONTH(d.fecha) IN (" + min + "," + max + ")) "
                                 + "GROUP BY p.descripcion "
                                 + "ORDER BY MOVIMIENTOS DESC ";
             List<Pais> cp = DB.ExecuteReader<Pais>(comando);
+
+            foreach (Pais p in cp)
+            {
+                comando = "SELECT TOP 5 "
+                                + "COUNT(d.id) + COUNT(r.id) AS MOVIMIENTOS "
+                                + "FROM VIDA_ESTATICA.Pais p "
+                                + "INNER JOIN VIDA_ESTATICA.Cliente cli "
+                                + "ON p.id = cli.nacionalidad "
+                                + "INNER JOIN VIDA_ESTATICA.Cuenta cue "
+                                + "ON cue.cod_cli = cli.id "
+                                + "INNER JOIN VIDA_ESTATICA.Deposito d "
+                                + "ON cue.id = d.cuenta_destino "
+                                + "INNER JOIN VIDA_ESTATICA.Retiro r "
+                                + "ON cue.id = r.cuenta_destino "
+                                + "WHERE (YEAR(r.fecha) = " + anio + " "
+                                + "AND MONTH(r.fecha) IN (" + min + "," + max + ")) "
+                                + "AND (YEAR(d.fecha) = " + anio + " "
+                                + "AND MONTH(d.fecha) IN (" + min + "," + max + ")) "
+                                + "AND p.descripcion = '" + p.descripcion + "' "
+                                + "GROUP BY p.descripcion "
+                                + "ORDER BY MOVIMIENTOS DESC ";
+                p.movimiento = (int)DB.ExecuteCardinal(comando);
+            }
+
 
             return cp;
         }

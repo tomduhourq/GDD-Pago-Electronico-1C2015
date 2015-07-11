@@ -8,6 +8,7 @@ using PagoElectronico.Models.BO;
 using PagoElectronico.Models.Utils;
 using System.Data.SqlClient;
 using PagoElectronico.Models.DataBase;
+using System.Windows;
 
 namespace PagoElectronico.Models.DAO
 {
@@ -36,8 +37,8 @@ namespace PagoElectronico.Models.DAO
                     _Cliente.usuario = "NULL";
                 }
                 else
-                {                                       
-                    if (!existsUser(_Cliente.usuario)) return false;
+                {
+                    if (!existsUser(_Cliente.usuario)) { MessageBox.Show("Usuario ingresado incorrecto"); return false;};
                     _Cliente.usuario = stringQuereable(_Cliente.usuario);
                 }
 

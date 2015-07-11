@@ -160,8 +160,13 @@ namespace PagoElectronico.Listados
             colDescripcion.DataPropertyName = "descripcion";
             colDescripcion.HeaderText = "Pais";
             colDescripcion.Width = 120;
+            DataGridViewTextBoxColumn colMovimientos = new DataGridViewTextBoxColumn();
+            colMovimientos.DataPropertyName = "movimiento";
+            colMovimientos.HeaderText = "Movimientos";
+            colMovimientos.Width = 120;
 
             dgResult.Columns.Add(colDescripcion);
+            dgResult.Columns.Add(colMovimientos);
         }
 
         private void cargarGrillaFormatoCuenta()

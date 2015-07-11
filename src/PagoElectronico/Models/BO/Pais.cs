@@ -18,7 +18,9 @@ namespace PagoElectronico.Models.BO {
 		
         public int? id {get; set;}
         public string descripcion {get; set;}
-		
+
+        public int movimiento { get; set; }
+
         public Pais initialize(DataRow _dr) {
 			
 			dr = _dr;
