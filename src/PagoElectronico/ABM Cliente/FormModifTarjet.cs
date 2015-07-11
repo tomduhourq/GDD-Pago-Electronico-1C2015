@@ -72,6 +72,7 @@ namespace PagoElectronico.ABM_Cliente
             tarjeta.fecha_vencimiento = dateVencimiento.Value.Date;
             tarjeta.cod_seguridad = (int?)Convert.ToInt32(txtCodigo.Text);
             tarjeta.emisor = ((Emisor)cmbEmisor.SelectedItem).id;
+            tarjeta.tEmisor = (Emisor)daoEmisor.retrieveBy_id(((Emisor)cmbEmisor.SelectedItem).id);
             if (update)
             {
                 if (daoTarjeta.update(tarjeta))
