@@ -60,6 +60,13 @@ namespace PagoElectronico.Models.BO
             return this;
         }
 
+        public string nombre_emisor()
+        {
+            DAOEmisor dao = new DAOEmisor();
+            Emisor emiso = dao.retrieveBy_id(this.emisor);
+            return emiso.nombre;
+        }
+
         public Tarjeta setData(DataRow dr)
         {
             initialize(dr);

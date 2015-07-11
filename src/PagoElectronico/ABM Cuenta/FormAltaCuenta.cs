@@ -16,6 +16,7 @@ namespace PagoElectronico.ABM_Cuenta
     {
         long? id = null;
         int? codCli;
+        bool update = false;
 
         public FormAltaCuenta(Cliente cli, bool esCliente)
         {
@@ -63,29 +64,48 @@ namespace PagoElectronico.ABM_Cuenta
             c.codigoCliente = codCli;
 
             Cuenta result = null;
-
-            try
+            if (update)
             {
-                result = new DAOCuenta().create(c);
-                MessageBox.Show(String.Format("Cuenta Numero:{0} Tipo:{1}", result.numCuenta, result.tipoCuenta), "Operacion Exitosa", MessageBoxButtons.OK);
+                try
+                {
+                    result = new DAOCuenta().update(c);
+                    MessageBox.Show(String.Format("Cuenta Numero:{0} Tipo:{1}", result.numCuenta, result.tipoCuenta), "Operacion Exitosa", MessageBoxButtons.OK);
+                }
+                catch (MyException exc)
+                {
+                    MessageBox.Show(exc.Message);
+                    return;
+                }
             }
-            catch (MyException exc)
+            else
             {
-                MessageBox.Show(exc.Message);
-                return;
+                try
+                {
+                    result = new DAOCuenta().create(c);
+                    MessageBox.Show(String.Format("Cuenta Numero:{0} Tipo:{1}", result.numCuenta, result.tipoCuenta), "Operacion Exitosa", MessageBoxButtons.OK);
+                }
+                catch (MyException exc)
+                {
+                    MessageBox.Show(exc.Message);
+                    return;
+                }
             }
             this.Close();
         }
 
-        private void cargarCombos(){
+        private void cargarCombos()
+        {
             cbPais.Items.AddRange(new DAOPais().retrieveBase().ToArray());
             cbTipoCuenta.Items.AddRange(new DAOTipoCuenta().retrieveBase().ToArray());
             cbMoneda.Items.AddRange(new DAOMoneda().retrieveBase().ToArray());
-            cbEstado.Items.AddRange(new DAOEstadoCuenta().retrieveBase().ToArray());
+            cbEstado.Items.Add(new DAOEstadoCuenta().retrieveBase().ToArray()[0]);
         }
 
-        private void volcarDatosCliente(Cuenta cuenta){
-            
+        private void volcarDatosCliente(Cuenta cuenta)
+        {
+            update = true;
+            cbEstado.Items.Clear();
+            cbEstado.Items.AddRange(new DAOEstadoCuenta().retrieveBase().ToArray());
             tbNroCuenta.Text = cuenta.numCuenta.ToString();
             dtFechaApertura.Value = (DateTime)cuenta.fechaCreacion;
             cbEstado.SelectedItem = new DAOEstadoCuenta().retrieveBase().Find(e => e.id == cuenta.estado);

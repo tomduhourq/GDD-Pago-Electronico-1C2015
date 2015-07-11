@@ -38,12 +38,14 @@
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbEmisor = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Location = new System.Drawing.Point(11, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
@@ -92,7 +94,7 @@
             // 
             // txtNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(114, 37);
+            this.txtNumero.Location = new System.Drawing.Point(114, 15);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(161, 20);
             this.txtNumero.TabIndex = 6;
@@ -124,11 +126,30 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 41);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Emisor";
+            // 
+            // cmbEmisor
+            // 
+            this.cmbEmisor.FormattingEnabled = true;
+            this.cmbEmisor.Location = new System.Drawing.Point(114, 38);
+            this.cmbEmisor.Name = "cmbEmisor";
+            this.cmbEmisor.Size = new System.Drawing.Size(161, 21);
+            this.cmbEmisor.TabIndex = 12;
+            // 
             // FormModifTarjet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 186);
+            this.Controls.Add(this.cmbEmisor);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.txtCodigo);
@@ -140,7 +161,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormModifTarjet";
-            this.Text = "FormModifTarjeta";
+            this.Text = "1";
             this.Load += new System.EventHandler(this.FormModifTarjeta_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -159,5 +180,7 @@
         private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbEmisor;
     }
 }

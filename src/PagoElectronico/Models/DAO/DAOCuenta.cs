@@ -19,7 +19,7 @@ namespace PagoElectronico.Models.DAO
         public Cuenta update(Cuenta _Cuenta)
         {
             int tipoViejo = (int)retrieveBy_id(_Cuenta.id).tipoCuenta;
-            string update = String.Format("UPDATE " + tabla + " SET pais={0},tipo_moneda={1},tipo_cuenta={2} WHERE id = {3}", _Cuenta.pais, _Cuenta.tipoMoneda, _Cuenta.tipoCuenta, _Cuenta.id);
+            string update = String.Format("UPDATE " + tabla + " SET pais={0},tipo_moneda={1},tipo_cuenta={2}, estado={3} WHERE id = {4}", _Cuenta.pais, _Cuenta.tipoMoneda, _Cuenta.tipoCuenta, _Cuenta.estado, _Cuenta.id);
             DB.ExecuteNonQuery(update);
             if (tipoViejo != _Cuenta.tipoCuenta)
                 DB.ExecuteNonQuery(String.Format("EXEC VIDA_ESTATICA.modificarTipoCuenta @fecha=  {0}, @idCliente = {1}, @numCuenta= {2}", fechaQuereable(Utils.Utils.fechaSistema), _Cuenta.codigoCliente,_Cuenta.id));

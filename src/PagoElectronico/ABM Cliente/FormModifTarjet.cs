@@ -16,7 +16,9 @@ namespace PagoElectronico.ABM_Cliente
 
         private Tarjeta tarjeta { get; set; }
         private DAOTarjeta daoTarjeta = new DAOTarjeta();
+        private DAOEmisor daoEmisor = new DAOEmisor();
         private bool update { get; set; }
+        private List<Emisor> lstEmisores = new List<Emisor>();
 
         public FormModifTarjet(Tarjeta tar)
         {
@@ -27,7 +29,7 @@ namespace PagoElectronico.ABM_Cliente
 
         private void FormModifTarjeta_Load(object sender, EventArgs e)
         {
-            
+            cargarCombos();
             if (tarjeta.numero != null)
             {               
                 update = true;
@@ -36,6 +38,26 @@ namespace PagoElectronico.ABM_Cliente
                 dateEmision.Value = (DateTime)tarjeta.fecha_emision;
                 dateVencimiento.Value = (DateTime)tarjeta.fecha_vencimiento;
                 txtCodigo.Text = tarjeta.cod_seguridad.ToString();
+                string emi = (string)tarjeta.nombre_emisor();
+                cmbEmisor.SelectedIndex = cmbEmisor.FindStringExact(emi);
+            }
+
+        }
+
+        private void cargarCombos()
+        {
+            //cmbEmisor.Items.AddRange(daoEmisor.retrieveBase().ToArray());
+
+            lstEmisores = daoEmisor.retrieveAll();
+
+            if (lstEmisores.Count > 0)
+            {
+                cmbEmisor.Visible = true;
+                cmbEmisor.DataSource = lstEmisores;
+                cmbEmisor.DisplayMember = "nombre";
+                cmbEmisor.ValueMember = "id";
+                cmbEmisor.SelectedIndex = -1;
+
             }
         }
 
@@ -49,6 +71,7 @@ namespace PagoElectronico.ABM_Cliente
             tarjeta.fecha_emision = dateEmision.Value.Date;
             tarjeta.fecha_vencimiento = dateVencimiento.Value.Date;
             tarjeta.cod_seguridad = (int?)Convert.ToInt32(txtCodigo.Text);
+            tarjeta.emisor = ((Emisor)cmbEmisor.SelectedItem).id;
             if (update)
             {
                 if (daoTarjeta.update(tarjeta))
@@ -64,7 +87,17 @@ namespace PagoElectronico.ABM_Cliente
             }
             else
             {
-               
+                tarjeta.numero = (int)Convert.ToInt32(txtNumero.Text);
+                if (daoTarjeta.create(tarjeta))
+                {
+                    MessageBox.Show("Tarjeta actualizada correctamente");
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Datos no se cargaron correctamente");
+                }
             }
 
         }

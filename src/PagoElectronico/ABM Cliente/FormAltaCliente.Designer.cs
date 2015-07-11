@@ -60,6 +60,7 @@
             this.btnDesvinc = new System.Windows.Forms.Button();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.cmbTipo = new System.Windows.Forms.ComboBox();
+            this.btnAlta = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgTarjetas)).BeginInit();
             this.SuspendLayout();
@@ -313,9 +314,9 @@
             // 
             // btnMod
             // 
-            this.btnMod.Location = new System.Drawing.Point(542, 195);
+            this.btnMod.Location = new System.Drawing.Point(559, 195);
             this.btnMod.Name = "btnMod";
-            this.btnMod.Size = new System.Drawing.Size(75, 23);
+            this.btnMod.Size = new System.Drawing.Size(58, 23);
             this.btnMod.TabIndex = 29;
             this.btnMod.Text = "Modificar";
             this.btnMod.UseVisualStyleBackColor = true;
@@ -333,7 +334,7 @@
             // 
             // btnActualizar
             // 
-            this.btnActualizar.Location = new System.Drawing.Point(461, 195);
+            this.btnActualizar.Location = new System.Drawing.Point(413, 195);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(75, 23);
             this.btnActualizar.TabIndex = 31;
@@ -349,11 +350,22 @@
             this.cmbTipo.Size = new System.Drawing.Size(146, 21);
             this.cmbTipo.TabIndex = 32;
             // 
+            // btnAlta
+            // 
+            this.btnAlta.Location = new System.Drawing.Point(494, 195);
+            this.btnAlta.Name = "btnAlta";
+            this.btnAlta.Size = new System.Drawing.Size(59, 23);
+            this.btnAlta.TabIndex = 33;
+            this.btnAlta.Text = "Alta";
+            this.btnAlta.UseVisualStyleBackColor = true;
+            this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
+            // 
             // FormAltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 293);
+            this.Controls.Add(this.btnAlta);
             this.Controls.Add(this.cmbTipo);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnDesvinc);
@@ -423,5 +435,6 @@
         private System.Windows.Forms.Button btnDesvinc;
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.ComboBox cmbTipo;
+        private System.Windows.Forms.Button btnAlta;
     }
 }

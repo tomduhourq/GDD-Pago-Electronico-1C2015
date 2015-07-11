@@ -221,6 +221,15 @@ namespace PagoElectronico.ABM_Cliente
             fmt.Show();
         }
 
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            Tarjeta tarjeta = new Tarjeta();
+            if (cliente.id == null) MessageBox.Show("El cliente al que quiere vincular tarjetas no existe");
+            else tarjeta.cli_cod = cliente.id;
+            FormModifTarjet fmt = new FormModifTarjet(tarjeta);
+            fmt.Show();
+        }
+
     }
 
     
