@@ -17,8 +17,10 @@ namespace PagoElectronico.Listados
     {
         DAOCliente daoCl = new DAOCliente();
         DAOPais daoP = new DAOPais();
+        DAOTipoCuenta daoTc = new DAOTipoCuenta();
         List<Cliente> listaClientes = new List<Cliente>();
         List<Pais> listaPaises = new List<Pais>();
+        List<TipoCuenta> listaTiposCuentas = new List<TipoCuenta>();
 
         public FormListados()
         {
@@ -31,7 +33,7 @@ namespace PagoElectronico.Listados
 
         private void FormListados_Load(object sender, EventArgs e)
         {
-            for (int i = 2016; i > 1995; i--)
+            for (int i = 2016; i < 2021; i++)
             {
                 cbAnio.Items.Add(i);
             }
@@ -162,6 +164,21 @@ namespace PagoElectronico.Listados
             dgResult.Columns.Add(colDescripcion);
         }
 
+        private void cargarGrillaFormatoCuenta()
+        {
+            DataGridViewTextBoxColumn colDescripcion = new DataGridViewTextBoxColumn();
+            colDescripcion.DataPropertyName = "descripcion";
+            colDescripcion.HeaderText = "Tipo Cuenta";
+            colDescripcion.Width = 120;
+            DataGridViewTextBoxColumn colMonto = new DataGridViewTextBoxColumn();
+            colMonto.DataPropertyName = "monto";
+            colMonto.HeaderText = "Monto";
+            colMonto.Width = 120;
+
+            dgResult.Columns.Add(colDescripcion);
+            dgResult.Columns.Add(colMonto);
+        }
+
         public void asociarCamposCompletosCliente()
         {
             Cliente client = new Cliente();
@@ -226,7 +243,13 @@ namespace PagoElectronico.Listados
         }
 
         public void TotalFacturadoTiposDeCuentas(int ano, int trimestre)
-        { 
+        {
+            cargarGrillaFormatoCuenta();
+
+            try { listaTiposCuentas = daoTc.topFacturadores(ano, minimoMesTrimestre(trimestre), maximoMesTrimestre(trimestre)); }
+            catch { MessageBox.Show("No existen cuentas con esas caracteristicas", "Error!", MessageBoxButtons.OK); }
+
+            dgResult.DataSource = listaTiposCuentas;
         }
     }
 }

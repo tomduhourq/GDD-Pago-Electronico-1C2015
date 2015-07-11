@@ -39,5 +39,37 @@ namespace PagoElectronico.Models.DAO {
         {
             return DB.ExecuteCardinal("SELECT costo_transaccion FROM +" + tabla + "t INNER JOIN VIDA_ESTATICA.Cuenta c ON c.tipo_cuenta = t.id WHERE c.id = " + p);
         }
+
+        public List<TipoCuenta> topFacturadores(int anio, int min, int max)
+        {
+            string comando = "SELECT TOP 5 tc.descripcion "
+                                + "FROM VIDA_ESTATICA.Tipo_Cuenta tc "
+                                + "INNER JOIN VIDA_ESTATICA.Cuenta c "
+                                + "ON tc.id = c.id "
+                                + "INNER JOIN VIDA_ESTATICA.Item_Factura i "
+                                + "ON i.num_cuenta = c.id "
+                                + "WHERE YEAR(i.fecha) = " + anio + " "
+                                + "AND MONTH(i.fecha) IN (" + min + "," + max + ") "
+                                + "GROUP BY tc.descripcion";
+            List<TipoCuenta> tc = DB.ExecuteReader<TipoCuenta>(comando);
+
+            foreach (TipoCuenta t in tc)
+            {
+                comando = "SELECT ISNULL(SUM(i.monto), 0) "
+                                + "FROM VIDA_ESTATICA.Tipo_Cuenta tc "
+                                + "INNER JOIN VIDA_ESTATICA.Cuenta c "
+                                + "ON tc.id = c.id "
+                                + "INNER JOIN VIDA_ESTATICA.Item_Factura i "
+                                + "ON i.num_cuenta = c.id "
+                                + "WHERE YEAR(i.fecha) = " + anio + " "
+                                + "AND MONTH(i.fecha) IN (" + min + "," + max + ") "
+                                + "AND tc.descripcion = '"+ t.descripcion + "' "
+                                + "GROUP BY tc.descripcion";
+                t.monto = (double)DB.ExecuteDecimal(comando);
+
+            }
+
+            return tc;
+        }
     }
 }

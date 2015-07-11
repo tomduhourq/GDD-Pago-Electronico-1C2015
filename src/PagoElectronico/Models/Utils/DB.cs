@@ -317,6 +317,69 @@ namespace PagoElectronico.Models.Utils{
             return temp;
         }
 
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Ejecuta comando y devuelve un número
+        /// </summary>
+        /// <param name="command">Comando</param>
+        /// <returns></returns>
+        static public double ExecuteDecimal(string command)
+        {
+            return ExecuteDecimal(command, null, new object[0]);
+        }
+
+        /// <summary>
+        /// Ejecuta comando y devuelve un número
+        /// </summary>
+        /// <param name="command">Comando</param>
+        /// <param name="transaccion">Transacción a utilizar</param>
+        /// <returns></returns>
+        static public double ExecuteDecimal(string command, Transaccion transaccion)
+        {
+            return ExecuteDecimal(command, transaccion, new object[0]);
+        }
+
+        /// <summary>
+        /// Ejecuta comando y devuelve un número
+        /// </summary>
+        /// <param name="command">Comando</param>
+        /// <param name="transaccion">Transacción a utilizar</param>
+        /// <param name="parameters">Parámetros del comando</param>
+        /// <returns></returns>
+        static public double ExecuteDecimal(string command, Transaccion transaccion, params object[] parameters)
+        {
+            SqlDataReader reader = null;
+            double temp = -1;
+
+            try
+            {
+
+                if (sqlCon.State != ConnectionState.Open)
+                    sqlCon.Open();
+
+                SqlCommand com = CompleteCommand(command, transaccion, parameters);
+
+                reader = com.ExecuteReader();
+
+                if (reader.Read())
+                    //--Es convert porque hay veces que trae Decimal y el getInt no entiende nada :)
+                    temp = Convert.ToDouble(reader[0]);
+
+            }
+            catch (Exception ex)
+            {
+                if (transaccion != null)
+                    RollBackTransaction(transaccion);
+                throw new MyException(ex);
+            }
+            finally
+            {
+
+                sqlCon.Close();
+            }
+            return temp;
+        }
+
         /// <summary>
         /// Ejecuta comando y devuelve un número
         /// </summary>
