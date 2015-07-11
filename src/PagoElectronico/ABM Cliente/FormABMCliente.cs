@@ -39,8 +39,6 @@ namespace PagoElectronico.ABM_Cliente
                 cmbTipoID.ValueMember = "id";
                 cmbTipoID.SelectedIndex = -1;
 
-            } else {
-
             }
 
             dtgCliente.AutoGenerateColumns = false;

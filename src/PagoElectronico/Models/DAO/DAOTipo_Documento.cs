@@ -39,8 +39,15 @@ namespace PagoElectronico.Models.DAO
         }
         public TipoDocumento retrieveBy_id(object _value)
         {
+            string comando = "SELECT * FROM " + tabla + " WHERE tipo = @1" + _value;
+            return DB.ExecuteReaderSingle<TipoDocumento>("SELECT * FROM " + tabla + " WHERE id = @1", _value);
 
-            return DB.ExecuteReaderSingle<TipoDocumento>("SELECT * FROM " + tabla + " WHERE tipo = @1", _value);
+        }
+
+        public TipoDocumento retrieveBy_desc(string _value)
+        {
+
+            return DB.ExecuteReaderSingle<TipoDocumento>("SELECT * FROM " + tabla + " WHERE descripcion = @1", _value);
 
         }
     }

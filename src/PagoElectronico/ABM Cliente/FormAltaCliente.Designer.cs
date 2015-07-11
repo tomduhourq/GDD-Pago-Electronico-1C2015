@@ -49,7 +49,6 @@
             this.txtPiso = new System.Windows.Forms.TextBox();
             this.txtCalle = new System.Windows.Forms.TextBox();
             this.txtDepto = new System.Windows.Forms.TextBox();
-            this.txtTipoID = new System.Windows.Forms.TextBox();
             this.txtNumID = new System.Windows.Forms.TextBox();
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -60,6 +59,7 @@
             this.btnMod = new System.Windows.Forms.Button();
             this.btnDesvinc = new System.Windows.Forms.Button();
             this.btnActualizar = new System.Windows.Forms.Button();
+            this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgTarjetas)).BeginInit();
             this.SuspendLayout();
@@ -85,7 +85,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(178, 181);
+            this.label3.Location = new System.Drawing.Point(225, 181);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 2;
@@ -237,16 +237,9 @@
             this.txtDepto.Size = new System.Drawing.Size(62, 20);
             this.txtDepto.TabIndex = 3;
             // 
-            // txtTipoID
-            // 
-            this.txtTipoID.Location = new System.Drawing.Point(67, 178);
-            this.txtTipoID.Name = "txtTipoID";
-            this.txtTipoID.Size = new System.Drawing.Size(105, 20);
-            this.txtTipoID.TabIndex = 6;
-            // 
             // txtNumID
             // 
-            this.txtNumID.Location = new System.Drawing.Point(242, 178);
+            this.txtNumID.Location = new System.Drawing.Point(289, 178);
             this.txtNumID.Name = "txtNumID";
             this.txtNumID.Size = new System.Drawing.Size(97, 20);
             this.txtNumID.TabIndex = 7;
@@ -348,11 +341,20 @@
             this.btnActualizar.UseVisualStyleBackColor = true;
             this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click_1);
             // 
+            // cmbTipo
+            // 
+            this.cmbTipo.FormattingEnabled = true;
+            this.cmbTipo.Location = new System.Drawing.Point(73, 177);
+            this.cmbTipo.Name = "cmbTipo";
+            this.cmbTipo.Size = new System.Drawing.Size(146, 21);
+            this.cmbTipo.TabIndex = 32;
+            // 
             // FormAltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 293);
+            this.Controls.Add(this.cmbTipo);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnDesvinc);
             this.Controls.Add(this.btnMod);
@@ -363,7 +365,6 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.txtNumID);
-            this.Controls.Add(this.txtTipoID);
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.txtMail);
             this.Controls.Add(this.txtApellido);
@@ -411,7 +412,6 @@
         private System.Windows.Forms.TextBox txtPiso;
         private System.Windows.Forms.TextBox txtCalle;
         private System.Windows.Forms.TextBox txtDepto;
-        private System.Windows.Forms.TextBox txtTipoID;
         private System.Windows.Forms.TextBox txtNumID;
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Button btnCancelar;
@@ -422,5 +422,6 @@
         private System.Windows.Forms.Button btnMod;
         private System.Windows.Forms.Button btnDesvinc;
         private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.ComboBox cmbTipo;
     }
 }

@@ -20,7 +20,7 @@ namespace PagoElectronico.Models.DAO
         
         public void delete(long Tarjeta_num)
         {
-            DB.ExecuteNonQuery("DELETE FROM " + tabla + " WHERE numero = @1", Tarjeta_num);
+            DB.ExecuteNonQuery("UPDATE " + tabla + " SET cod_cli=null WHERE numero = @1", Tarjeta_num);
         }
 
         public bool update(Tarjeta tarjeta)

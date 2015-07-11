@@ -18,9 +18,10 @@ namespace PagoElectronico.ABM_Cliente
         private DAOCliente daoCliente = new DAOCliente();
         private DAOTarjeta daoTarjeta = new DAOTarjeta();
         private DAOPais daoPais = new DAOPais();
+        private DAOTipoDocumento daoTipoDoc = new DAOTipoDocumento();
         private List<Tarjeta> lstTarjetas { get; set; }
         private bool update;
-
+        private List<TipoDocumento> lstTipos;
 
         public FormAltaCliente(Cliente cli)
         {
@@ -39,11 +40,12 @@ namespace PagoElectronico.ABM_Cliente
                 txtPiso.Text = cliente.dom_piso.ToString();
                 txtMail.Text = cliente.mail;
                 txtNumero.Text = cliente.dom_nro.ToString();
-                txtNumID.Text = cliente.documento.ToString();
-                txtTipoID.Text = cliente.tipo_documento.ToString();
+                txtNumID.Text = cliente.documento.ToString();                
                 dateNacimiento.Value = (DateTime)cliente.fecha_nac;
                 string pa = (string)cliente.get_pais().Substring(1);            
                 cbNacionalidad.SelectedIndex = cbNacionalidad.FindStringExact(pa); 
+                string tip = ((TipoDocumento)daoTipoDoc.retrieveBy_id(cliente.tipo_documento)).descripcion;
+                cmbTipo.SelectedIndex = cmbTipo.FindStringExact(tip);
                 checkActivo.Checked = (bool)cliente.activo;
         }
 
@@ -66,7 +68,8 @@ namespace PagoElectronico.ABM_Cliente
                 cliente.dom_nro = (int?)Convert.ToInt32(txtNumero.Text);
                 cliente.dom_piso = (int?)Convert.ToInt32(txtPiso.Text);
                 cliente.dom_dpto = txtDepto.Text;
-                cliente.tipo_documento = Convert.ToInt32(txtTipoID.Text);
+                TipoDocumento tip = (TipoDocumento)daoTipoDoc.retrieveBy_desc(cmbTipo.Text);
+                cliente.tipo_documento = (int?)tip.id;
                 cliente.documento = Convert.ToInt32(txtNumID.Text);
                 cliente.nacionalidad = ((Pais)cbNacionalidad.SelectedItem).id;
                 cliente.usuario = txtUsuario.Text;
@@ -156,6 +159,18 @@ namespace PagoElectronico.ABM_Cliente
         private void cargarCombos()
         {
             cbNacionalidad.Items.AddRange(daoPais.retrieveBase().ToArray());
+            
+            lstTipos = TipoDocumento.ObtenerTiposDocumento();
+
+            if (lstTipos.Count > 0)
+            {
+                cmbTipo.Visible = true;
+                cmbTipo.DataSource = lstTipos;
+                cmbTipo.DisplayMember = "descripcion";
+                cmbTipo.ValueMember = "id";
+                cmbTipo.SelectedIndex = -1;
+
+            }
         }
 
         private void FormAltaCliente_Load(object sender, EventArgs e)
@@ -177,8 +192,11 @@ namespace PagoElectronico.ABM_Cliente
 
         private void btnDesvinc_Click(object sender, EventArgs e)
         {
-            Tarjeta delete = (Tarjeta)dtgTarjetas.CurrentRow.DataBoundItem;
-            daoTarjeta.delete((long)(decimal)delete.numero);
+            if (dtgTarjetas.CurrentRow != null) {
+                Tarjeta delete = (Tarjeta)dtgTarjetas.CurrentRow.DataBoundItem;
+                daoTarjeta.delete((long)(decimal)delete.numero);
+            } 
+            
             actualizarGrilla();
         }
 
