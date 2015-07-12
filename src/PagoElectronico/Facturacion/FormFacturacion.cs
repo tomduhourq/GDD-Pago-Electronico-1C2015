@@ -117,7 +117,7 @@ namespace PagoElectronico.Facturacion
           
             if (getRolUser() == "Administrador General")
             {
-                string query = "SELECT cod_cli FROM VIDA_ESTATICA.Cuenta WHERE id = " + num_cuenta;
+                string query = "SELECT cod_cli FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = " + num_cuenta;
                 SqlCommand command = new SqlCommand(query, con);
                 SqlDataReader lector = command.ExecuteReader();
                 lector.Read();
