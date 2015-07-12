@@ -44,6 +44,7 @@
             this.cbItems.Name = "cbItems";
             this.cbItems.Size = new System.Drawing.Size(209, 21);
             this.cbItems.TabIndex = 2;
+            this.cbItems.SelectedIndexChanged += new System.EventHandler(this.cbItems_SelectedIndexChanged_1);
             // 
             // groupBox1
             // 

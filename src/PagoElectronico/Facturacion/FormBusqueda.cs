@@ -86,6 +86,11 @@ namespace PagoElectronico.Facturacion
                 this.Close();
             }
         }
+
+        private void cbItems_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
         
       
 
