@@ -839,7 +839,7 @@ CREATE PROCEDURE VIDA_ESTATICA.PRC_obtener_factura
 @id_factura NUMERIC(18, 0) OUTPUT
 AS
 BEGIN
-	SELECT DISTINCT @id_factura = id_factura FROM VIDA_ESTATICA.Factura WHERE fecha = CONVERT(datetime, @fecha, 103) AND id_cliente = @id_cliente 
+	SELECT @id_factura = id_factura FROM VIDA_ESTATICA.Factura WHERE CAST(fecha as DATE) = CAST(@fecha as DATE) AND id_cliente = @id_cliente 
 END
 GO
 
