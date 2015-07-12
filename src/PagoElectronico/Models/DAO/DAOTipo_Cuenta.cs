@@ -37,7 +37,7 @@ namespace PagoElectronico.Models.DAO {
 
         internal int costo_transaccion(long p)
         {
-            return DB.ExecuteCardinal("SELECT costo_transaccion FROM +" + tabla + "t INNER JOIN VIDA_ESTATICA.Cuenta c ON c.tipo_cuenta = t.id WHERE c.id = " + p);
+            return DB.ExecuteCardinal("SELECT costo_transaccion FROM " + tabla + " t INNER JOIN VIDA_ESTATICA.Cuenta c ON c.tipo_cuenta = t.id WHERE c.id = " + p);
         }
 
         public List<TipoCuenta> topFacturadores(int anio, int min, int max)

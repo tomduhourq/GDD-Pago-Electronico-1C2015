@@ -750,6 +750,12 @@ BEGIN
 END;
 GO
 
+IF OBJECT_ID('VIDA_ESTATICA.PRC_obtener_factura') IS NOT NULL
+BEGIN
+	DROP PROCEDURE VIDA_ESTATICA.PRC_obtener_factura;
+END;
+GO
+
 CREATE PROCEDURE VIDA_ESTATICA.addFuncionalidad(@rol varchar(255), @func varchar(255)) AS
 BEGIN
 	INSERT INTO VIDA_ESTATICA.Funcionalidad_Rol (rol, funcionalidad)
@@ -827,6 +833,16 @@ as
 	(0, @fecha, @factID, 3, 50, @numCuenta) -- COmisión por modificacion de tipo de cuenta = 3
 GO
 
+CREATE PROCEDURE VIDA_ESTATICA.PRC_obtener_factura
+@fecha DATETIME,
+@id_cliente INTEGER,
+@id_factura NUMERIC(18, 0) OUTPUT
+AS
+BEGIN
+	SELECT DISTINCT @id_factura = id_factura FROM VIDA_ESTATICA.Factura WHERE fecha = CONVERT(datetime, @fecha, 103) AND id_cliente = @id_cliente 
+END
+GO
+
 CREATE PROCEDURE VIDA_ESTATICA.PRC_facturar_item_factura
 @id_item_factura NUMERIC(18,0),
 @id_factura NUMERIC(18,0)
@@ -835,6 +851,7 @@ BEGIN
 	UPDATE VIDA_ESTATICA.Item_Factura SET facturado = 1, id_factura = @id_factura WHERE id_item_factura = @id_item_factura
 END
 GO
+
 
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Cliente';
 EXEC VIDA_ESTATICA.addFuncionalidad @rol='Administrador General', @func ='ABM Cuenta';

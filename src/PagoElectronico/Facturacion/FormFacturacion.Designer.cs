@@ -67,6 +67,7 @@
             this.btnFacturar.TabIndex = 9;
             this.btnFacturar.Text = "Facturar";
             this.btnFacturar.UseVisualStyleBackColor = true;
+            this.btnFacturar.Click += new System.EventHandler(this.btnFacturar_Click_2);
             // 
             // dgvFactura
             // 

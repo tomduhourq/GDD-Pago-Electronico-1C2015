@@ -40,12 +40,13 @@ namespace PagoElectronico.Facturacion
 
             //CARGO EL DATAGRIDVIEW CON LOS DATOS A FACTURAR
             SqlConnection con = DBAcess.GetConnection();
-            if (getRolUser() == "Administrador")
+            if (getRolUser() == "Administrador General")
             {
                 if (id_item == 0)
                 {
-                    string query = "SELECT i.id_item_factura, i.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
-                                + " JOIN VIDA_ESTATICA.ITEMS it ON it.id_item = i.id_item"
+                    string query = "SELECT i.id_item_factura, c.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
+                                + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
+                                + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta"
                                 + " WHERE i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
                     dtDatos = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
@@ -55,8 +56,9 @@ namespace PagoElectronico.Facturacion
                 else
                 {
 
-                    string query = "SELECT i.id_item_factura, i.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
+                    string query = "SELECT i.id_item_factura, c.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
+                                + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta"
                                 + " WHERE i.id_item = " + id_item + " AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
 
                     dtDatos = new DataTable();
@@ -105,27 +107,32 @@ namespace PagoElectronico.Facturacion
             
         }
 
-        private int getIdCliente()
+        private Int64 getIdCliente()
         {
-            SqlConnection con = DBAcess.GetConnection();
-            if (getRolUser() == "Administrador")
+            SqlConnection con = new SqlConnection();
+            //SqlConnection con = DBAcess.GetConnection();
+            con.ConnectionString =
+                @System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
+            con.Open();
+          
+            if (getRolUser() == "Administrador General")
             {
-                string query = "SELECT id_cliente FROM VIDA_ESTATICA.Cuenta WHERE num_cuenta = '" + num_cuenta + "'";
+                string query = "SELECT cod_cli FROM VIDA_ESTATICA.Cuenta WHERE id = " + num_cuenta;
                 SqlCommand command = new SqlCommand(query, con);
                 SqlDataReader lector = command.ExecuteReader();
                 lector.Read();
-                int id_cliente = lector.GetInt32(0);
+                Int64 id_cliente = Convert.ToInt64(lector[0].ToString()) ;
                 con.Close();
                 return id_cliente;
 
             }
             else
             {
-                string query = "SELECT id_cliente FROM VIDA_ESTATICA.Cliente WHERE usuario = '" + usuario + "'";
+                string query = "SELECT id FROM VIDA_ESTATICA.Cliente WHERE usuario = '" + usuario + "'";
                 SqlCommand command = new SqlCommand(query, con);
                 SqlDataReader lector = command.ExecuteReader();
                 lector.Read();
-                int id_cliente = lector.GetInt32(0);
+                Int64 id_cliente = Convert.ToInt64(lector[0].ToString());
                 con.Close();
                 return id_cliente;
 
@@ -157,8 +164,12 @@ namespace PagoElectronico.Facturacion
         }
         private string facturar(decimal id_item)
         {
-            
-            SqlConnection con = DBAcess.GetConnection();
+
+            SqlConnection con = new SqlConnection();
+            //SqlConnection con = DBAcess.GetConnection();
+            con.ConnectionString =
+                @System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
+            con.Open();
             string salida;
 
             try
@@ -184,13 +195,18 @@ namespace PagoElectronico.Facturacion
         }
         private decimal getIdFactura()
         {
-            SqlConnection con = DBAcess.GetConnection();
+            SqlConnection con = new SqlConnection();
+            //SqlConnection con = DBAcess.GetConnection();
+            con.ConnectionString =
+                @System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
+            con.Open();
             string query = "VIDA_ESTATICA.PRC_obtener_factura";
             SqlCommand command = new SqlCommand(query, con);
             command.CommandType = CommandType.StoredProcedure;
             DateTime fechaConfiguracion = Utils.fechaSistema;
             command.Parameters.Add(new SqlParameter("@fecha", fechaConfiguracion));
             command.Parameters.Add(new SqlParameter("@id_cliente", getIdCliente()));
+            Int64 id_cli = getIdCliente();
             SqlParameter outPutParameter = new SqlParameter();
             outPutParameter.ParameterName = "@id_factura";
             outPutParameter.SqlDbType = System.Data.SqlDbType.Int;
@@ -215,6 +231,35 @@ namespace PagoElectronico.Facturacion
         private void btnSalir_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnFacturar_Click_2(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvFactura.Rows)
+            {
+                int ind = dgvFactura.Columns["chk"].Index;
+                if (Convert.ToBoolean(row.Cells[ind].Value))
+                {
+                    if (getRolUser() == "Administrador General")
+                    {
+                        int i = dgvFactura.Columns["id_item_factura"].Index;
+                        id_item_factura = Convert.ToDecimal(row.Cells[i].Value);
+                        int j = dgvFactura.Columns["num_cuenta"].Index;
+                        num_cuenta = Convert.ToDecimal(row.Cells[j].Value);
+                        salida = facturar(id_item_factura);
+
+                    }
+                    else
+                    {
+                        int i = dgvFactura.Columns["id_item_factura"].Index;
+                        id_item_factura = Convert.ToDecimal(row.Cells[i].Value);
+                        salida = facturar(id_item_factura);
+                    }
+                }
+            }
+            MessageBox.Show("" + salida);
+            FormBusqueda busc = new FormBusqueda(usuario);
+            this.Close(); 
         }
     }
 }

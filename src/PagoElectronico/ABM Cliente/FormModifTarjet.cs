@@ -31,7 +31,9 @@ namespace PagoElectronico.ABM_Cliente
         {
             cargarCombos();
             if (tarjeta.numero != null)
-            {               
+            {
+                this.Text = "Modificar Tarjeta";
+                btnCrear.Text = "Modificar";
                 update = true;
                 txtNumero.Enabled = false;
                 txtNumero.Text = tarjeta.Visualize;
@@ -41,13 +43,17 @@ namespace PagoElectronico.ABM_Cliente
                 string emi = (string)tarjeta.nombre_emisor();
                 cmbEmisor.SelectedIndex = cmbEmisor.FindStringExact(emi);
             }
+            else
+            {
+                this.Text = "Crear Tarjeta";
+            }
+            
+
 
         }
 
         private void cargarCombos()
         {
-            //cmbEmisor.Items.AddRange(daoEmisor.retrieveBase().ToArray());
-
             lstEmisores = daoEmisor.retrieveAll();
 
             if (lstEmisores.Count > 0)
@@ -88,7 +94,7 @@ namespace PagoElectronico.ABM_Cliente
             }
             else
             {
-                tarjeta.numero = (int)Convert.ToInt32(txtNumero.Text);
+                tarjeta.numero = (long)Convert.ToInt64(txtNumero.Text);
                 if (daoTarjeta.create(tarjeta))
                 {
                     MessageBox.Show("Tarjeta actualizada correctamente");
