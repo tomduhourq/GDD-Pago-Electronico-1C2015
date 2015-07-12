@@ -38,7 +38,7 @@ namespace PagoElectronico.Models.DAO
              string sqlDouble = "";
              if (imp.Length == 2) sqlDouble = imp[0] + "." + imp[1];
              else sqlDouble = imp[0];
-             return tran.fecha.ToString("dd/MM/yyyy") + "," +
+             return "CAST('" + tran.fecha.ToString("dd/MM/yyyy")+"' AS DATE)" + "," +
                     sqlDouble + "," +
                     tran.costo.ToString() + "," +
                     tran.cuenta_origen.ToString() + "," +
