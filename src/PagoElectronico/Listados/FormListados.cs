@@ -33,7 +33,7 @@ namespace PagoElectronico.Listados
 
         private void FormListados_Load(object sender, EventArgs e)
         {
-            for (int i = 2016; i < 2021; i++)
+            for (int i = 2020; i >= 2010; i--)
             {
                 cbAnio.Items.Add(i);
             }
@@ -134,19 +134,19 @@ namespace PagoElectronico.Listados
             DataGridViewTextBoxColumn colNombre = new DataGridViewTextBoxColumn();
             colNombre.DataPropertyName = "nombre";
             colNombre.HeaderText = "Nombre";
-            colNombre.Width = 120;
+            colNombre.Width = 90;
             DataGridViewTextBoxColumn colApellido = new DataGridViewTextBoxColumn();
             colApellido.DataPropertyName = "apellido";
             colApellido.HeaderText = "Apellido";
-            colApellido.Width = 120;
+            colApellido.Width = 90;
             DataGridViewTextBoxColumn colMail = new DataGridViewTextBoxColumn();
             colMail.DataPropertyName = "mail";
             colMail.HeaderText = "Email";
-            colMail.Width = 120;
+            colMail.Width = 100;
             DataGridViewTextBoxColumn colDoc = new DataGridViewTextBoxColumn();
             colDoc.DataPropertyName = "documento";
-            colDoc.HeaderText = "Numero Documento";
-            colDoc.Width = 120;
+            colDoc.HeaderText = "Documento";
+            colDoc.Width = 90;
 
             dgResult.Columns.Add(colNombre);
             dgResult.Columns.Add(colApellido);

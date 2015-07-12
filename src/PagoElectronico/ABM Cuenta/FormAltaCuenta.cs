@@ -39,6 +39,7 @@ namespace PagoElectronico.ABM_Cuenta
             btnGuardar.Text = "Modificar";
             volcarDatosCliente(cuenta);
             id = cuenta.id;
+            dtFechaApertura.Enabled = false;
             tbSaldo.Visible = true;
             lblSaldo.Visible = true;
         }

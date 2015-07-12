@@ -45,7 +45,7 @@
             // 
             this.cbTrimestre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTrimestre.FormattingEnabled = true;
-            this.cbTrimestre.Location = new System.Drawing.Point(12, 38);
+            this.cbTrimestre.Location = new System.Drawing.Point(76, 64);
             this.cbTrimestre.Name = "cbTrimestre";
             this.cbTrimestre.Size = new System.Drawing.Size(51, 21);
             this.cbTrimestre.TabIndex = 0;
@@ -53,7 +53,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 19);
+            this.label1.Location = new System.Drawing.Point(18, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 1;
@@ -62,7 +62,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 19);
+            this.label2.Location = new System.Drawing.Point(133, 67);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 3;
@@ -72,7 +72,7 @@
             // 
             this.cbAnio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAnio.FormattingEnabled = true;
-            this.cbAnio.Location = new System.Drawing.Point(69, 38);
+            this.cbAnio.Location = new System.Drawing.Point(165, 64);
             this.cbAnio.Name = "cbAnio";
             this.cbAnio.Size = new System.Drawing.Size(73, 21);
             this.cbAnio.TabIndex = 2;
@@ -80,7 +80,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(145, 19);
+            this.label3.Location = new System.Drawing.Point(19, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 13);
             this.label3.TabIndex = 5;
@@ -90,16 +90,16 @@
             // 
             this.cbListado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbListado.FormattingEnabled = true;
-            this.cbListado.Location = new System.Drawing.Point(148, 38);
+            this.cbListado.Location = new System.Drawing.Point(22, 32);
             this.cbListado.Name = "cbListado";
-            this.cbListado.Size = new System.Drawing.Size(323, 21);
+            this.cbListado.Size = new System.Drawing.Size(403, 21);
             this.cbListado.TabIndex = 4;
             // 
             // btnVer
             // 
-            this.btnVer.Location = new System.Drawing.Point(480, 37);
+            this.btnVer.Location = new System.Drawing.Point(354, 62);
             this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(75, 23);
+            this.btnVer.Size = new System.Drawing.Size(71, 23);
             this.btnVer.TabIndex = 6;
             this.btnVer.Text = "Ver";
             this.btnVer.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(477, 372);
+            this.btnCerrar.Location = new System.Drawing.Point(350, 372);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
             this.btnCerrar.TabIndex = 7;
@@ -123,15 +123,15 @@
             this.dgResult.AllowUserToResizeColumns = false;
             this.dgResult.AllowUserToResizeRows = false;
             this.dgResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgResult.Location = new System.Drawing.Point(12, 80);
+            this.dgResult.Location = new System.Drawing.Point(12, 102);
             this.dgResult.Name = "dgResult";
             this.dgResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgResult.Size = new System.Drawing.Size(540, 286);
+            this.dgResult.Size = new System.Drawing.Size(413, 264);
             this.dgResult.TabIndex = 8;
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(396, 372);
+            this.btnLimpiar.Location = new System.Drawing.Point(273, 62);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 9;
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 407);
+            this.ClientSize = new System.Drawing.Size(443, 402);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.dgResult);
             this.Controls.Add(this.btnCerrar);
