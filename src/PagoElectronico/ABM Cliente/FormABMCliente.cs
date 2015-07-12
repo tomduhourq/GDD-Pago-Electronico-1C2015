@@ -118,7 +118,7 @@ namespace PagoElectronico.ABM_Cliente
 
         public void actualizarGrilla()
         {
-            if (txtNombre.Text != "")
+            if (txtNombre.Text != "" || txtApellido.Text != "" || txtNumID.Text != "" || txtEmail.Text != "")
                 lstClientes = dao.search(txtNombre.Text, txtApellido.Text, cmbTipoID.SelectedText, txtNumID.Text, txtEmail.Text);
             else
                 lstClientes = dao.retrieveAll();
