@@ -56,8 +56,9 @@ namespace PagoElectronico.Facturacion
                 else
                 {
 
-                    string query = "SELECT i.id_item_factura, i.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
+                    string query = "SELECT i.id_item_factura, c.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
+                                + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta"
                                 + " WHERE i.id_item = " + id_item + " AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
 
                     dtDatos = new DataTable();
