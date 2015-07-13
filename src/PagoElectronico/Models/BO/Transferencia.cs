@@ -26,7 +26,7 @@ namespace PagoElectronico.Models.BO
   
         public long id {get; set;}
         public DateTime fecha {get; set;}
-        public int costo {get; set;}
+        public double costo {get; set;}
         public double importe { get; set; }
         public long cuenta_origen {get; set;}
         public long cuenta_destino {get; set;}

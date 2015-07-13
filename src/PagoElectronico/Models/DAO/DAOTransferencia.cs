@@ -20,7 +20,7 @@ namespace PagoElectronico.Models.DAO
 
         public List<Transferencia> ultimasTransferenciasDeCuenta(Cuenta c)
         {
-            string query = String.Format("SELECT TOP 10 * FROM {0} WHERE cuenta_destino = {1} ORDER BY id DESC", tabla, c.id);
+            string query = String.Format("SELECT TOP 10 * FROM {0} WHERE cuenta_destino = {1} ORDER BY fecha DESC", tabla, c.id);
             return DB.ExecuteReader<Transferencia>(query);
         }
 

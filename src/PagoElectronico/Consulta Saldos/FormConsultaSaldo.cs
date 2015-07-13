@@ -33,7 +33,6 @@ namespace PagoElectronico.Consulta_Saldos
             table.Columns.Add("Fecha");
             table.Columns.Add("Importe");
             table.Columns.Add("Costo");
-            table.Columns.Add("Banco");
             table.Columns.Add("Moneda");
 
 
@@ -43,10 +42,9 @@ namespace PagoElectronico.Consulta_Saldos
             {
                 newRow = table.NewRow();
                 newRow["Fecha"] = t.fecha.ToString("yyyy-MM-dd"); ;
-                newRow["Importe"] = t.costo; //ACA VA EL IMPORTE que falta agregar a BO transferencia
+                newRow["Importe"] = t.importe;
                 newRow["Moneda"] = (Moneda.Monedas)t.tipo_moneda;
                 newRow["Costo"] = t.costo;
-                newRow["Banco"] = t.costo; // ACA FALTA BANCO que no esta en BO tampoco;
 
 
                 table.Rows.Add(newRow);
