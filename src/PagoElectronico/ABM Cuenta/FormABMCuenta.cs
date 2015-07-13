@@ -151,5 +151,10 @@ namespace PagoElectronico.ABM_Cuenta
         {
             new FormConsultaSaldo(obtenerCuentaSeleccionada()).ShowDialog();
         }
+
+        private void grillaCuentas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

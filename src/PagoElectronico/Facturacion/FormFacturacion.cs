@@ -47,7 +47,7 @@ namespace PagoElectronico.Facturacion
                     string query = "SELECT i.id_item_factura, c.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
                                 + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta"
-                                + " WHERE i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
+                                + " WHERE i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
                     dtDatos = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
                     da.Fill(dtDatos);
@@ -58,7 +58,7 @@ namespace PagoElectronico.Facturacion
 
                     string query = "SELECT i.id_item_factura, i.num_cuenta, i.monto, it.descripcion, i.fecha "
                                         + "FROM VIDA_ESTATICA.Item_Factura i, VIDA_ESTATICA.Items it "
-                                        + "WHERE i.id_item = it.id_item AND i.id_item = 1 AND i.facturado = 0 "
+                                        + "WHERE i.id_item = it.id_item AND i.id_item = " + id_item +" AND i.facturado = 0 "
                                         + "ORDER BY i.num_cuenta";
 
                     /*string query = "SELECT i.id_item_factura, c.num_cuenta, i.monto, it.descripcion, i.fecha FROM VIDA_ESTATICA.Item_Factura i"
@@ -80,7 +80,7 @@ namespace PagoElectronico.Facturacion
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
                                 + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta "
                                 + " JOIN VIDA_ESTATICA.Cliente cl ON cl.id = c.cod_cli"
-                                + " WHERE cl.usuario = '" + usuario + "' AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
+                                + " WHERE cl.usuario = '" + usuario + "' AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
                     dtDatos = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
                     da.Fill(dtDatos);
@@ -93,7 +93,7 @@ namespace PagoElectronico.Facturacion
                                 + " JOIN VIDA_ESTATICA.Items it ON it.id_item = i.id_item"
                                 + " JOIN VIDA_ESTATICA.Cuenta c ON c.id = i.num_cuenta "
                                 + " JOIN VIDA_ESTATICA.Cliente cl ON cl.id = c.cod_cli"
-                                + " WHERE i.id_item = " + id_item + " AND cl.usuario = '"+usuario+"' AND  i.id_factura is NULL AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
+                                + " WHERE i.id_item = " + id_item + " AND cl.usuario = '"+usuario+"' AND i.facturado = 0  AND fecha IS NOT NULL ORDER BY i.num_cuenta";
 
                     dtDatos = new DataTable();
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
@@ -184,8 +184,6 @@ namespace PagoElectronico.Facturacion
                 command.CommandType = CommandType.StoredProcedure;
                 id_item_factura = id_item;
                 command.Parameters.Add(new SqlParameter("@id_item_factura",id_item_factura));
-                decimal id_factura = getIdFactura();
-                command.Parameters.Add(new SqlParameter("@id_factura", id_factura));
                 command.ExecuteNonQuery();
                 
                 salida = "Se facturo correctamente";
@@ -198,7 +196,7 @@ namespace PagoElectronico.Facturacion
             con.Close();
             return salida;
         }
-        private decimal getIdFactura()
+        private decimal getIdFactura(decimal id_item_factura)
         {
             SqlConnection con = new SqlConnection();
             //SqlConnection con = DBAcess.GetConnection();
@@ -209,8 +207,7 @@ namespace PagoElectronico.Facturacion
             SqlCommand command = new SqlCommand(query, con);
             command.CommandType = CommandType.StoredProcedure;
             DateTime fechaConfiguracion = Utils.fechaSistema;
-            command.Parameters.Add(new SqlParameter("@fecha", fechaConfiguracion));
-            command.Parameters.Add(new SqlParameter("@id_cliente", getIdCliente()));
+            command.Parameters.Add(new SqlParameter("@id_item_factura", id_item_factura));
             Int64 id_cli = getIdCliente();
             SqlParameter outPutParameter = new SqlParameter();
             outPutParameter.ParameterName = "@id_factura";

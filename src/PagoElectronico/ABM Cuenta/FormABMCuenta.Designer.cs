@@ -130,6 +130,7 @@
             this.grillaCuentas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grillaCuentas.Size = new System.Drawing.Size(479, 182);
             this.grillaCuentas.TabIndex = 20;
+            this.grillaCuentas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grillaCuentas_CellContentClick);
             // 
             // lblCuentas
             // 

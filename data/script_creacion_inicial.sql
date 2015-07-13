@@ -834,21 +834,19 @@ as
 GO
 
 CREATE PROCEDURE VIDA_ESTATICA.PRC_obtener_factura
-@fecha DATETIME,
-@id_cliente INTEGER,
+@id_item_factura NUMERIC(18,0),
 @id_factura NUMERIC(18, 0) OUTPUT
 AS
 BEGIN
-	SELECT @id_factura = id_factura FROM VIDA_ESTATICA.Factura WHERE CAST(fecha as DATE) = CAST(@fecha as DATE) AND id_cliente = @id_cliente 
+	SELECT @id_factura = id_factura FROM VIDA_ESTATICA.Item_Factura WHERE id_item_factura = @id_item_factura
 END
 GO
 
 CREATE PROCEDURE VIDA_ESTATICA.PRC_facturar_item_factura
-@id_item_factura NUMERIC(18,0),
-@id_factura NUMERIC(18,0)
+@id_item_factura NUMERIC(18,0)
 AS
 BEGIN
-	UPDATE VIDA_ESTATICA.Item_Factura SET facturado = 1, id_factura = @id_factura WHERE id_item_factura = @id_item_factura
+	UPDATE VIDA_ESTATICA.Item_Factura SET facturado = 1 WHERE id_item_factura = @id_item_factura
 END
 GO
 
