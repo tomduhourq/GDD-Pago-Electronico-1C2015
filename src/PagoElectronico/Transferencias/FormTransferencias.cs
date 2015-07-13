@@ -65,22 +65,12 @@ namespace PagoElectronico.Transferencias
 
         private void txtCuentaDestino_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char keypress = e.KeyChar;
-            if (!Utils.isNumeric(keypress))
-            {
-                MessageBox.Show(" Solo puede ingresar un número o ,!");
-                txtCuentaDestino.Text = "";
-            }
+            Shared.UIUtils.aceptarSoloNumero(sender, e);
         }
 
         private void txtImporte_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char keypress = e.KeyChar;
-            if (!Utils.isNumeric(keypress))
-            {
-                MessageBox.Show(" Solo puede ingresar un número o ,!");
-                txtImporte.Text = "";
-            }
+            Shared.UIUtils.aceptarSoloNumero(sender, e);
         }
 
         private void btnTransferir_Click(object sender, EventArgs e)

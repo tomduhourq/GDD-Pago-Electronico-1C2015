@@ -166,6 +166,7 @@
     <Compile Include="Models\BO\Banco.cs" />
     <Compile Include="Models\BO\Cheque.cs" />
     <Compile Include="Models\BO\Cliente.cs" />
+    <Compile Include="Models\BO\Factura.cs" />
     <Compile Include="Models\BO\Cuenta.cs" />
     <Compile Include="Models\BO\Deposito.cs" />
     <Compile Include="Models\BO\Emisor.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Models\BO\IBO.cs" />
     <Compile Include="Models\BO\Pais.cs" />
     <Compile Include="Models\BO\Transferencia.cs" />
+    <Compile Include="Models\DAO\DAOFactura.cs" />
     <Compile Include="Models\DAO\DAOCheque.cs" />
     <Compile Include="Models\DAO\DAOCuenta.cs" />
     <Compile Include="Models\DAO\DAOBanco.cs" />
@@ -337,8 +339,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ABM de Usuario\" />
-    <Folder Include="Listados\" />
-    <Folder Include="Facturacion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -62,12 +62,7 @@ namespace PagoElectronico.Retiros
 
         private void txtRetirar_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char keypress = e.KeyChar;
-            if (!Utils.isPlainNumeric(keypress))
-            {
-                MessageBox.Show("Solo puede ingresar un número!");
-                txtRetirar.Text = "";
-            }
+            Shared.UIUtils.aceptarSoloNumero(sender, e);
         }
 
         private void cmbCuenta_SelectedIndexChanged(object sender, EventArgs e)
